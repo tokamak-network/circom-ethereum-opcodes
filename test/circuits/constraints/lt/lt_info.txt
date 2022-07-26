@@ -1,0 +1,12 @@
+[32mtemplate instances[0m: 2
+non-linear constraints: 253
+linear constraints: 0
+public inputs: 2
+public outputs: 1
+private inputs: 0
+private outputs: 0
+wires: 255
+labels: 258
+[32mWritten successfully:[0m constraints/lt/lt_test.r1cs
+[32mConstraints written in:[0m constraints/lt/lt_test_constraints.json
+[32mEverything went okay, circom safe[0m
