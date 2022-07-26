@@ -1,0 +1,12 @@
+[32mtemplate instances[0m: 3
+non-linear constraints: 759
+linear constraints: 0
+public inputs: 2
+public outputs: 1
+private inputs: 0
+private outputs: 0
+wires: 760
+labels: 766
+[32mWritten successfully:[0m constraints/or.r1cs
+[32mConstraints written in:[0m constraints/or_constraints.json
+[32mEverything went okay, circom safe[0m
