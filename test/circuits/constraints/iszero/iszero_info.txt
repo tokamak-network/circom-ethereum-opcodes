@@ -10,3 +10,7 @@ labels: 4
 [32mWritten successfully:[0m constraints/iszero/iszero_test.r1cs
 [32mConstraints written in:[0m constraints/iszero/iszero_test_constraints.json
 [32mEverything went okay, circom safe[0m
+
+[constraint]
+1 -> output (input 1 == 0)
+2 -> input 1
