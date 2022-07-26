@@ -6,4 +6,3 @@ template Add () {
 
     out <== in[0] + in[1];
 }
-// component main {public [in]} = Add();

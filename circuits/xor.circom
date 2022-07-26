@@ -23,4 +23,3 @@ template Xor () {
   }
   out <== bits2num.out;
 }
-// component main {public [in]} = Xor();

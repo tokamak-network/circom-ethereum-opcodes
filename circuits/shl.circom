@@ -12,4 +12,3 @@ template SHL () {
   exp.n <== n;
   out <== in * exp.out;
 }
-// component main {public [in, n]} = SHL();

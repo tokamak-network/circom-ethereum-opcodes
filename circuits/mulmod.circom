@@ -16,4 +16,3 @@ template MulMod () {
   out <-- mul % in[2];
   mul === div.out * in[2] + out;
 }
-// component main {public [in]} = MulMod();

@@ -10,4 +10,3 @@ template Mod () {
 
     q * in[1] === in[0] - out;
 }
-// component main {public [in]} = Mod();

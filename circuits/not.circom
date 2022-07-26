@@ -21,4 +21,3 @@ template Not () {
   }
   out <== bits2num.out;
 }
-// component main {public [in]} = Not();

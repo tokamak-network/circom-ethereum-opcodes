@@ -66,5 +66,3 @@ template SLT () {
 
   out <== num2Bits0.out[MSB - 1] + xor.out * (adder.out[MSB - 1] - num2Bits0.out[MSB - 1]);  
 }
-
-// component main {public [in]} = SLT();

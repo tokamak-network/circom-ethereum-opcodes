@@ -11,4 +11,3 @@ template SGT () {
 
   out <== slt.out;
 }
-// component main {public [in]} = SGT();

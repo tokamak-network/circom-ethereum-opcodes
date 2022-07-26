@@ -30,4 +30,3 @@ template SAR () {
   shl <== 14474011154664524427946373126085988481658748083205070504932198000989141204992 - exp.out;
   out <== shr.out + shl * num2Bits.out[NUM_BIT - 1];
 }
-// component main {public [in, n]} = SAR();

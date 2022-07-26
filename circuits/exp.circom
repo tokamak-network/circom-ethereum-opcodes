@@ -30,4 +30,3 @@ template Exp () {
         }
     }
 }
-// component main {public [in, n]} = Exp();

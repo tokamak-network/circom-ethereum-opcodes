@@ -18,4 +18,3 @@ template SHR () {
 
   out <== div.out;
 }
-// component main {public [in, n]} = SHR();

@@ -16,4 +16,3 @@ template AddMod () {
   out <-- sum % in[2];
   sum === div.out * in[2] + out;
 }
-// component main {public [in]} = AddMod();

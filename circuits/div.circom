@@ -10,4 +10,3 @@ template Div () {
 
     out * in[1] === in[0] - r;
 }
-// component main {public [in]} = Div();
