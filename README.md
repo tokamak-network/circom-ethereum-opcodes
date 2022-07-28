@@ -1,2 +1,2 @@
 # circom-ethereum-opcodes
-The set of circom circuit implementation for ethereum opcodes
+Circom circuit implementation of ethereum opcodes
