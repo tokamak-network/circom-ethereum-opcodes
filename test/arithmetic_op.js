@@ -4,12 +4,10 @@ const F1Field = require("ffjavascript").F1Field
 const Scalar = require("ffjavascript").Scalar
 exports.p = Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617")
 const Fr = new F1Field(exports.p)
-
 const wasm_tester = require("circom_tester").wasm
-
 const assert = chai.assert
 
-describe("0x01 Add test", function ()  {
+describe("0x01 ADD test", function ()  {
   let circuit;
   let witness;
   before( async () => {
@@ -42,7 +40,7 @@ describe("0x01 Add test", function ()  {
 })
 
 
-describe("0x02 Mul test", function ()  {
+describe("0x02 MUL test", function ()  {
   let circuit;
   let witness;
   before( async () => {
@@ -73,7 +71,7 @@ describe("0x02 Mul test", function ()  {
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
 })
-describe("0x03 Sub test", function ()  {
+describe("0x03 SUB test", function ()  {
   let circuit;
   let witness;
   before( async () => {
@@ -101,7 +99,7 @@ describe("0x03 Sub test", function ()  {
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
 })
-describe("0x04 Div test", function ()  {
+describe("0x04 DIV test", function ()  {
   let circuit;
   let witness;
   before( async () => {
