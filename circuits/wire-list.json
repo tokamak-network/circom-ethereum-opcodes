@@ -2,52 +2,45 @@
   "wire-list": [
     {
       "opcode": "0x1",
-      "Nwires": 5,
+      "Nwires": 4,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
       "opcode": "0x2",
-      "Nwires": 4,
+      "Nwires": 3,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
       "opcode": "0x3",
-      "Nwires": 5,
+      "Nwires": 4,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
       "opcode": "0x4",
-      "Nwires": 5,
+      "Nwires": 4,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
       "opcode": "0x6",
-      "Nwires": 5,
+      "Nwires": 4,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
       "opcode": "0x8",
-      "Nwires": 7,
+      "Nwires": 6,
       "Out_idx": [1, 1],
-      "In_idx": [2, 3],
-      "Const_idx": 0
+      "In_idx": [2, 3]
     },
     {
       "opcode": "0x9",
-      "Nwires": 8,
+      "Nwires": 7,
       "Out_idx": [1, 1],
-      "In_idx": [2, 3],
-      "Const_idx": 0
+      "In_idx": [2, 3]
     },
     {
       "opcode": "0xa",
