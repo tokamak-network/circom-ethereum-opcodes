@@ -25,10 +25,24 @@
       "In_idx": [2, 2]
     },
     {
+      "opcode": "0x5",
+      "Nwires": 513,
+      "Out_idx": [1, 1],
+      "In_idx": [2, 2],
+      "Const_idx": 0
+    },
+    {
       "opcode": "0x6",
       "Nwires": 4,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
+    },
+    {
+      "opcode": "0x7",
+      "Nwires": 513,
+      "Out_idx": [1, 1],
+      "In_idx": [2, 2],
+      "Const_idx": 0
     },
     {
       "opcode": "0x8",
