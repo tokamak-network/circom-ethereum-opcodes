@@ -1,7 +1,4 @@
-const { throws } = require("assert")
-const { expect } = require("chai")
 const chai = require("chai")
-const { freemem } = require("os")
 const path = require("path")
 const F1Field = require("ffjavascript").F1Field
 const Scalar = require("ffjavascript").Scalar
