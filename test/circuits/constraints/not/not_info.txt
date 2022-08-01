@@ -1,11 +1,11 @@
 [32mtemplate instances[0m: 3
 non-linear constraints: 253
-linear constraints: 1
-public inputs: 1
+linear constraints: 0
+public inputs: 0
 public outputs: 1
-private inputs: 0
+private inputs: 1
 private outputs: 0
-wires: 255
+wires: 254
 labels: 511
 [32mWritten successfully:[0m constraints/not/not_test.r1cs
 [32mConstraints written in:[0m constraints/not/not_test_constraints.json
