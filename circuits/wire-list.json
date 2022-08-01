@@ -132,6 +132,13 @@
       "Out_idx": [1, 1],
       "In_idx": [2, 2],
       "Const_idx": 0
+    },
+    {
+      "opcode": "0x1d",
+      "Nwires": 286,
+      "Out_idx": [1, 1],
+      "In_idx": [2, 2],
+      "Const_idx": 0
     }
   ]
 }
