@@ -1,11 +1,233 @@
-// TODO: 0X10 LT
+const chai = require("chai")
+const path = require("path")
+const F1Field = require("ffjavascript").F1Field
+const Scalar = require("ffjavascript").Scalar
+exports.p = Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617")
+const Fr = new F1Field(exports.p)
+const wasm_tester = require("circom_tester").wasm
+const assert = chai.assert
 
-// TODO: 0X11 GT
+describe("0x10 LT test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "lt_test.circom"))
+  })
+  it("Should equal one", async() => {
+    const input = [1, 200]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal zero", async() => {
+    const input = [200, 1]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal one", async() => {
+    const input = [
+      Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617"),
+      Scalar.fromString("3")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+})
 
-// TODO: 0X12 SLT
+describe("0x11 GT test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "gt_test.circom"))
+  })
+  it("Should equal zero", async() => {
+    const input = [1, 200]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal one", async() => {
+    const input = [200, 1]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal zero", async() => {
+    const input = [
+      Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617"),
+      Scalar.fromString("3")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+})
 
-// TODO: 0X13 SGT
+describe("0x12 SLT test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "slt_test.circom"))
+  })
+  it("Should equal one", async() => {
+    const input = [1, 200]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal zero", async() => {
+    const input = [1000, 200]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal one", async() => {
+    const input = [
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204990"),
+      Scalar.fromString("100")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal zero", async() => {
+    const input = [
+      Scalar.fromString("100"),
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204990")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal one", async() => {
+    const input = [
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204986"),
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204990")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal zero", async() => {
+    const input = [
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204990"),
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204986")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+})
 
-// TODO: 0X14 EQ
+describe("0x13 SGT test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "sgt_test.circom"))
+  })
+  it("Should equal one", async() => {
+    const input = [200, 1]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal zero", async() => {
+    const input = [1, 200]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal one", async() => {
+    const input = [
+      Scalar.fromString("100"),
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204990")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal zero", async() => {
+    const input = [
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204990"),
+      Scalar.fromString("100")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal one", async() => {
+    const input = [
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204990"),
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204986")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal zero", async() => {
+    const input = [
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204986"),
+      Scalar.fromString("14474011154664524427946373126085988481658748083205070504932198000989141204990")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+})
 
-// TODO: 0X15 ISZERO
+describe("0x14 EQ test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "eq_test.circom"))
+  })
+  it("Should equal zero", async() => {
+    const input = [1, 200]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal one", async() => {
+    const input = [200, 200]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal one", async() => {
+    const input = [
+      Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495618"),
+      Scalar.fromString("1")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+})
+
+describe("0x15 ISZERO test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "iszero_test.circom"))
+  })
+  it("Should equal zero", async() => {
+    const input = 0
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+  it("Should equal one", async() => {
+    const input = 100
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal zero", async() => {
+    const input = Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617")
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
+})
