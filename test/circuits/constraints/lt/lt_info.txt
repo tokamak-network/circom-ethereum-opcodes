@@ -10,8 +10,3 @@ labels: 258
 [32mWritten successfully:[0m constraints/lt/lt_test.r1cs
 [32mConstraints written in:[0m constraints/lt/lt_test_constraints.json
 [32mEverything went okay, circom safe[0m
-
-[constraint]
-1 -> output (input 1 < input 2)
-2 -> input 1
-3 -> input 2
