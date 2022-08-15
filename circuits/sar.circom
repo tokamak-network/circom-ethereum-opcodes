@@ -4,29 +4,28 @@ include "shr.circom";
 include "exp.circom";
 
 
-// sar(in, n) == shr(in, n) + shl(2**NUM_BIT - 1, NUM_BIT - n) * SIGN_BIT
+// sar(in, n) == shr(in, n) + shl(2**NUM_BITS - 1, NUM_BITS - n) * SIGN_BIT
 
 template SAR () {
-  signal input in;
-  signal input n;
+  signal input in[2];
   signal shl;
   signal output out;
   
-  var NUM_BIT = 253;
-  assert(n <= NUM_BIT);
+  var NUM_BITS = 253;
+  assert(in[1] <= NUM_BITS);
 
   // To check sign bit
-  component num2Bits = Num2Bits(NUM_BIT);
-  num2Bits.in <== in;
+  component num2Bits = Num2Bits(NUM_BITS);
+  num2Bits.in <== in[0];
 
   component shr = SHR();
-  shr.in <== in;
-  shr.n <== n;
+  shr.in[0] <== in[0];
+  shr.in[1] <== in[1];
 
   component exp = Exp();
-  exp.in <== 2;
-  exp.n <== 253 - n;
+  exp.in[0] <== 2;
+  exp.in[1] <== 253 - in[1];
 
   shl <== 14474011154664524427946373126085988481658748083205070504932198000989141204992 - exp.out;
-  out <== shr.out + shl * num2Bits.out[NUM_BIT - 1];
+  out <== shr.out + shl * num2Bits.out[NUM_BITS - 1];
 }

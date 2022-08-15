@@ -321,26 +321,26 @@ describe("0x0A EXP test", function ()  {
     circuit = await wasm_tester(path.join(__dirname, "circuits", "exp_test.circom"))
   })
   it("Should equal to pow(a, b)", async() => {
-    const input = {in: 9, n: 5}
-    witness = await circuit.calculateWitness(input, true)
+    const input = [9, 5]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-    assert(Fr.eq(Fr.e(witness[1]), Fr.e(Math.pow(input["in"], input["n"]))))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(Math.pow(input[0], input[1]))))
   })
   it("Should equal to one", async() => {
-    const input = {in: 1, n: 100}
-    witness = await circuit.calculateWitness(input, true)
+    const input = [1, 100]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
   })
   it("Should equal to one", async() => {
-    const input = {in: 17, n: 0}
-    witness = await circuit.calculateWitness(input, true)
+    const input = [17, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
   })
   it("Should equal to zero", async() => {
-    const input = {in: 0, n: 100}
-    witness = await circuit.calculateWitness(input, true)
+    const input = [0, 100]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })

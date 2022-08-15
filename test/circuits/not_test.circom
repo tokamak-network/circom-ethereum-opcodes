@@ -1,4 +1,4 @@
 pragma circom 2.0.5;
 include "../../circuits/not.circom";
 
-component main = Not();
+component main {public [in]} = Not();
