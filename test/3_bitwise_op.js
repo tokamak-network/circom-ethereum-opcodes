@@ -106,29 +106,20 @@ describe("0x1B SHL test", function ()  {
     circuit = await wasm_tester(path.join(__dirname, "circuits", "shl_test.circom"))
   })
   it("Should equal to input1 << input2", async() => {
-    const input = {
-      in: 3,
-      n: 4
-    }
-    witness = await circuit.calculateWitness(input, true)
+    const input = [3, 4]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input['in'] << input['n'])))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] << input[1])))
   })
   it("Should equal to 2**253", async() => {
-    const input = {
-      in: 1,
-      n: 253
-    }
-    witness = await circuit.calculateWitness(input, true)
+    const input = [1, 253]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE + Scalar.fromString('1'))))
   })
   it("Should equal to zero", async() => {
-    const input = {
-      in: 0,
-      n: 100
-    }
-    witness = await circuit.calculateWitness(input, true)
+    const input = [0, 100]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
@@ -141,29 +132,20 @@ describe("0x1C SHR test", function ()  {
     circuit = await wasm_tester(path.join(__dirname, "circuits", "shr_test.circom"))
   })
   it("Should equal to input1 >> input2", async() => {
-    const input = {
-      in: 15,
-      n: 2
-    }
-    witness = await circuit.calculateWitness(input, true)
+    const input = [15, 2]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input['in'] >>> input['n'])))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] >>> input[1])))
   })
   it("Should equal to zero", async() => {
-    const input = {
-      in: MAX_VALUE,
-      n: 253
-    }
-    witness = await circuit.calculateWitness(input, true)
+    const input = [MAX_VALUE, 253]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
   it("Should equal to zero", async() => {
-    const input = {
-      in: 0,
-      n: 100
-    }
-    witness = await circuit.calculateWitness(input, true)
+    const input = [0, 100]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
@@ -176,20 +158,14 @@ describe("0x1D SAR test", function ()  {
     circuit = await wasm_tester(path.join(__dirname, "circuits", "sar_test.circom"))
   })
   it("Should zero-fill right shift", async() => {
-    const input = {
-      in: 15,
-      n: 2
-    }
-    witness = await circuit.calculateWitness(input, true)
+    const input = [15, 2]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input['in'] >>> input['n'])))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] >>> input[1])))
   })
   it("Should fill signed bit in msb", async() => {
-    const input = {
-      in: MAX_VALUE,
-      n: Scalar.fromString('2')
-    }
-    witness = await circuit.calculateWitness(input, true)
+    const input = [MAX_VALUE, Scalar.fromString('2')]
+    witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE)))
   })

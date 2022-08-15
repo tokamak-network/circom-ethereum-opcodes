@@ -1,4 +1,4 @@
 pragma circom 2.0.5;
 include "../../circuits/slt.circom";
 
-component main = SLT();
+component main {public [in]} = SLT();
