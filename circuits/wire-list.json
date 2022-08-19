@@ -1,158 +1,196 @@
 {
   "wire-list": [
     {
-      "opcode": "0x1",
+      "id": 0,
+      "opcode": "fff",
+      "name": "load",
+      "Nwires": 65,
+      "Out_idx": [1, 32],
+      "In_idx": [33, 65]
+    },
+    {
+      "id": 1,
+      "opcode": "1",
+      "name": "ADD",
+      "Nwires": 5,
+      "Out_idx": [1, 1],
+      "In_idx": [2, 2]
+    },
+    {
+      "id": 2,
+      "opcode": "2",
+      "name": "MUL",
       "Nwires": 4,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
     },
     {
-      "opcode": "0x2",
-      "Nwires": 3,
+      "id": 3,
+      "opcode": "3",
+      "name": "SUB",
+      "Nwires": 5,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
     },
     {
-      "opcode": "0x3",
-      "Nwires": 4,
+      "id": 4,
+      "opcode": "4",
+      "name": "DIV",
+      "Nwires": 5,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
     },
     {
-      "opcode": "0x4",
-      "Nwires": 4,
-      "Out_idx": [1, 1],
-      "In_idx": [2, 2]
-    },
-    {
-      "opcode": "0x5",
+      "id": 5,
+      "opcode": "5",
+      "name": "SDIV",
       "Nwires": 513,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x6",
-      "Nwires": 4,
+      "id": 6,
+      "opcode": "6",
+      "name": "MOD",
+      "Nwires": 5,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
     },
     {
-      "opcode": "0x7",
+      "id": 7,
+      "opcode": "7",
+      "name": "SMOD",
       "Nwires": 513,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x8",
-      "Nwires": 6,
-      "Out_idx": [1, 1],
-      "In_idx": [2, 3]
-    },
-    {
-      "opcode": "0x9",
+      "id": 8,
+      "opcode": "8",
+      "name": "ADDMOD",
       "Nwires": 7,
       "Out_idx": [1, 1],
       "In_idx": [2, 3]
     },
     {
-      "opcode": "0xa",
+      "id": 9,
+      "opcode": "9",
+      "name": "MULMOD",
+      "Nwires": 8,
+      "Out_idx": [1, 1],
+      "In_idx": [2, 3]
+    },
+    {
+      "id": 10,
+      "opcode": "a",
+      "name": "EXP",
       "Nwires": 32,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x10",
+      "id": 11,
+      "opcode": "10",
+      "name": "LT",
       "Nwires": 255,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x11",
+      "id": 12,
+      "opcode": "11",
+      "name": "GT",
       "Nwires": 255,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x12",
+      "id": 13,
+      "opcode": "12",
+      "name": "SLT",
       "Nwires": 764,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x13",
+      "id": 14,
+      "opcode": "13",
+      "name": "SGT",
       "Nwires": 764,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x14",
+      "id": 15,
+      "opcode": "14",
+      "name": "EQ",
       "Nwires": 5,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x15",
+      "id": 16,
+      "opcode": "15",
+      "name": "ISZERO",
       "Nwires": 4,
       "Out_idx": [1, 1],
-      "In_idx": [2, 1],
-      "Const_idx": 0
+      "In_idx": [2, 1]
     },
     {
-      "opcode": "0x16",
+      "id": 17,
+      "opcode": "16",
+      "name": "AND",
       "Nwires": 760,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x17",
+      "id": 18,
+      "opcode": "17",
+      "name": "OR",
       "Nwires": 760,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x18",
+      "id": 19,
+      "opcode": "18",
+      "name": "XOR",
       "Nwires": 760,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x19",
-      "Nwires": 254,
+      "id": 20,
+      "opcode": "19",
+      "name": "NOT",
+      "Nwires": 255,
       "Out_idx": [1, 1],
-      "In_idx": [2, 1],
-      "Const_idx": 0
+      "In_idx": [2, 1]
     },
     {
-      "opcode": "0x1b",
+      "id": 21,
+      "opcode": "1b",
+      "name": "SHL",
       "Nwires": 18,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x1c",
+      "id": 22,
+      "opcode": "1c",
+      "name": "SHR",
       "Nwires": 19,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     },
     {
-      "opcode": "0x1d",
+      "id": 23,
+      "opcode": "1d",
+      "name": "SAR",
       "Nwires": 286,
       "Out_idx": [1, 1],
-      "In_idx": [2, 2],
-      "Const_idx": 0
+      "In_idx": [2, 2]
     }
   ]
 }
