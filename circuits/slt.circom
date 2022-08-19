@@ -56,8 +56,8 @@ template SLT () {
 
   component adder = BinAdder();
   for (var i = 0; i < MSB; i++) {
-      num2Bits0.out[i] ==> adder.in[0][i];
-      num2Bits1.out[i] ==> adder.in[1][i];
+      adder.in[0][i] <== num2Bits0.out[i];
+      adder.in[1][i] <== num2Bits1.out[i];
   }
 
   component xor = XOR();

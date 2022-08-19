@@ -8,6 +8,6 @@ template SHL () {
   // out == in * 2**n
   component exp = Exp();
   exp.in[0] <== 2;
-  exp.in[1] <== in[1];
-  out <== in[0] * exp.out;
+  exp.in[1] <== in[0];
+  out <== in[1] * exp.out;
 }

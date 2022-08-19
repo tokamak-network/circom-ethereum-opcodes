@@ -3,9 +3,12 @@ include "mod.circom";
 include "../node_modules/circomlib/circuits/bitify.circom";
 include "../node_modules/circomlib/circuits/gates.circom";
 
+// TODO: 0 if in[1] == 0
 template Smod () {
   signal input in[2];
   signal output out;
+
+  assert(in[1] != 0);
 
   var NUM_BIT = 253;
   var MAX_VALUE = 14474011154664524427946373126085988481658748083205070504932198000989141204992; // 2**253
