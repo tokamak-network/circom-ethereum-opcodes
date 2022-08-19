@@ -109,16 +109,16 @@ describe("0x1B SHL test", function ()  {
     const input = [3, 4]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] << input[1])))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[1] << input[0])))
   })
   it("Should equal to 2**253", async() => {
-    const input = [1, 253]
+    const input = [253, 1]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE + Scalar.fromString('1'))))
   })
   it("Should equal to zero", async() => {
-    const input = [0, 100]
+    const input = [100, 0]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
@@ -135,16 +135,16 @@ describe("0x1C SHR test", function ()  {
     const input = [15, 2]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] >>> input[1])))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[1] >>> input[0])))
   })
   it("Should equal to zero", async() => {
-    const input = [MAX_VALUE, 253]
+    const input = [253, MAX_VALUE]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
   it("Should equal to zero", async() => {
-    const input = [0, 100]
+    const input = [100, 0]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
@@ -161,10 +161,10 @@ describe("0x1D SAR test", function ()  {
     const input = [15, 2]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] >>> input[1])))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[1] >>> input[0])))
   })
   it("Should fill signed bit in msb", async() => {
-    const input = [MAX_VALUE, Scalar.fromString('2')]
+    const input = [Scalar.fromString('2'), MAX_VALUE]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE)))

@@ -1,6 +1,7 @@
 pragma circom 2.0.5;
 include "div.circom";
 
+// TODO: 0 if in[2] == 0
 template MulMod () {
   signal input in[3];
   signal mul;
