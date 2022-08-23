@@ -7,12 +7,12 @@ const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
 
-describe("0x00 BASE test", function ()  {
+describe("0x00 LOAD test", function ()  {
   let circuit;
   let witness;
   const NUM_INPUTS = 32
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "base_test.circom"))
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "load_test.circom"))
   })
   it("Should equal to each input and output array element", async() => {
     const input = Array.from(Array(NUM_INPUTS).keys())
