@@ -199,6 +199,14 @@
       "Nwires": 286,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
+    },
+    {
+      "id": 25,
+      "opcode": "20",
+      "name": "SHA3",
+      "Nwires": 3,
+      "Out_idx": [1, 1],
+      "In_idx": [2, 1]
     }
   ]
 }
