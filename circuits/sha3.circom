@@ -5,5 +5,6 @@ template SHA3 () {
     signal input in;
     signal output out;
 
-    out <== in;
+    out <-- 1;
+    out * (in - in) === 0;
 }

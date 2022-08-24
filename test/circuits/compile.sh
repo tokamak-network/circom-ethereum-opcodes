@@ -6,7 +6,7 @@
 # mv constraints/$1/$1_test.r1cs constraints/$1/$1.r1cs
 # mv constraints/$1/$1_test_constraints.json constraints/$1/$1_constraints.json
 
-names=("load" "add" "mul" "sub" "div" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr_l" "shr_r" "sar")
+names=("load" "add" "mul" "sub" "div" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr_l" "shr_r" "sar" "sha3")
 
 for (( i = 0 ; i < ${#names[@]} ; i++ )) ; do
   echo "id[$i] = ${names[$i]}"
