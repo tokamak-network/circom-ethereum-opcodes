@@ -87,7 +87,7 @@ There are a few limitations on our very first circuits.
 
 2. DIV, MOD, SDIV, SMOD, ADDMOD, MULMOD
 
-    The four circuits work fine but they are not carrying out the exception case such as they should return 0 if dividor is zero.
+    The four circuits work fine but they are not carrying out the exception case such as they should return 0 if divisor is zero stated in Ethereum yellow paper.
 
 3. SHA3
 
