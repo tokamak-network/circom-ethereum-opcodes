@@ -178,19 +178,35 @@
     },
     {
       "id": 22,
-      "opcode": "1c",
-      "name": "SHR",
+      "opcode": "1c1",
+      "name": "SHR-L",
       "Nwires": 19,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
     },
     {
       "id": 23,
+      "opcode": "1c2",
+      "name": "SHR-H",
+      "Nwires": 19,
+      "Out_idx": [1, 1],
+      "In_idx": [2, 2]
+    },
+    {
+      "id": 24,
       "opcode": "1d",
       "name": "SAR",
       "Nwires": 286,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
+    },
+    {
+      "id": 25,
+      "opcode": "20",
+      "name": "SHA3",
+      "Nwires": 3,
+      "Out_idx": [1, 1],
+      "In_idx": [2, 1]
     }
   ]
 }

@@ -1,4 +1,4 @@
 pragma circom 2.0.5;
-include "../../circuits/SHL.circom";
+include "../../circuits/shl.circom";
 
 component main {public [in]} = SHL();
