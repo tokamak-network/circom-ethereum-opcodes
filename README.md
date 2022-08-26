@@ -73,7 +73,7 @@ Signed integers are represented as two's complement form.
 
 ### Output
 
-All the circuits return one single output except `load` for a special use.
+All the circuits return a single output except `load` for a special use.
 
 The output modulo the Circom prime might not the expected result if any intermediate or final result is greater than the prime number since the operators are performed over the finite field.
 
