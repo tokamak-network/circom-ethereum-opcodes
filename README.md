@@ -5,7 +5,7 @@ Circom circuit set of the Ethereum opcodes
 ## Goal
 
 Onther team is working toward a zk-EVM which is capable to execute EVM bytecode and generate a zk-SNARK proof based on [the modified Groth16](https://github.com/Onther-Tech/UniGro16js).
-The original Groth16 requires high cost "setup" for every single transaction since it is a circuit-speicific SNARK. On the other hand, universal SNARKs such as Plonk would be enough with just a single setup but the existing protocols have humongous computation overhead in proving and verifying algorithm.
+The original Groth16 requires high cost "setup" for every single transaction since it is a circuit-speicific SNARK. On the other hand, universal SNARKs such as Plonk would be enough with just a single setup but the existing protocols cause humongous computation overhead in proving and verifying algorithm.
 
 Every transaction might execute different functions with different arguments but all the execution steps can be broken down into the EVM opcode set; the executed opcodes should be in the EVM instruction set even though the order of opcode execution would be different.
 
