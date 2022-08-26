@@ -9,7 +9,7 @@ The original Groth16 requires high cost "setup" for every single transaction sin
 
 Every transaction might execute different functions with different arguments but all the execution steps can be broken down into the EVM opcode set; the executed opcodes should be in the EVM instruction set even though the order of opcode execution would be different.
 
-Our approach is to take advantage of those two types of SNARK protocols by assembling each EVM opcode circuit in the order of executions by a transaction; it would be fast to prove and verify like circuit-speicific SNARKs and require only a single setup phase similar to universal SNARKs. It is enough to make setups for the EVM opcode circuits, rather than you need setups everytime transaction occurs. This allows us to make all transactions zk-provable after a single of the setup phase, using [the modified Groth16](https://github.com/Onther-Tech/UniGro16js) without any huge sacrifice in terms of cost to prove or verify.
+Our approach is to take advantage of those two different types of SNARK protocols by assembling each EVM opcode circuit in the order of executions by a transaction; it would be fast to prove and verify like circuit-speicific SNARKs and require only a single setup phase similar to universal SNARKs. It is enough to make setups for the EVM opcode circuits, rather than you need setups everytime transaction occurs. This allows us to make all transactions zk-provable after a single of the setup phase, using [the modified Groth16](https://github.com/Onther-Tech/UniGro16js) without any huge sacrifice in terms of cost to prove or verify.
 
 This repository aims to implement zk-SNARK provable circuits of the EVM instruction set along Onther's zk-EVM plan.
 
@@ -87,7 +87,7 @@ There are a few limitations on our very first circuits.
 
 2. DIV, MOD, SDIV, SMOD, ADDMOD, MULMOD
 
-    The four circuits work fine but they are not carrying out the exception case such as they should return 0 if divisor is zero stated in Ethereum yellow paper.
+    The six circuits work fine but they are not carrying out the exception case such as they should return 0 if divisor is zero stated in Ethereum yellow paper.
 
 3. SHA3
 
