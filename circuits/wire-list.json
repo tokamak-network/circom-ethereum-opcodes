@@ -108,7 +108,7 @@
       "id": 13,
       "opcode": "12",
       "name": "SLT",
-      "Nwires": 764,
+      "Nwires": 290,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
     },
@@ -116,7 +116,7 @@
       "id": 14,
       "opcode": "13",
       "name": "SGT",
-      "Nwires": 764,
+      "Nwires": 290,
       "Out_idx": [1, 1],
       "In_idx": [2, 2]
     },
