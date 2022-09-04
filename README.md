@@ -83,7 +83,7 @@ There are a few limitations on our very first circuits.
 
 1. Integer incompability to EVM
 
-    The circuits should take 253-bit integers to work as expected, however, EVM computes over 256-bit integers. We will figure it out to improve compatibility to EVM.
+    The circuits should take 253-bit unsigned/signed integers to work as expected, however, EVM computes over 256-bit integers. We will figure it out to improve compatibility to EVM.
 
 2. DIV, MOD, SDIV, SMOD, ADDMOD, MULMOD
 
@@ -92,3 +92,9 @@ There are a few limitations on our very first circuits.
 3. SHA3
 
     [Keccak256](https://github.com/vocdoni/keccak256-circom) hash function is implemented in Circom by [Vocdoni](https://github.com/vocdoni). However, it needs around 151k constraints by Keccak's zk-unfriendliness. Regarding no circuit has more than 1k constraints, Keccak circuit requires too much cost. We rather verify Keccak function in the verification phase of the modified Groth16.
+
+4. The prime number of finite field is less than MAX_VALUE of uint256.
+
+    Circom(2.0.5) performs over the finite field by the prime number; 2^253 < p < 2^254.
+
+    If input values are greater than the prime number, Circom automatically performs modulo by the prime. Therefore it would result in an unexpected output. For example, you cannot get the correct value of SHR(5, 2^254) because it actually computes the result of SHR(5 mod `p`, 2^254 mod `p`) which causes an wrong output. EVM still uses SHR operator to extract a function selector so most of transactions compute `VALUE_BIGGER_THAN_P` >> 224, for instance. SHR-H is designed to handle `VALUE_BIGGER_THAN_P` by dividing it by 2^8 before computing SHR so that the big value is fully representable. On the other hand, SHR-L takes an input smaller than the prime and there is no limitation to represent the input value itself over the finite field.
