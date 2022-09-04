@@ -7,7 +7,7 @@ include "exp.circom";
 
 // in[3] value, (low, high): shift
 
-template SHR_R () {
+template SHR_H () {
   signal input in[2];
   signal output out;
 
