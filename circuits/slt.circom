@@ -1,68 +1,42 @@
 pragma circom 2.0.5;
-include "../node_modules/circomlib/circuits/bitify.circom";
 include "../node_modules/circomlib/circuits/gates.circom";
+include "shr.circom";
 
-template BinAdder () {
+template LT(n) {
+    // assert(n <= 252);
+    signal input in[2];
+    signal output out;
 
-  // From ciromlib but hard-coded to detour wrong value of nout.
-  var n = 253;
-  var ops = 2;
-  var nout = 254;
-  signal input in[2][n];
-  signal output out[nout];
+    component n2b = Num2Bits(n+1);
 
-  var lin = 0;
-  var lout = 0;
+    n2b.in <== in[0]+ (1<<n) - in[1];
 
-  var k;
-  var j;
-
-  var e2;
-
-  e2 = 1;
-  for (k=0; k<n; k++) {
-      for (j=0; j<ops; j++) {
-          lin += in[j][k] * e2;
-      }
-      e2 = e2 + e2;
-  }
-
-  e2 = 1;
-  for (k=0; k<nout; k++) {
-      out[k] <-- (lin >> k) & 1;
-
-      // Ensure out is binary
-      out[k] * (out[k] - 1) === 0;
-
-      lout += out[k] * e2;
-
-      e2 = e2+e2;
-  }
-  // Ensure the sum;
-  lin === lout;
+    out <== 1-n2b.out[n];
 }
 
-// The MSB is the sign bit.
 template SLT () {
-  var MSB = 253;
   signal input in[2];
   signal output out;
 
-  component num2Bits0 = Num2Bits(MSB);
-  component num2Bits1 = Num2BitsNeg(MSB);
+  var NUM_BITS = 253;
 
-  num2Bits0.in <== in[0];
-  num2Bits1.in <== in[1];
+  assert(in[0] >> NUM_BITS == 0);
+  assert(in[1] >> NUM_BITS == 0);
 
-  component adder = BinAdder();
-  for (var i = 0; i < MSB; i++) {
-      adder.in[0][i] <== num2Bits0.out[i];
-      adder.in[1][i] <== num2Bits1.out[i];
+  component shr[2];
+  for (var i = 0; i < 2; i++){
+    shr[i] = SHR();
+    shr[i].in[0] <== NUM_BITS - 1;
+    shr[i].in[1] <== in[i];
   }
+  
+  component lt = LT(NUM_BITS);
+  lt.in[0] <== in[0];
+  lt.in[1] <== in[1];
 
   component xor = XOR();
-  xor.a <== num2Bits0.out[MSB - 1];
-  xor.b <== num2Bits1.out[MSB - 1];
+  xor.a <== shr[0].out;
+  xor.b <== shr[1].out;
 
-  out <== num2Bits0.out[MSB - 1] + xor.out * (adder.out[MSB - 1] - num2Bits0.out[MSB - 1]);  
+  out <== xor.out * (shr[0].out - lt.out) + lt.out;
 }
