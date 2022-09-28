@@ -346,3 +346,33 @@ describe("0x0A EXP test", function ()  {
   })
 })
 // TODO: 0x0B SINGEXTEND
+
+describe("0x0B SIGNEXTEND test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "signextend_test.circom"))
+  })
+  it("Should equal to signextend", async() => {
+    const input = [0, 127]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(
+      Fr.eq(
+        Fr.e(witness[1]), 
+        Fr.e(input[1])
+      )
+    )
+  })
+  it("Should equal to signextend", async() => {
+    const input = [1, 2**15]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(
+      Fr.eq(
+        Fr.e(witness[1]), 
+        Fr.e(Fr.e(2**253) - Fr.e(2**16) + Fr.e(input[1]))
+      )
+    )
+  })
+})
