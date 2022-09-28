@@ -129,9 +129,18 @@ describe("0x1A BYTE test", function ()  {
       )    
     )
   })
+  it("Should equal to 1", async() => {
+    const input = [33, 256]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(
+      Fr.eq(
+        Fr.e(witness[1]), 
+        Fr.e(0)
+      )    
+    )
+  })
 })
-
-
 
 describe("0x1B SHL test", function ()  {
   let circuit;

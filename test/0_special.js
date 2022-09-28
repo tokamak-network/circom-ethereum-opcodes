@@ -32,7 +32,7 @@ describe("0x00 LOAD test", function ()  {
       const input = 10
       witness = await circuit.calculateWitness({"in": input}, true)
       assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-      assert(Fr.eq(Fr.e(witness[1]), Fr.e(input)))
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
     })
   })
 })

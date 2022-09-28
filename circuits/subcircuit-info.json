@@ -368,7 +368,7 @@
 			"id": 26,
 			"opcode": "B",
 			"name": "SIGNEXTEND",
-			"Nwires": "34",
+			"Nwires": "288",
 			"Out_idx": [
 				"1",
 				"1"
@@ -382,7 +382,7 @@
 			"id": 27,
 			"opcode": "1A",
 			"name": "BYTE",
-			"Nwires": "20",
+			"Nwires": "274",
 			"Out_idx": [
 				"1",
 				"1"
