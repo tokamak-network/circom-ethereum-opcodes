@@ -1,4 +1,4 @@
-names=("load" "add" "mul" "sub" "div" "sha3" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr_l" "shr_h" "sar")
+names=("load" "add" "mul" "sub" "div" "sha3" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr_l" "shr_h" "sar" "signextend" "byte")
 
 for (( i = 0 ; i < ${#names[@]} ; i++ )) ; do
   echo "id[$i] = ${names[$i]}" >> temp.txt

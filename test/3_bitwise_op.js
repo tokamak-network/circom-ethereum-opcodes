@@ -99,6 +99,40 @@ describe("0x19 NOT test", function ()  {
   })
 })
 
+describe("0x1A BYTE test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "byte_test.circom"))
+  })
+  it("Should equal to 127", async() => {
+    const input = [31, 127]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(
+      Fr.eq(
+        Fr.e(witness[1]), 
+        Fr.e(
+          (input[1] >> (248 - input[0] * 8)) & 255
+        )
+      )    
+    )
+  })
+  it("Should equal to 1", async() => {
+    const input = [30, 256]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(
+      Fr.eq(
+        Fr.e(witness[1]), 
+        Fr.e(1)
+      )    
+    )
+  })
+})
+
+
+
 describe("0x1B SHL test", function ()  {
   let circuit;
   let witness;

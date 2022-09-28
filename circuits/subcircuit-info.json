@@ -363,6 +363,34 @@
 				"2",
 				"2"
 			]
+		},
+		{
+			"id": 26,
+			"opcode": "B",
+			"name": "SIGNEXTEND",
+			"Nwires": "34",
+			"Out_idx": [
+				"1",
+				"1"
+			],
+			"In_idx": [
+				"2",
+				"2"
+			]
+		},
+		{
+			"id": 27,
+			"opcode": "1A",
+			"name": "BYTE",
+			"Nwires": "20",
+			"Out_idx": [
+				"1",
+				"1"
+			],
+			"In_idx": [
+				"2",
+				"2"
+			]
 		}
 	]
 }
