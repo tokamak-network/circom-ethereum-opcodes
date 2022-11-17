@@ -2,13 +2,12 @@ pragma circom 2.0.5;
 include "mod.circom";
 include "shr.circom";
 include "../node_modules/circomlib/circuits/gates.circom";
+include "../node_modules/circomlib/circuits/comparators.circom";
 
-// TODO: 0 if in[1] == 0
 template Smod () {
   signal input in[2];
+  signal inter;
   signal output out;
-
-  assert(in[1] != 0);
 
   var NUM_BIT = 253;
   var MAX_VALUE = 2**253;
@@ -33,5 +32,9 @@ template Smod () {
   xor.a <== shr[0].out;
   xor.b <== shr[1].out;
 
-  out <== mod.out + xor.out * (MAX_VALUE - 2 * mod.out);
+  component isZero = IsZero();
+  isZero.in <== in[1];
+
+  inter <== xor.out * (MAX_VALUE - 2 * mod.out);
+  out <== mod.out + (1 - isZero.out) * inter;
 }

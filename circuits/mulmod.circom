@@ -1,7 +1,7 @@
 pragma circom 2.0.5;
 include "div.circom";
+include "mod.circom";
 
-// TODO: 0 if in[2] == 0
 template MulMod () {
   signal input in[3];
   signal mul;
@@ -14,6 +14,10 @@ template MulMod () {
   div.in[0] <== mul;
   div.in[1] <== in[2];
 
-  out <-- mul % in[2];
-  mul === div.out * in[2] + out;
+  component mod = Mod();
+  mod.in[0] <== mul;
+  mod.in[1] <== in[2];
+  out <== mod.out;
+
+  // mul === div.out * in[2] + out;
 }
