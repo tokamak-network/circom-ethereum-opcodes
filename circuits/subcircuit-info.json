@@ -60,7 +60,7 @@
 			"id": 4,
 			"opcode": "4",
 			"name": "DIV",
-			"Nwires": "5",
+			"Nwires": "7",
 			"Out_idx": [
 				"1",
 				"1"
@@ -88,7 +88,7 @@
 			"id": 6,
 			"opcode": "5",
 			"name": "SDIV",
-			"Nwires": "44",
+			"Nwires": "50",
 			"Out_idx": [
 				"1",
 				"1"
@@ -102,7 +102,7 @@
 			"id": 7,
 			"opcode": "6",
 			"name": "MOD",
-			"Nwires": "9",
+			"Nwires": "11",
 			"Out_idx": [
 				"1",
 				"1"
@@ -116,7 +116,7 @@
 			"id": 8,
 			"opcode": "7",
 			"name": "SMOD",
-			"Nwires": "48",
+			"Nwires": "54",
 			"Out_idx": [
 				"1",
 				"1"
@@ -130,7 +130,7 @@
 			"id": 9,
 			"opcode": "8",
 			"name": "ADDMOD",
-			"Nwires": "12",
+			"Nwires": "16",
 			"Out_idx": [
 				"1",
 				"1"
@@ -144,7 +144,7 @@
 			"id": 10,
 			"opcode": "9",
 			"name": "MULMOD",
-			"Nwires": "13",
+			"Nwires": "17",
 			"Out_idx": [
 				"1",
 				"1"
@@ -200,7 +200,7 @@
 			"id": 14,
 			"opcode": "12",
 			"name": "SLT",
-			"Nwires": "290",
+			"Nwires": "294",
 			"Out_idx": [
 				"1",
 				"1"
@@ -214,7 +214,7 @@
 			"id": 15,
 			"opcode": "13",
 			"name": "SGT",
-			"Nwires": "290",
+			"Nwires": "294",
 			"Out_idx": [
 				"1",
 				"1"
@@ -326,7 +326,7 @@
 			"id": 23,
 			"opcode": "1C1",
 			"name": "SHR-L",
-			"Nwires": "19",
+			"Nwires": "21",
 			"Out_idx": [
 				"1",
 				"1"
@@ -340,7 +340,7 @@
 			"id": 24,
 			"opcode": "1C2",
 			"name": "SHR-H",
-			"Nwires": "19",
+			"Nwires": "21",
 			"Out_idx": [
 				"1",
 				"1"
@@ -354,7 +354,7 @@
 			"id": 25,
 			"opcode": "1D",
 			"name": "SAR",
-			"Nwires": "286",
+			"Nwires": "288",
 			"Out_idx": [
 				"1",
 				"1"
@@ -368,7 +368,7 @@
 			"id": 26,
 			"opcode": "B",
 			"name": "SIGNEXTEND",
-			"Nwires": "288",
+			"Nwires": "290",
 			"Out_idx": [
 				"1",
 				"1"
@@ -382,7 +382,7 @@
 			"id": 27,
 			"opcode": "1A",
 			"name": "BYTE",
-			"Nwires": "274",
+			"Nwires": "276",
 			"Out_idx": [
 				"1",
 				"1"
