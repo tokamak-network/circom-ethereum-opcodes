@@ -128,6 +128,21 @@ describe("0x04 DIV test", function ()  {
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
   })
+  it("Should equal to zero; divide by zero", async() => {
+    const input = [10, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero; divide by zero", async() => {
+    const input = [
+      MAX_VALUE,
+      Scalar.fromString('0')
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
 })
 
 describe("0x05 SDIV test", function ()  {
@@ -175,6 +190,39 @@ describe("0x05 SDIV test", function ()  {
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(2)))
   })
+  it("Should equal to zero: devide by zero", async() => {
+    const input = [100, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero: devide by zero", async() => {
+    const input = [
+      Scalar.fromString('7237005577332262213973186563042994240829374041602535252466099000494570602495'),
+      0
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero; divide by zero", async() => {
+    const input = [
+      MAX_VALUE, // -1
+      Scalar.fromString('0')
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to -2^252", async() => {
+    const input = [
+      Scalar.fromString('7237005577332262213973186563042994240829374041602535252466099000494570602496'), // -2^252
+      MAX_VALUE
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0])))
+  })
 })
 
 describe("0x06 MOD test", function ()  {
@@ -200,6 +248,21 @@ describe("0x06 MOD test", function ()  {
     const input = [
       exports.p - Scalar.fromString('1'),
       exports.p - Scalar.fromString('1')
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero: divide by zero", async() => {
+    const input = [1000, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero; divide by zero", async() => {
+    const input = [
+      MAX_VALUE,
+      Scalar.fromString('0')
     ]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
@@ -252,6 +315,30 @@ describe("0x07 SMOD test", function ()  {
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
   })
+  it("Should equal to zero: divide by zero", async() => {
+    const input = [1000, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero; divide by zero", async() => {
+    const input = [
+      Scalar.fromString('7237005577332262213973186563042994240829374041602535252466099000494570602495'),
+      Scalar.fromString('0')
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero; divide by zero", async() => {
+    const input = [
+      MAX_VALUE, // -1
+      Scalar.fromString('0')
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
 })
 
 describe("0x08 ADDMOD test", function ()  {
@@ -282,6 +369,22 @@ describe("0x08 ADDMOD test", function ()  {
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
+  it("Should equal to zero: divide by zero", async() => {
+    const input = [10, 1, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero: divide by zero", async() => {
+    const input = [
+      MAX_VALUE,
+      Scalar.fromString('1'),
+      Scalar.fromString('0')
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
 })
 
 describe("0x09 MULMOD test", function ()  {
@@ -307,6 +410,22 @@ describe("0x09 MULMOD test", function ()  {
       exports.p,
       Scalar.fromString("1"),
       Scalar.fromString("17")
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero: divide by zero", async() => {
+    const input = [10, 1, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero: divide by zero", async() => {
+    const input = [
+      MAX_VALUE,
+      Scalar.fromString('2'),
+      Scalar.fromString('0')
     ]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
@@ -344,8 +463,14 @@ describe("0x0A EXP test", function ()  {
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
+  it("Should equal to one", async() => {
+    const input = [0, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
 })
-// TODO: 0x0B SINGEXTEND
+// 0x0B SINGEXTEND
 
 describe("0x0B SIGNEXTEND test", function ()  {
   let circuit;
@@ -372,6 +497,17 @@ describe("0x0B SIGNEXTEND test", function ()  {
       Fr.eq(
         Fr.e(witness[1]), 
         Fr.e(Fr.e(2**253) - Fr.e(2**16) + Fr.e(input[1]))
+      )
+    )
+  })
+  it("Should equal to the original input", async() => {
+    const input = [32, 2**15]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(
+      Fr.eq(
+        Fr.e(witness[1]), 
+        Fr.e(input[1])
       )
     )
   })

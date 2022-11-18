@@ -1,7 +1,7 @@
 pragma circom 2.0.5;
 include "div.circom";
+include "mod.circom";
 
-// TODO: 0 if in[2] == 0
 template AddMod () {
   signal input in[3];
   signal sum;
@@ -14,6 +14,10 @@ template AddMod () {
   div.in[0] <== sum;
   div.in[1] <== in[2];
 
-  out <-- sum % in[2];
-  sum === div.out * in[2] + out;
+  component mod = Mod();
+  mod.in[0] <== sum;
+  mod.in[1] <== in[2];
+  
+  out <== mod.out;
+  // sum === div.out * in[2] + out;
 }

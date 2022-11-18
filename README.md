@@ -85,15 +85,11 @@ There are a few limitations on our very first circuits.
 
     The circuits should take 253-bit unsigned/signed integers to work as expected, however, EVM computes over 256-bit integers. We will figure it out to improve compatibility to EVM.
 
-2. DIV, MOD, SDIV, SMOD, ADDMOD, MULMOD
-
-    The six circuits work fine but they are not carrying out the exception case such as they should return 0 if divisor is zero stated in Ethereum yellow paper.
-
-3. SHA3
+2. SHA3
 
     [Keccak256](https://github.com/vocdoni/keccak256-circom) hash function is implemented in Circom by [Vocdoni](https://github.com/vocdoni). However, it needs around 151k constraints by Keccak's zk-unfriendliness. Regarding no circuit has more than 1k constraints, Keccak circuit requires too much cost. We rather verify Keccak function in the verification phase of the modified Groth16.
 
-4. The prime number of finite field is less than MAX_VALUE of uint256.
+3. The prime number of finite field is less than MAX_VALUE of uint256.
 
     Circom(2.0.5) performs over the finite field by the prime number; 2^253 < p < 2^254.
 

@@ -1,12 +1,12 @@
-[32mtemplate instances[0m: 7
-non-linear constraints: 37
+[32mtemplate instances[0m: 8
+non-linear constraints: 53
 linear constraints: 0
 public inputs: 2
 public outputs: 1
 private inputs: 0
 private outputs: 0
-wires: 41
-labels: 97
+wires: 54
+labels: 121
 [32mWritten successfully:[0m constraints/smod/smod_test.r1cs
 [32mConstraints written in:[0m constraints/smod/smod_test_constraints.json
 [32mEverything went okay, circom safe[0m
