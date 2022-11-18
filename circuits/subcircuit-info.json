@@ -102,7 +102,7 @@
 			"id": 7,
 			"opcode": "6",
 			"name": "MOD",
-			"Nwires": "5",
+			"Nwires": "9",
 			"Out_idx": [
 				"1",
 				"1"
@@ -116,7 +116,7 @@
 			"id": 8,
 			"opcode": "7",
 			"name": "SMOD",
-			"Nwires": "41",
+			"Nwires": "48",
 			"Out_idx": [
 				"1",
 				"1"
@@ -130,7 +130,7 @@
 			"id": 9,
 			"opcode": "8",
 			"name": "ADDMOD",
-			"Nwires": "7",
+			"Nwires": "12",
 			"Out_idx": [
 				"1",
 				"1"
@@ -144,7 +144,7 @@
 			"id": 10,
 			"opcode": "9",
 			"name": "MULMOD",
-			"Nwires": "8",
+			"Nwires": "13",
 			"Out_idx": [
 				"1",
 				"1"

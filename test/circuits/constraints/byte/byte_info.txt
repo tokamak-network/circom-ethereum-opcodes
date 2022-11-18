@@ -1,4 +1,4 @@
-[32mtemplate instances[0m: 8
+[32mtemplate instances[0m: 9
 non-linear constraints: 271
 linear constraints: 0
 public inputs: 2
@@ -6,7 +6,7 @@ public outputs: 1
 private inputs: 0
 private outputs: 0
 wires: 274
-labels: 308
+labels: 316
 [32mWritten successfully:[0m constraints/byte/byte_test.r1cs
 [32mConstraints written in:[0m constraints/byte/byte_test_constraints.json
 [32mEverything went okay, circom safe[0m
