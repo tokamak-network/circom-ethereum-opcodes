@@ -2,9 +2,11 @@ pragma circom 2.0.5;
 include "div.circom";
 include "shr.circom";
 include "../node_modules/circomlib/circuits/gates.circom";
+include "../node_modules/circomlib/circuits/comparators.circom";
 
 template Sdiv () {
   signal input in[2];
+  signal inter;
   signal output out;
 
   var NUM_BIT = 253;
@@ -30,5 +32,9 @@ template Sdiv () {
   xor.a <== shr[0].out;
   xor.b <== shr[1].out;
 
-  out <== div.out + xor.out * (MAX_VALUE - 2 * div.out);
+  component isZero = IsZero();
+  isZero.in <== in[1];
+
+  inter <== xor.out * (MAX_VALUE - 2 * div.out);
+  out <== div.out + (1 - isZero.out) * inter;
 }

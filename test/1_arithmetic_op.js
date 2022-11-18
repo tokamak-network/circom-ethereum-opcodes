@@ -196,6 +196,24 @@ describe("0x05 SDIV test", function ()  {
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
+  it("Should equal to zero: devide by zero", async() => {
+    const input = [
+      Scalar.fromString('7237005577332262213973186563042994240829374041602535252466099000494570602495'),
+      0
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero; divide by zero", async() => {
+    const input = [
+      MAX_VALUE, // -1
+      Scalar.fromString('0')
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
   it("Should equal to -2^252", async() => {
     const input = [
       Scalar.fromString('7237005577332262213973186563042994240829374041602535252466099000494570602496'), // -2^252
@@ -357,6 +375,16 @@ describe("0x08 ADDMOD test", function ()  {
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
+  it("Should equal to zero: divide by zero", async() => {
+    const input = [
+      MAX_VALUE,
+      Scalar.fromString('1'),
+      Scalar.fromString('0')
+    ]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
 })
 
 describe("0x09 MULMOD test", function ()  {
@@ -389,6 +417,16 @@ describe("0x09 MULMOD test", function ()  {
   })
   it("Should equal to zero: divide by zero", async() => {
     const input = [10, 1, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+  })
+  it("Should equal to zero: divide by zero", async() => {
+    const input = [
+      MAX_VALUE,
+      Scalar.fromString('2'),
+      Scalar.fromString('0')
+    ]
     witness = await circuit.calculateWitness({"in": input}, true)
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
