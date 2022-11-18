@@ -463,6 +463,12 @@ describe("0x0A EXP test", function ()  {
     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
   })
+  it("Should equal to one", async() => {
+    const input = [0, 0]
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
+  })
 })
 // 0x0B SINGEXTEND
 
