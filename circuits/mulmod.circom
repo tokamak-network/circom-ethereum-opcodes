@@ -18,6 +18,4 @@ template MulMod () {
   mod.in[0] <== mul;
   mod.in[1] <== in[2];
   out <== mod.out;
-
-  // mul === div.out * in[2] + out;
 }

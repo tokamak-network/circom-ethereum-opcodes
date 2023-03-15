@@ -22,17 +22,17 @@ describe("0x00 LOAD test", function ()  {
       assert(Fr.eq(Fr.e(witness[i + 1]), Fr.e(input[i])))
     }
   })
-  describe("0x20 SHA3 test", function ()  {
-    let circuit;
-    let witness;
-    before( async () => {
-      circuit = await wasm_tester(path.join(__dirname, "circuits", "sha3_test.circom"))
-    })
-    it("Should equal to each input and output array element", async() => {
-      const input = 10
-      witness = await circuit.calculateWitness({"in": input}, true)
-      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-      assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
-    })
+})
+describe("0x20 SHA3 test", function ()  {
+  let circuit;
+  let witness;
+  before( async () => {
+    circuit = await wasm_tester(path.join(__dirname, "circuits", "sha3_test.circom"))
+  })
+  it("Should equal to each input and output array element", async() => {
+    const input = 10
+    witness = await circuit.calculateWitness({"in": input}, true)
+    assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
+    assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
   })
 })

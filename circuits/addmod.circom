@@ -10,7 +10,6 @@ template AddMod () {
   sum <== in[0] + in[1];
 
   component div = Div();
-
   div.in[0] <== sum;
   div.in[1] <== in[2];
 
@@ -19,5 +18,4 @@ template AddMod () {
   mod.in[1] <== in[2];
   
   out <== mod.out;
-  // sum === div.out * in[2] + out;
 }
