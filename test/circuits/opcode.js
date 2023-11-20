@@ -28,6 +28,11 @@ module.exports = {
     'SHR-L': '1C1',
     'SHR-H': '1C2',
     'SAR': '1D',
-    'SHA3': '20'
+    'SHA3': '20',
+
+    // Integrated circuits
+    'ALU': 'F0', // Arithmetic Logic Unit
+    'MLU': 'F1', // Mixed Logical Unit 
+    'IC' : 'F2', // Integrated Circuit
   }
 }

@@ -11,12 +11,16 @@ template SHR_H () {
   signal input in[2];
   signal output out;
 
-  assert(in[0] - 8 > 0);
+  // assert(in[0] - 8 > 0);
 
   // out == in / 2**n
   component exp = Exp();
   exp.in[0] <== 2;
-  exp.in[1] <== in[0] - 8;
+
+  // FIXME: why sub 8? - shouldn't it be in[0]?
+  // also the remainder has to be added back to the output from shr-l
+  // exp.in[1] <== in[0] - 8;
+  exp.in[1] <== in[0];
 
   component div = Div();
   div.in[0] <== in[1];

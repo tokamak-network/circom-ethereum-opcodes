@@ -1,12 +1,12 @@
-[32mtemplate instances[0m: 2
+[32mtemplate instances[0m: 5
 non-linear constraints: 30
 linear constraints: 0
 public inputs: 2
 public outputs: 1
 private inputs: 0
 private outputs: 0
-wires: 32
-labels: 37
+wires: 33
+labels: 53
 [32mWritten successfully:[0m constraints/exp/exp_test.r1cs
 [32mConstraints written in:[0m constraints/exp/exp_test_constraints.json
 [32mEverything went okay, circom safe[0m

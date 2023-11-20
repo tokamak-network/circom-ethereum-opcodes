@@ -1,12 +1,12 @@
-[32mtemplate instances[0m: 3
+[32mtemplate instances[0m: 6
 non-linear constraints: 16
 linear constraints: 0
 public inputs: 2
 public outputs: 1
 private inputs: 0
 private outputs: 0
-wires: 18
-labels: 40
+wires: 19
+labels: 56
 [32mWritten successfully:[0m constraints/shl/shl_test.r1cs
 [32mConstraints written in:[0m constraints/shl/shl_test_constraints.json
 [32mEverything went okay, circom safe[0m

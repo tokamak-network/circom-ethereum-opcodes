@@ -5,8 +5,8 @@ public inputs: 2
 public outputs: 1
 private inputs: 0
 private outputs: 0
-wires: 276
-labels: 324
+wires: 277
+labels: 340
 [32mWritten successfully:[0m constraints/byte/byte_test.r1cs
 [32mConstraints written in:[0m constraints/byte/byte_test_constraints.json
 [32mEverything went okay, circom safe[0m

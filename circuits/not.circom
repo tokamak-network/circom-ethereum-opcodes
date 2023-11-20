@@ -7,7 +7,6 @@ template Not () {
   signal input in;
   signal output out;
 
-  var i;
   // Input -> bit num2bits
   component num2bits;
 
@@ -17,7 +16,7 @@ template Not () {
   component bits2num = Bits2Num(NUM_BIT);
   for (var i = 0; i < NUM_BIT; i++) {
     // Not op
-    bits2num.in[i] <== 1 + num2bits.out[i] - 2 * num2bits.out[i];
+    bits2num.in[i] <== 1 - num2bits.out[i];
   }
   out <== bits2num.out;
 }
