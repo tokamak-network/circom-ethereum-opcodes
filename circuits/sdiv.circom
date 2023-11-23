@@ -1,4 +1,4 @@
-pragma circom 2.0.5;
+pragma circom 2.1.6;
 include "div.circom";
 include "shr.circom";
 include "../node_modules/circomlib/circuits/gates.circom";

@@ -1,4 +1,4 @@
-pragma circom 2.0.5;
+pragma circom 2.1.6;
 include "../add.circom";
 include "../mul.circom";
 include "../sub.circom";
