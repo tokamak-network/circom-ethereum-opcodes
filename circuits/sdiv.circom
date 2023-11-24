@@ -9,17 +9,17 @@ template Sdiv () {
   signal inter;
   signal output out;
 
-  var NUM_BIT = 253;
-  var MAX_VALUE = 2**253;
+  var NUM_BITS = 256;
+  var MAX_VALUE = 2 ** NUM_BITS;
 
   // Check MSB for each input signal
-  assert(in[0] >> 253 == 0);
-  assert(in[1] >> 253 == 0);
+  assert(in[0] >> NUM_BITS == 0);
+  assert(in[1] >> NUM_BITS == 0);
 
   component shr[2];
   for (var i = 0; i < 2; i++){
     shr[i] = SHR();
-    shr[i].in[0] <== 252;
+    shr[i].in[0] <== NUM_BITS - 1;
     shr[i].in[1] <== in[i];
   }
 

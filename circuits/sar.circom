@@ -11,7 +11,7 @@ template SAR () {
   signal shl;
   signal output out;
   
-  var NUM_BITS = 253;
+  var NUM_BITS = 256;
   assert(in[0] <= NUM_BITS);
 
   // To check sign bit
@@ -24,8 +24,8 @@ template SAR () {
 
   component exp = Exp();
   exp.in[0] <== 2;
-  exp.in[1] <== 253 - in[0];
+  exp.in[1] <== NUM_BITS - in[0];
 
-  shl <== 14474011154664524427946373126085988481658748083205070504932198000989141204992 - exp.out;
+  shl <== 2 ** NUM_BITS - exp.out;
   out <== shr.out + shl * num2Bits.out[NUM_BITS - 1];
 }

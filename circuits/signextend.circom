@@ -1,16 +1,17 @@
 pragma circom 2.1.6;
 include "shr.circom";
 include "exp.circom";
-include "../node_modules/circomlib/circuits/comparators.circom";
+include "templates/comparators.circom";
 
   // in[1] >= 0 or 30 < in[0]: out = in[1]
-  // in[1] < 0  : out = 2**253 - 2 ** ( 8 * (1 + in[0])) + in[1]
+  // in[1] < 0  : out = 2**256 - 2 ** ( 8 * (1 + in[0])) + in[1]
 
 template SignExtend () {
   signal input in[2];
   signal output out;
+  var NUM_BITS = 256;
 
-  component lt = LessThan(252);
+  component lt = LT(NUM_BITS);
   lt.in[0] <== in[0];
   lt.in[1] <== 30;
 
@@ -28,5 +29,5 @@ template SignExtend () {
   signal temp;
   temp <== shr.out * lt.out;
 
-  out <== in[1] - temp * (in[1] - (2**253 - exp.out + in[1]));
+  out <== in[1] - temp * (in[1] - (2**NUM_BITS - exp.out + in[1]));
 }

@@ -8,12 +8,9 @@ template Exp () {
 
     component mod = Mod();
     mod.in[0] <== in[1];
-    mod.in[1] <== 254; // ensure the exponent is always less or equal to 253
+    mod.in[1] <== 256; // ensure the exponent is always less or equal to 256
 
-    //assert(in[1] <= 253);   // 2^253 already overflows 253-bit unsigned integer; the possible maximum exponenet value is 252 
-                            // Since 2**253 can be described inside the circom integer range(the circom prime number is larger than 2**253), we set 253 as maximum value for other usages(SAR, etc).
-
-    var NUM_BITS = 8; // An exponent can be represented into 8 bits since it is 252 at max. 
+    var NUM_BITS = 8; // An exponent can be represented into 8 bits since it is 255 at max. 
 
     signal exp[NUM_BITS];
     signal inter[NUM_BITS];

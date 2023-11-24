@@ -2,7 +2,7 @@ pragma circom 2.1.6;
 include "../node_modules/circomlib/circuits/bitify.circom";
 
 template Xor () {
-  var NUM_BIT = 253;
+  var NUM_BITS = 256;
 
   signal input in[2];
   signal output out;
@@ -12,12 +12,12 @@ template Xor () {
   component num2bits[2];
 
   for (i = 0; i < 2; i++) {
-    num2bits[i] = Num2Bits(NUM_BIT);
+    num2bits[i] = Num2Bits(NUM_BITS);
     num2bits[i].in <== in[i];
   }
 
-  component bits2num = Bits2Num(NUM_BIT);
-  for (var i = 0; i < NUM_BIT; i++) {
+  component bits2num = Bits2Num(NUM_BITS);
+  for (var i = 0; i < NUM_BITS; i++) {
     // Xor op
     bits2num.in[i] <== num2bits[0].out[i] + num2bits[1].out[i] - 2 * num2bits[0].out[i] * num2bits[1].out[i];
   }

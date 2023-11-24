@@ -2,7 +2,7 @@ pragma circom 2.1.6;
 include "../node_modules/circomlib/circuits/bitify.circom";
 
 template Or () {
-  var NUM_BIT = 253;
+  var NUM_BIT = 256;
 
   signal input in[2];
   signal output out;

@@ -1,24 +1,13 @@
 pragma circom 2.1.6;
 include "../node_modules/circomlib/circuits/gates.circom";
 include "shr.circom";
-
-template LT(n) {
-    // assert(n <= 252);
-    signal input in[2];
-    signal output out;
-
-    component n2b = Num2Bits(n+1);
-
-    n2b.in <== in[0]+ (1<<n) - in[1];
-
-    out <== 1-n2b.out[n];
-}
+include "templates/comparators.circom";
 
 template SLT () {
   signal input in[2];
   signal output out;
 
-  var NUM_BITS = 253;
+  var NUM_BITS = 256;
 
   assert(in[0] >> NUM_BITS == 0);
   assert(in[1] >> NUM_BITS == 0);

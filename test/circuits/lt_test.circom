@@ -1,4 +1,4 @@
-pragma circom 2.0.5;
-include "../../node_modules/circomlib/circuits/comparators.circom";
+pragma circom 2.1.6;
+include "../../circuits/templates/comparators.circom";
 
-component main {public [in]} = LessThan(252);
+component main {public [in]} = LT(256);

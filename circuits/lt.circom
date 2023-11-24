@@ -1,4 +1,4 @@
 pragma circom 2.1.6;
-include "../node_modules/circomlib/circuits/comparators.circom";
+include "templates/comparators.circom";
 
-component lt = LessThan(252);
+component lt = LT(256); // compare 256 bit numbers

@@ -2,12 +2,11 @@ const chai = require("chai")
 const path = require("path")
 const F1Field = require("ffjavascript").F1Field
 const Scalar = require("ffjavascript").Scalar
-exports.p = Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617")
+exports.p = Scalar.fromString("0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab") // BLS12-381 prime
 const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
-const MAX_VALUE = Scalar.fromString('14474011154664524427946373126085988481658748083205070504932198000989141204991') // 2**253 - 1
-
+const MAX_VALUE = Scalar.fromString("115792089237316195423570985008687907853269984665640564039457584007913129639935") // 2**256 - 1
 describe("0x10 LT test", function ()  {
   let circuit;
   let witness;
