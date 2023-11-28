@@ -2,7 +2,8 @@ const chai = require("chai")
 const path = require("path")
 const F1Field = require("ffjavascript").F1Field
 const Scalar = require("ffjavascript").Scalar
-exports.p = Scalar.fromString("0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab") // BLS12-381 prime
+const CURVE_NAME = "bn128"
+exports.p = Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617") // CURVE_NAME
 const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
@@ -12,7 +13,12 @@ describe("0x01 ADD test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to sum of two small inputs", async() => {
     const input = [32, 200, 0]
@@ -66,7 +72,12 @@ describe("0x02 MUL test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to product of two small inputs", async() => {
     const input = [20, 9, 0]
@@ -119,7 +130,12 @@ describe("0x03 SUB test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to subtraction of smaller number from large number", async() => {
     const input = [20, 9, 0]
@@ -168,7 +184,12 @@ describe("0x04 DIV test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to zero", async() => {
     const input = [9, 20, 0]
@@ -245,7 +266,12 @@ describe("0x05 SDIV test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to zero", async() => {
     const input = [9, 20, 0]
@@ -385,7 +411,12 @@ describe("0x06 MOD test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to dividend", async() => {
     const input = [9, 20, 0]
@@ -463,7 +494,12 @@ describe("0x07 SMOD test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to the first input", async() => {
     const input = [9, 20, 0]
@@ -587,7 +623,12 @@ describe("0x08 ADDMOD test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to modular of summation of first two inputs", async() => {
     const input = [9, 20, 7]
@@ -663,7 +704,12 @@ describe("0x09 MULMOD test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to modular of multiplication of first two inputs", async() => {
     const input = [9, 20, 7]
@@ -739,7 +785,12 @@ describe("0x0A EXP test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to pow(a, b)", async() => {
     const input = [9, 5, 0]
@@ -808,7 +859,12 @@ describe("0x0B SIGNEXTEND test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to signextend", async() => {
     const input = [0, 127, 0]
@@ -867,7 +923,12 @@ describe("0x10 LT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to one", async() => {
     const input = [1, 200, 0]
@@ -915,7 +976,12 @@ describe("0x11 GT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to zero", async() => {
     const input = [1, 200, 0]
@@ -963,7 +1029,12 @@ describe("0x12 SLT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to one", async() => {
     const input = [1, 200, 0]
@@ -1059,7 +1130,12 @@ describe("0x13 SGT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to one", async() => {
     const input = [200, 1, 0]
@@ -1155,7 +1231,12 @@ describe("0x14 EQ test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to zero", async() => {
     const input = [1, 200, 0]
@@ -1203,7 +1284,12 @@ describe("0x15 ISZERO test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to zero", async() => {
     const input = [0, 0, 0]
@@ -1247,7 +1333,12 @@ describe("0x19 NOT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to one", async() => {
     const input = [
@@ -1287,7 +1378,12 @@ describe("0x1A BYTE test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to 127", async() => {
     const input = [31, 127, 0]
@@ -1348,7 +1444,12 @@ describe("0x1B SHL test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to input1 << input2", async() => {
     const input = [3, 4, 0]
@@ -1392,7 +1493,12 @@ describe("0x1C1 SHR-L test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to input1 >> input2", async() => {
     const input = [15, 2, 0]
@@ -1436,7 +1542,12 @@ describe("0x1D SAR test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "ic_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "ic_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should zero-fill right shift", async() => {
     const input = [15, 2, 0]

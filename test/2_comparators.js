@@ -2,7 +2,8 @@ const chai = require("chai")
 const path = require("path")
 const F1Field = require("ffjavascript").F1Field
 const Scalar = require("ffjavascript").Scalar
-exports.p = Scalar.fromString("0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab") // BLS12-381 prime
+const CURVE_NAME = "bn128"
+exports.p = Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617") // CURVE_NAME
 const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
@@ -11,7 +12,12 @@ describe("0x10 LT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "lt_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "lt_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to one", async() => {
     const input = [1, 200]
@@ -40,7 +46,12 @@ describe("0x11 GT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "gt_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "gt_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to zero", async() => {
     const input = [1, 200]
@@ -69,7 +80,12 @@ describe("0x12 SLT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "slt_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "slt_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to one", async() => {
     const input = [1, 200]
@@ -125,7 +141,12 @@ describe("0x13 SGT test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "sgt_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "sgt_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to one", async() => {
     const input = [200, 1]
@@ -181,7 +202,12 @@ describe("0x14 EQ test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "eq_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "eq_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to zero", async() => {
     const input = [1, 200]
@@ -210,7 +236,12 @@ describe("0x15 ISZERO test", function ()  {
   let circuit;
   let witness;
   before( async () => {
-    circuit = await wasm_tester(path.join(__dirname, "circuits", "iszero_test.circom"))
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "iszero_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
   })
   it("Should equal to zero", async() => {
     const input = 0
