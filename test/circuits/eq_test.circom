@@ -1,4 +1,4 @@
 pragma circom 2.1.6;
-include "../../node_modules/circomlib/circuits/comparators.circom";
+include "../../circuits/eq.circom";
 
-component main {public [in]} = IsEqual();
+component main {public [in1, in2]} = Eq();

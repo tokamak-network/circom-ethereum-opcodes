@@ -1,4 +1,4 @@
 pragma circom 2.1.6;
-include "../../circuits/templates/comparators.circom";
+include "../../circuits/lt.circom";
 
-component main {public [in]} = LT(256);
+component main {public [in1, in2]} = LT();
