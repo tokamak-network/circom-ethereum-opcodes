@@ -1,7 +1,6 @@
 names=("load" "add" "mul" "sub" "div" "sha3" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr" "sar" "signextend" "byte") # "alu" "mlu" "ic")
 
 
-
 # get the directory of the script
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$script_dir"
@@ -19,7 +18,7 @@ for (( i = 0 ; i < ${#names[@]} ; i++ )) ; do
   mkdir -p ${output_dir_path}/wasm
 
 
-  circom ${test_circuit_dir_path}/${names[$i]}_test.circom --r1cs --json -o ${output_dir_path}/constraints/${names[$i]} -p bls12381 > ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_info.txt && \
+  circom ${test_circuit_dir_path}/${names[$i]}_test.circom --r1cs --json -o ${output_dir_path}/constraints/${names[$i]} -p bn128 > ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_info.txt && \
   cat ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_info.txt >> temp.txt
   mv  ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_test.r1cs              ${output_dir_path}/constraints/${names[$i]}/${names[$i]}.r1cs
   mv  ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_test_constraints.json  ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_constraints.json && \
