@@ -15,8 +15,8 @@ describe("0x01 ADD test", function ()  {
   let witness;
   const test_cases = [
     {
-      "in1": 10,
-      "in2": 10
+      "in1": BigInt(10),
+      "in2": BigInt(10)
     },
     {
       "in1": BigInt(2**254),
@@ -27,7 +27,7 @@ describe("0x01 ADD test", function ()  {
       "in2": BigInt(2**255)
     },
     {
-      "in1": BigInt(2**256 - 1),
+      "in1": BigInt(2**256) - BigInt(1),
       "in2": BigInt(1)
     },
   ]
@@ -42,8 +42,9 @@ describe("0x01 ADD test", function ()  {
   for (const test_case of test_cases) {
     const in1 = split256BitInteger(test_case.in1)
     const in2 = split256BitInteger(test_case.in2)
-    const out = split256BitInteger(test_case.in1 + test_case.in2)
-    it(`${test_case.in1} + ${test_case.in2} = ${test_case.in1 + test_case.in2}`, async () => {
+    const res = (test_case.in1 + test_case.in2) % 2n**256n
+    const out = split256BitInteger(res)
+    it(`${test_case.in1} + ${test_case.in2} = ${res}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -56,65 +57,57 @@ describe("0x01 ADD test", function ()  {
       assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
     });
   }
-  // it("Should equal to sum of two big enough inputs", async() => {
-  //   const input = [
-  //     BigInt(2**254), 
-  //     BigInt(2**254)
-  //   ]
-  //   witness = await circuit.calculateWitness({"in": input}, true)
-  //   assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-  //   console.log(witness[1])
-  //   console.log((input[0] + input[1]).toString())
-  //   // assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] + input[1])))
-  // })
-  // it("Should equal to zero", async() => {
-  //   const input = [
-  //     Scalar.fromString("1"),
-  //     MAX_VALUE
-  //   ]
-  //   witness = await circuit.calculateWitness({"in": input}, true)
-  //   assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-  //   assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-  // })
 })
 
+describe("0x02 MUL test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(10)
+    },
+    {
+      "in1": BigInt(2**254),
+      "in2": BigInt(2)
+    },
+    {
+      "in1": BigInt(2**255),
+      "in2": BigInt(2**255)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(1)
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "mul_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = (test_case.in1 * test_case.in2) % 2n**256n
+    const out = split256BitInteger(res)
+    it(`${test_case.in1} * ${test_case.in2} = ${res}`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
 
-// describe("0x02 MUL test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "mul_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to product of two small inputs", async() => {
-//     const input = [20, 9]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] * input[1])))
-//   })
-//   it("Should equal to product of two big enough inputs", async() => {
-//     const input = [
-//       MAX_VALUE + Scalar.fromString("1"),
-//       Scalar.fromString("81221")
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] * input[1])))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [
-//       exports.p - Scalar.fromString('1'),
-//       Scalar.fromString("0")
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
 // describe("0x03 SUB test", function ()  {
 //   let circuit;
 //   let witness;

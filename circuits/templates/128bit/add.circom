@@ -7,7 +7,7 @@ template Adder128 () {
     signal inter <-- 1;
     
     component div_and_mod = DivAndMod();
-    div_and_mod.in[0] <== (in[0] + in[1]) * inter;
+    div_and_mod.in[0] <== (in[0] + in[1] + carry_in) * inter;
     div_and_mod.in[1] <== 2**NUM_BITS;
 
     signal output carry_out <== div_and_mod.q;
