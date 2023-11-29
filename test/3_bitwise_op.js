@@ -264,67 +264,63 @@ describe("0x19 NOT test", function ()  {
 //   })
 // })
 
-// describe("0x1B SHL test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "shl_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to input1 << input2", async() => {
-//     const input = [3, 4]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[1] << input[0])))
-//   })
-//   it("Should equal to 2**253", async() => {
-//     const input = [253, 1]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE + Scalar.fromString('1'))))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [100, 0]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
-
-// describe("0x1C SHR test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "shr_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to input1 >> input2", async() => {
-//     const input = [15, 2]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[1] >>> input[0])))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [253, MAX_VALUE]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [100, 0]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
+describe("0x1B SHL test", function ()  {
+  let circuit;
+  let witness;
+  // FIXME: 256 > exp >= 128
+  const test_cases = [
+    {
+      "in1": BigInt(2),
+      "in2": BigInt(10)
+    },
+    {
+      "in1": BigInt(2**127),
+      "in2": BigInt(1)
+    },
+    {
+      "in1": BigInt(3**30),
+      "in2": BigInt(500)
+    },
+    {
+      "in1": BigInt(7),
+      "in2": BigInt(50)
+    },
+    {
+      "in1": BigInt(2**128) - BigInt(1),
+      "in2": BigInt(128)
+    },
+    {
+      "in1": BigInt(2**128) - BigInt(1),
+      "in2": BigInt(200)
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "shl_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = (test_case.in1 << test_case.in2) % 2n**256n
+    const out = split256BitInteger(res)
+    it(`${test_case.in1} << ${test_case.in2} = ${res}`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
 
 // describe("0x1D SAR test", function ()  {
 //   let circuit;
