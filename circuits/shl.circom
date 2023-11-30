@@ -1,5 +1,4 @@
 pragma circom 2.1.6;
-include "lt.circom";
 include "iszero.circom";
 include "templates/128bit/exp.circom";
 include "templates/128bit/div_and_mod.circom";
@@ -60,20 +59,21 @@ template SHL () {
   div_and_mod2.in[0] <== in2[0];
   div_and_mod2.in[1] <== 128;
 
-  component _shl[2];
-  _shl[0] = _SHL();
-  _shl[1] = _SHL();
-
   // 2-1) shift in2 % 128 times
-  _shl[0].in1 <== in1;
-  _shl[0].in2 <== [div_and_mod2.r, 0];
+  component _shl = _SHL();
+  _shl.in1 <== in1;
+  _shl.in2 <== [div_and_mod2.r, 0];
 
   // 2-2) shift the rest
-  _shl[1].in1 <== _shl[0].out;
-  _shl[1].in2 <== [div_and_mod2.q * 128, 0];
+  //  if div_and_mod2.q = 1:  out[0] = 0,           out[1] = shl.out[0]
+  //  else:                   out[0] = shl.out[0],  out[1] = shl.out[1]
+  signal inter[2] <== [
+    _shl.out[0] * (1 - div_and_mod2.q),
+    div_and_mod2.q * (_shl.out[0] - _shl.out[1]) + _shl.out[1]
+  ];
 
 
   // collapse the two cases
-  out[0] <== lt_out * _shl[1].out[0];
-  out[1] <== lt_out * _shl[1].out[1];
+  out[0] <== lt_out * inter[0];
+  out[1] <== lt_out * inter[1];
 }
