@@ -29,7 +29,34 @@ function split256BitInteger(value) {
   return [lower, upper];
 }
 
+function sar256BitInteger(value, shiftAmount) {
+  if (typeof value !== 'bigint') {
+    value = BigInt(value);
+  }
+  if (typeof shiftAmount !== 'bigint') {
+    shiftAmount = BigInt(shiftAmount);
+  }
+
+  // Extract the original sign bit (256th bit)
+  const signBit = value & (1n << 255n);
+
+  // Perform SAR operation manually
+  let result;
+  if (signBit === 0n) {
+    // If the original value is non-negative, perform a regular right shift
+    result = value >> shiftAmount;
+  } else {
+    // If the original value is negative, manually set the leftmost bits to 1 after shifting
+    const shiftedValue = value >> shiftAmount;
+    const supplied = ((2n ** shiftAmount) - 1n) << (256n - shiftAmount);
+    result = shiftedValue + supplied;
+  }
+
+  return result % (2n ** 256n);
+}
+
 module.exports = {
   construct256BitInteger,
   split256BitInteger,
+  sar256BitInteger,
 };

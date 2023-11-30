@@ -269,28 +269,28 @@ describe("0x1B SHL test", function ()  {
   let witness;
   const test_cases = [
     {
-      "in1": BigInt(2),
-      "in2": BigInt(10)
+      "in1": BigInt(10),
+      "in2": BigInt(2),
     },
     {
-      "in1": BigInt(2**127),
-      "in2": BigInt(1)
+      "in1": BigInt(1),
+      "in2": BigInt(2**127),
     },
     {
-      "in1": BigInt(3**30),
-      "in2": BigInt(500)
+      "in1": BigInt(500),
+      "in2": BigInt(3**30),
     },
     {
-      "in1": BigInt(7),
-      "in2": BigInt(50)
+      "in1": BigInt(50),
+      "in2": BigInt(7),
     },
     {
-      "in1": BigInt(2**128) - BigInt(1),
-      "in2": BigInt(128)
+      "in1": BigInt(128),
+      "in2": BigInt(2**128) - BigInt(1),
     },
     {
-      "in1": BigInt(2**128) - BigInt(1),
-      "in2": BigInt(200)
+      "in1": BigInt(200),
+      "in2": BigInt(2**128) - BigInt(1),
     },
   ]
   before(async () => {
@@ -304,9 +304,9 @@ describe("0x1B SHL test", function ()  {
   for (const test_case of test_cases) {
     const in1 = split256BitInteger(test_case.in1)
     const in2 = split256BitInteger(test_case.in2)
-    const res = (test_case.in1 << test_case.in2) % 2n**256n
+    const res = (test_case.in2 << test_case.in1) % 2n**256n
     const out = split256BitInteger(res)
-    it(`${test_case.in1} << ${test_case.in2} = ${res}`, async () => {
+    it(`${test_case.in2} << ${test_case.in1} = ${res}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -326,28 +326,28 @@ describe("0x1C SHR test", function ()  {
   let witness;
   const test_cases = [
     {
-      "in1": BigInt(2**10),
-      "in2": BigInt(10)
+      "in1": BigInt(10),
+      "in2": BigInt(2**10),
     },
     {
-      "in1": BigInt(2**128),
-      "in2": BigInt(1)
+      "in1": BigInt(1),
+      "in2": BigInt(2**128),
     },
     {
-      "in1": BigInt(3**30),
-      "in2": BigInt(500)
+      "in1": BigInt(500),
+      "in2": BigInt(3**30),
     },
     {
-      "in1": BigInt(7),
-      "in2": BigInt(50)
+      "in1": BigInt(50),
+      "in2": BigInt(7),
     },
     {
-      "in1": BigInt(2**128) - BigInt(1),
-      "in2": BigInt(128)
+      "in1": BigInt(128),
+      "in2": BigInt(2**128) - BigInt(1),
     },
     {
-      "in1": BigInt(2**250) - BigInt(1),
-      "in2": BigInt(200)
+      "in1": BigInt(200),
+      "in2": BigInt(2**250) - BigInt(1),
     },
   ]
   before(async () => {
@@ -361,9 +361,9 @@ describe("0x1C SHR test", function ()  {
   for (const test_case of test_cases) {
     const in1 = split256BitInteger(test_case.in1)
     const in2 = split256BitInteger(test_case.in2)
-    const res = (test_case.in1 >> test_case.in2) % 2n**256n
+    const res = (test_case.in2 >> test_case.in1) % 2n**256n
     const out = split256BitInteger(res)
-    it(`${test_case.in1} >> ${test_case.in2} = ${res}`, async () => {
+    it(`${test_case.in2} >> ${test_case.in1} = ${res}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -383,52 +383,52 @@ describe("0x1D SAR test", function ()  {
   let witness;
   const test_cases = [
     {
-      "in1": BigInt(2**255),
-      "in2": BigInt(0)
+      "in1": BigInt(0),
+      "in2": BigInt(2**255),
     },
     {
-      "in1": BigInt(2**255),
-      "in2": BigInt(64)
+      "in1": BigInt(64),
+      "in2": BigInt(2**255),
     },
     {
-      "in1": BigInt(2**255),
-      "in2": BigInt(128)
+      "in1": BigInt(128),
+      "in2": BigInt(2**255),
     },
     {
-      "in1": BigInt(2**255),
-      "in2": BigInt(196)
+      "in1": BigInt(196),
+      "in2": BigInt(2**255),
     },
     {
-      "in1": BigInt(2**255),
-      "in2": BigInt(256)
+      "in1": BigInt(256),
+      "in2": BigInt(2**255),
     },
     {
-      "in1": BigInt(2**128),
-      "in2": BigInt(1)
+      "in1": BigInt(1),
+      "in2": BigInt(2**128),
     },
     {
-      "in1": BigInt(3**30),
-      "in2": BigInt(500)
+      "in1": BigInt(500),
+      "in2": BigInt(3**30),
     },
     {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(10)
+      "in1": BigInt(10),
+      "in2": BigInt(2**256) - BigInt(1),
     },
     {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(255)
+      "in1": BigInt(255),
+      "in2": BigInt(2**256) - BigInt(1),
     },
     {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(256)
+      "in1": BigInt(256),
+      "in2": BigInt(2**256) - BigInt(1),
     },
     {
-      "in1": BigInt(2**128) - BigInt(1),
-      "in2": BigInt(128)
+      "in1": BigInt(128),
+      "in2": BigInt(2**128) - BigInt(1),
     },
     {
-      "in1": BigInt(2**255) - BigInt(1),
-      "in2": BigInt(200)
+      "in1": BigInt(200),
+      "in2": BigInt(2**255) - BigInt(1),
     },
   ]
   before(async () => {
@@ -442,9 +442,9 @@ describe("0x1D SAR test", function ()  {
   for (const test_case of test_cases) {
     const in1 = split256BitInteger(test_case.in1)
     const in2 = split256BitInteger(test_case.in2)
-    const res = sar256BitInteger(test_case.in1, test_case.in2)
+    const res = sar256BitInteger(test_case.in2, test_case.in1)
     const out = split256BitInteger(res)
-    it(`${test_case.in1} >>> ${test_case.in2} = ${res}`, async () => {
+    it(`${test_case.in2} >>> ${test_case.in1} = ${res}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
