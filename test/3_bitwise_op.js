@@ -8,7 +8,7 @@ const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
 const MAX_VALUE = Scalar.fromString("115792089237316195423570985008687907853269984665640564039457584007913129639935") // 2**256 - 1
-const { construct256BitInteger, split256BitInteger} = require("./helper_functions")
+const { construct256BitInteger, split256BitInteger, sar256BitInteger} = require("./helper_functions")
 
 describe("0x16 AND test", function ()  {
   let circuit;
@@ -378,27 +378,83 @@ describe("0x1C SHR test", function ()  {
   }
 })
 
-// describe("0x1D SAR test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "sar_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should zero-fill right shift", async() => {
-//     const input = [15, 2]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[1] >>> input[0])))
-//   })
-//   it("Should fill signed bit in msb", async() => {
-//     const input = [Scalar.fromString('2'), MAX_VALUE]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE)))
-//   })
-// })
+describe("0x1D SAR test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": BigInt(2**255),
+      "in2": BigInt(0)
+    },
+    {
+      "in1": BigInt(2**255),
+      "in2": BigInt(64)
+    },
+    {
+      "in1": BigInt(2**255),
+      "in2": BigInt(128)
+    },
+    {
+      "in1": BigInt(2**255),
+      "in2": BigInt(196)
+    },
+    {
+      "in1": BigInt(2**255),
+      "in2": BigInt(256)
+    },
+    {
+      "in1": BigInt(2**128),
+      "in2": BigInt(1)
+    },
+    {
+      "in1": BigInt(3**30),
+      "in2": BigInt(500)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(10)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(255)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(256)
+    },
+    {
+      "in1": BigInt(2**128) - BigInt(1),
+      "in2": BigInt(128)
+    },
+    {
+      "in1": BigInt(2**255) - BigInt(1),
+      "in2": BigInt(200)
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "sar_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = sar256BitInteger(test_case.in1, test_case.in2)
+    const out = split256BitInteger(res)
+    it(`${test_case.in1} >>> ${test_case.in2} = ${res}`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
