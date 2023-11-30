@@ -55,8 +55,30 @@ function sar256BitInteger(value, shiftAmount) {
   return result % (2n ** 256n);
 }
 
+function signedLessThan256BitInteger(a, b) {
+  if (typeof a !== 'bigint') {
+    a = BigInt(a);
+  }
+  if (typeof b !== 'bigint') {
+    b = BigInt(b);
+  }
+
+  // Extract the sign bits (256th bits)
+  const signBitA = a & (1n << 255n);
+  const signBitB = b & (1n << 255n);
+
+  if (signBitA !== signBitB) {
+    // If sign bits are different, return true if a is negative, false otherwise
+    return signBitA !== 0n;
+  } else {
+    // If sign bits are the same, perform a regular comparison
+    return a < b;
+  }
+}
+
 module.exports = {
   construct256BitInteger,
   split256BitInteger,
   sar256BitInteger,
+  signedLessThan256BitInteger,
 };

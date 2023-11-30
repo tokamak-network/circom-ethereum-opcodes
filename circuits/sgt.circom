@@ -2,12 +2,6 @@ pragma circom 2.1.6;
 include "slt.circom";
 
 template SGT () {
-  signal input in[2];
-  signal output out;
-
-  component slt = SLT();
-  slt.in[0] <== in[1];
-  slt.in[1] <== in[0];
-
-  out <== slt.out;
+  signal input in1[2], in2[2]; // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  signal output out[2] <== SLT()(in2, in1);
 }
