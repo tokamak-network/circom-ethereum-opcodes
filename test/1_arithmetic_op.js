@@ -108,39 +108,63 @@ describe("0x02 MUL test", function ()  {
   }
 })
 
-// describe("0x03 SUB test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "sub_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to subtraction of smaller number from large number", async() => {
-//     const input = [20, 9]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] - input[1])))
-//   })
-//   it("Should equal to subtraction of larger number from small number", async() => {
-//     const input = [1, 1000]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] - input[1])))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [
-//       exports.p - Scalar.fromString('1'),
-//       exports.p - Scalar.fromString('1')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
+describe("0x03 SUB test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(10)
+    },
+    {
+      "in1": BigInt(2**255),
+      "in2": BigInt(2**255)
+    },
+    {
+      "in1": BigInt(2**254),
+      "in2": BigInt(2)
+    },
+    {
+      "in1": BigInt(2),
+      "in2": BigInt(2**254)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(199)
+    },
+    {
+      "in1": BigInt(1),
+      "in2": BigInt(2**256) - BigInt(1)
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "sub_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = (2n**256n + test_case.in1 - test_case.in2) % 2n**256n
+    const out = split256BitInteger(res)
+    it(`${test_case.in1} - ${test_case.in2} = ${res}`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
+
 // describe("0x04 DIV test", function ()  {
 //   let circuit;
 //   let witness;
