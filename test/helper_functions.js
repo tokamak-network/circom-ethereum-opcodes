@@ -76,9 +76,27 @@ function signedLessThan256BitInteger(a, b) {
   }
 }
 
+function getByte(byteIndex, value) {
+  if (typeof value !== 'bigint') {
+    value = BigInt(value);
+  }
+  if (typeof byteIndex !== 'bigint') {
+    byteIndex = BigInt(byteIndex);
+  }
+
+  // Ensure byteIndex is within 0-31
+  if (byteIndex < 0n || byteIndex > 31n) {
+    return BigInt(0);
+  }
+
+  // Extract the byte
+  return (value >> (8n * (31n - byteIndex))) % 2n ** 8n;
+}
+
 module.exports = {
   construct256BitInteger,
   split256BitInteger,
   sar256BitInteger,
   signedLessThan256BitInteger,
+  getByte,
 };
