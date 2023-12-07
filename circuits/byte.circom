@@ -1,18 +1,15 @@
 pragma circom 2.1.6;
-include "../node_modules/circomlib/circuits/comparators.circom";
-include "templates/128bit/div_and_mod.circom";
 include "templates/128bit/exp.circom";
+include "templates/comparators.circom";
+include "templates/128bit/div_and_mod.circom";
+include "../node_modules/circomlib/circuits/comparators.circom";
 
 template Byte () {
   signal input in1[2], in2[2];  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
                                 // in1: index, in2: value
   
-  // check if in1[1] == 0 and in1[1] < 32 (== in1 < 32)
-  signal is_zero_out <== IsZero()(in1[1]); // check if the upper 128-bit integer is zero
-  component div_and_mod1 = DivAndMod(); // check if the upper 128-bit integer is less than 32
-  div_and_mod1.in <== [in1[0], 32];
-  signal is_lower_less_than_32_out <== IsZero()(div_and_mod1.q); // check if the lower 128-bit integer is less than 32
-  signal is_less_than_32_out <== is_zero_out * is_lower_less_than_32_out; // check if in1 < 32
+  // check if in1 < 32
+  signal is_less_than_32 <== IsLessThanN()(in1, 32);
 
   // calculate t = in1[0] % 16
   component div_and_mod2 = DivAndMod();
@@ -39,8 +36,9 @@ template Byte () {
   bytes[1] <== div_and_mod6.r;
 
   // select either one using the selector
-  signal output out[2];
   signal temp <== selector * (bytes[1] - bytes[0]) + bytes[0];
-  out[0] <== temp * is_less_than_32_out;
-  out[1] <== 0;
+  signal output out[2] <== [
+    temp * is_less_than_32,
+    0
+  ];
 }
