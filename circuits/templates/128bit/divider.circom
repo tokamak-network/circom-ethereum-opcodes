@@ -1,7 +1,7 @@
 pragma circom 2.1.6;
 include "../../../node_modules/circomlib/circuits/comparators.circom";
 
-template DivAndMod () {
+template Divider128 () {
     signal input in[2];
 
     var temp = 0;

@@ -93,10 +93,35 @@ function getByte(byteIndex, value) {
   return (value >> (8n * (31n - byteIndex))) % 2n ** 8n;
 }
 
+function signExtend (index, value) {
+  if (typeof index !== 'bigint') {
+    index = BigInt(index);
+  }
+  if (typeof value !== 'bigint') {
+    value = BigInt(value);
+  }
+
+  // Calculate the sign bit position
+  const signBitPos = 8n * (index + 1n);
+
+  let res;
+
+  // Check if the sign bit is set
+  if ((value & (1n << (signBitPos - 1n))) !== 0n) {
+    // If set, perform sign extension
+    const extensionBits = 256n - signBitPos;
+    const extensionMask = (1n << extensionBits) - 1n;
+    return value | (extensionMask << signBitPos);
+  }
+  // If sign bit is not set, return the original value
+  return value & ((1n << signBitPos) - 1n);
+}
+
 module.exports = {
   construct256BitInteger,
   split256BitInteger,
   sar256BitInteger,
   signedLessThan256BitInteger,
   getByte,
+  signExtend,
 };

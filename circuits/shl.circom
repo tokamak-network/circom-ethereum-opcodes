@@ -2,7 +2,7 @@ pragma circom 2.1.6;
 include "iszero.circom";
 include "templates/comparators.circom";
 include "templates/128bit/exp.circom";
-include "templates/128bit/div_and_mod.circom";
+include "templates/128bit/divider.circom";
 include "../node_modules/circomlib/circuits/gates.circom";
 include "../node_modules/circomlib/circuits/comparators.circom";
 
@@ -17,15 +17,15 @@ template _SHL () {
   signal exp1 <== Exp128()([2, 128 - in1[0]]);
   signal exp2 <== Exp128()([2, in1[0]]);
 
-  component upper_div_and_mod = DivAndMod();
-  upper_div_and_mod.in <== [in2[1], exp1];
+  component upper_divider = Divider128();
+  upper_divider.in <== [in2[1], exp1];
 
-  component lower_div_and_mod = DivAndMod();
-  lower_div_and_mod.in <== [in2[0], exp1];
+  component lower_divider = Divider128();
+  lower_divider.in <== [in2[0], exp1];
 
   signal inter[2] <== [
-    lower_div_and_mod.r * exp2,
-    upper_div_and_mod.r * exp2 + lower_div_and_mod.q
+    lower_divider.r * exp2,
+    upper_divider.r * exp2 + lower_divider.q
   ];
 
   // collapse the two cases
@@ -40,24 +40,24 @@ template SHL () {
                                 // in2 << in1
 
   // 1) in1 >= 256 == !in1 < 256: out = 0
-  signal is_less_than_256 <== IsLessThanN(in1, 256); // in1 < 256
+  signal is_less_than_256 <== IsLessThanN()(in1, 256); // in1 < 256
 
 
   // 2) 0 <= in1 < 256
-  component div_and_mod2 = DivAndMod();
-  div_and_mod2.in <== [in1[0], 128];
+  component divider2 = Divider128();
+  divider2.in <== [in1[0], 128];
 
   // 2-1) shift in1 % 128 times
   component _shl = _SHL();
-  _shl.in1 <== [div_and_mod2.r, 0];
+  _shl.in1 <== [divider2.r, 0];
   _shl.in2 <== in2;
 
   // 2-2) shift the rest
-  //  if div_and_mod2.q = 1:  out[0] = 0,           out[1] = shl.out[0]
+  //  if divider2.q = 1:  out[0] = 0,           out[1] = shl.out[0]
   //  else:                   out[0] = shl.out[0],  out[1] = shl.out[1]
   signal inter[2] <== [
-    _shl.out[0] * (1 - div_and_mod2.q),
-    div_and_mod2.q * (_shl.out[0] - _shl.out[1]) + _shl.out[1]
+    _shl.out[0] * (1 - divider2.q),
+    divider2.q * (_shl.out[0] - _shl.out[1]) + _shl.out[1]
   ];
 
 

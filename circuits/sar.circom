@@ -2,7 +2,7 @@ pragma circom 2.1.6;
 include "shr.circom";
 include "templates/128bit/exp.circom";
 include "templates/comparators.circom";
-include "templates/128bit/div_and_mod.circom";
+include "templates/128bit/divider.circom";
 include "../node_modules/circomlib/circuits/comparators.circom";
 
 
@@ -12,9 +12,9 @@ template SAR () {
 
 
   // 1. calculate msb
-  component msb_div_and_mod = DivAndMod();
-  msb_div_and_mod.in <== [in2[1], 2**127];
-  signal msb <== msb_div_and_mod.q;
+  component msb_divider = Divider128();
+  msb_divider.in <== [in2[1], 2**127];
+  signal msb <== msb_divider.q;
   msb * (1 - msb) === 0; // msb is either 0 or 1
 
 

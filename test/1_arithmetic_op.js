@@ -7,8 +7,7 @@ exports.p = Scalar.fromString("2188824287183927522224640574525727508854836440041
 const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
-const MAX_VALUE = Scalar.fromString("115792089237316195423570985008687907853269984665640564039457584007913129639935") // 2**256 - 1
-const { construct256BitInteger, split256BitInteger} = require("./helper_functions")
+const { split256BitInteger, signExtend} = require("./helper_functions")
 
 describe("0x01 ADD test", function ()  {
   let circuit;
@@ -44,7 +43,9 @@ describe("0x01 ADD test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = (test_case.in1 + test_case.in2) % 2n**256n
     const out = split256BitInteger(res)
-    it(`${test_case.in1} + ${test_case.in2} = ${res}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
+    + 0x${test_case.in2.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -93,7 +94,9 @@ describe("0x02 MUL test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = (test_case.in1 * test_case.in2) % 2n**256n
     const out = split256BitInteger(res)
-    it(`${test_case.in1} * ${test_case.in2} = ${res}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
+    * 0x${test_case.in2.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -150,7 +153,9 @@ describe("0x03 SUB test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = (2n**256n + test_case.in1 - test_case.in2) % 2n**256n
     const out = split256BitInteger(res)
-    it(`${test_case.in1} - ${test_case.in2} = ${res}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
+    - 0x${test_case.in2.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -570,50 +575,67 @@ describe("0x03 SUB test", function ()  {
 //     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
 //   })
 // })
-// // 0x0B SINGEXTEND
 
-// describe("0x0B SIGNEXTEND test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "signextend_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to signextend", async() => {
-//     const input = [0, 127]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(
-//       Fr.eq(
-//         Fr.e(witness[1]), 
-//         Fr.e(input[1])
-//       )
-//     )
-//   })
-//   it("Should equal to signextend", async() => {
-//     const input = [1, 2**15]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(
-//       Fr.eq(
-//         Fr.e(witness[1]), 
-//         Fr.e(Fr.e(2**253) - Fr.e(2**16) + Fr.e(input[1]))
-//       )
-//     )
-//   })
-//   it("Should equal to the original input", async() => {
-//     const input = [32, 2**15]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(
-//       Fr.eq(
-//         Fr.e(witness[1]), 
-//         Fr.e(input[1])
-//       )
-//     )
-//   })
-// })
+
+// 0x0B SINGEXTEND
+describe("0x0B SIGNEXTEND test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(1),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(2),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(31),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(32),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(200),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(10000),
+      "in2": BigInt(0xf077fF)
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "signextend_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = signExtend(test_case.in1, test_case.in2)
+    const out = split256BitInteger(res)
+    it(`Extend length of two's complement signed integer ${test_case.in2.toString(16).padStart(64, '0')} at position of ${(test_case.in1 + 1n) * 8n} 
+                                                    => ${res.toString(16).padStart(64, '0')}\n`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})

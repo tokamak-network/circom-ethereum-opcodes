@@ -7,8 +7,7 @@ exports.p = Scalar.fromString("2188824287183927522224640574525727508854836440041
 const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
-const MAX_VALUE = Scalar.fromString("115792089237316195423570985008687907853269984665640564039457584007913129639935") // 2**256 - 1
-const { construct256BitInteger, split256BitInteger, signedLessThan256BitInteger} = require("./helper_functions")
+const { split256BitInteger, signedLessThan256BitInteger} = require("./helper_functions")
 
 describe("0x10 LT test", function ()  {
   let circuit;
@@ -48,7 +47,7 @@ describe("0x10 LT test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = (test_case.in1 < test_case.in2) ? BigInt(1) : BigInt(0)
     const out = split256BitInteger(res)
-    it(`${test_case.in1} < ${test_case.in2} = ${res ? "True" : "False"}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} < 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -101,7 +100,7 @@ describe("0x11 GT test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = (test_case.in1 > test_case.in2) ? BigInt(1) : BigInt(0)
     const out = split256BitInteger(res)
-    it(`${test_case.in1} > ${test_case.in2} = ${res ? "True" : "False"}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} > 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -166,7 +165,7 @@ describe("0x12 SLT test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = signedLessThan256BitInteger(test_case.in1, test_case.in2)
     const out = split256BitInteger(res)
-    it(`${test_case.in1} < ${test_case.in2} = ${res ? "True" : "False"}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} < 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -231,7 +230,7 @@ describe("0x13 SGT test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = signedLessThan256BitInteger(test_case.in2, test_case.in1)
     const out = split256BitInteger(res)
-    it(`${test_case.in1} > ${test_case.in2} = ${res ? "True" : "False"}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} > 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -345,7 +344,7 @@ describe("0x14 EQ test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = (test_case.in1 == test_case.in2) ? BigInt(1) : BigInt(0)
     const out = split256BitInteger(res)
-    it(`${test_case.in1} == ${test_case.in2} = ${res ? "True" : "False"}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} == 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -389,7 +388,7 @@ describe("0x15 ISZERO test", function ()  {
     const input = split256BitInteger(test_case.in)
     const res = (test_case.in == 0 ) ? BigInt(1) : BigInt(0)
     const out = split256BitInteger(res)
-    it(`${test_case.in} == 0 => ${res ? "True" : "False"}`, async () => {
+    it(`0x${test_case.in.toString(16).padStart(64, '0')} == 0x0 => ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in": input

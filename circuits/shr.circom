@@ -1,7 +1,7 @@
 pragma circom 2.1.6;
 include "iszero.circom";
 include "templates/128bit/exp.circom";
-include "templates/128bit/div_and_mod.circom";
+include "templates/128bit/divider.circom";
 include "../node_modules/circomlib/circuits/comparators.circom";
 include "../node_modules/circomlib/circuits/gates.circom";
 
@@ -17,17 +17,17 @@ template _SHR () {
   signal exp1 <== Exp128()([2, in1[0]]);
   signal exp2 <== Exp128()([2, 128 - in1[0]]);
 
-  component upper_div_and_mod = DivAndMod();
-  upper_div_and_mod.in[0] <== in2[1];
-  upper_div_and_mod.in[1] <== exp1;
+  component upper_divider = Divider128();
+  upper_divider.in[0] <== in2[1];
+  upper_divider.in[1] <== exp1;
 
-  component lower_div_and_mod = DivAndMod();
-  lower_div_and_mod.in[0] <== in2[0];
-  lower_div_and_mod.in[1] <== exp1;
+  component lower_divider = Divider128();
+  lower_divider.in[0] <== in2[0];
+  lower_divider.in[1] <== exp1;
 
   signal inter[2] <== [
-    upper_div_and_mod.r * exp2 + lower_div_and_mod.q,
-    upper_div_and_mod.q
+    upper_divider.r * exp2 + lower_divider.q,
+    upper_divider.q
   ];
 
   // collapse the two cases
@@ -42,11 +42,11 @@ template SHR () {
 
   // 1) in1 >= 256 == !in1 < 256: out = 0
   // 1-1) in1[0] // 256 == 0
-  component div_and_mod1 = DivAndMod();
-  div_and_mod1.in[0] <== in1[0];
-  div_and_mod1.in[1] <== 256;
+  component divider1 = Divider128();
+  divider1.in[0] <== in1[0];
+  divider1.in[1] <== 256;
 
-  signal is_less_than_256 <== IsZero()(div_and_mod1.q);
+  signal is_less_than_256 <== IsZero()(divider1.q);
   
   // 1-2) in1[1] == 0
   signal is_upper_zero <== IsZero()(in1[1]);
@@ -55,21 +55,21 @@ template SHR () {
 
 
   // 2) 0 <= in1 < 256
-  component div_and_mod2 = DivAndMod();
-  div_and_mod2.in[0] <== in1[0];
-  div_and_mod2.in[1] <== 128;
+  component divider2 = Divider128();
+  divider2.in[0] <== in1[0];
+  divider2.in[1] <== 128;
 
   // 2-1) shift in1 % 128 times
   component _shr = _SHR();
   _shr.in2 <== in2;
-  _shr.in1 <== [div_and_mod2.r, 0];
+  _shr.in1 <== [divider2.r, 0];
 
   // 2-2) shift the rest
-  //  if div_and_mod2.q == 1:  out[0] = in2[1], out[1] = 0
+  //  if divider2.q == 1:  out[0] = in2[1], out[1] = 0
   //  else:                    out[0] = in2[0], out[1] = in2[1]
   signal inter[2] <== [
-    div_and_mod2.q * (_shr.out[1] - _shr.out[0]) + _shr.out[0],
-    (1 - div_and_mod2.q) * _shr.out[1]
+    divider2.q * (_shr.out[1] - _shr.out[0]) + _shr.out[0],
+    (1 - divider2.q) * _shr.out[1]
   ];
 
 

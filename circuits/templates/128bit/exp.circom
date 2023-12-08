@@ -1,6 +1,6 @@
 pragma circom 2.1.6;
 include "../../../node_modules/circomlib/circuits/bitify.circom";
-include "div_and_mod.circom";
+include "divider.circom";
 
 template Exp128 () {
     signal input in[2];
@@ -8,7 +8,7 @@ template Exp128 () {
 
     var NUM_EXP_BITS = 7; // 0 <= exp < 2**7 = 128
     var NUM_BITS = 2**NUM_EXP_BITS;
-    component mod1 = DivAndMod();
+    component mod1 = Divider128();
     mod1.in[0] <== in[1];
     mod1.in[1] <== NUM_BITS;
 
@@ -22,7 +22,7 @@ template Exp128 () {
     exp[0] <== in[0];
     inter[0] <== 1;
     
-    component mod2 = DivAndMod();
+    component mod2 = Divider128();
 
     for (var i = 0; i < NUM_EXP_BITS; i++) {
         temp[i] <== num_to_bits.out[i] * exp[i] + (1 - num_to_bits.out[i]); // exponent_bin[i] == 1 ? 2^(i+1) : 1

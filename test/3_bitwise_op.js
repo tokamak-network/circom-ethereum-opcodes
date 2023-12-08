@@ -7,8 +7,7 @@ exports.p = Scalar.fromString("2188824287183927522224640574525727508854836440041
 const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
-const MAX_VALUE = Scalar.fromString("115792089237316195423570985008687907853269984665640564039457584007913129639935") // 2**256 - 1
-const { construct256BitInteger, split256BitInteger, sar256BitInteger, getByte} = require("./helper_functions")
+const { split256BitInteger, sar256BitInteger, getByte} = require("./helper_functions")
 
 describe("0x16 AND test", function ()  {
   let circuit;
@@ -48,7 +47,9 @@ describe("0x16 AND test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = test_case.in1 & test_case.in2
     const out = split256BitInteger(res)
-    it(`${test_case.in1} & ${test_case.in2} = ${res}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
+    & 0x${test_case.in2.toString(16).padStart(64, '0')} 
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -101,7 +102,9 @@ describe("0x17 OR test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = test_case.in1 | test_case.in2
     const out = split256BitInteger(res)
-    it(`${test_case.in1} | ${test_case.in2} = ${res}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')}
+    | 0x${test_case.in2.toString(16).padStart(64, '0')} 
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -154,7 +157,9 @@ describe("0x18 XOR test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = test_case.in1 ^ test_case.in2
     const out = split256BitInteger(res)
-    it(`${test_case.in1} ^ ${test_case.in2} = ${res}`, async () => {
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')}
+    ^ 0x${test_case.in2.toString(16).padStart(64, '0')} 
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -202,7 +207,8 @@ describe("0x19 NOT test", function ()  {
     const bitmask = (1n << 256n) - 1n;
     const res = test_case.in ^ bitmask; // Invert the bits using XOR (^) with the bitmask
     const out = split256BitInteger(res)
-    it(`~${test_case.in} = ${res}`, async () => {
+    it(`~ 0x${test_case.in.toString(16).padStart(64, '0')} 
+      = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in": input
@@ -270,7 +276,8 @@ describe("0x1A BYTE test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = getByte(test_case.in1, test_case.in2)
     const out = split256BitInteger(res)
-    it(`Extract a single byte from ${test_case.in2} at index ${test_case.in1} = ${res}`, async () => {
+    it(`Extract a single byte from 0x${test_case.in2.toString(16).padStart(64, '0')} at index ${test_case.in1 * 8n} 
+                               = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -328,7 +335,8 @@ describe("0x1C SHR test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = (test_case.in2 >> test_case.in1) % 2n**256n
     const out = split256BitInteger(res)
-    it(`${test_case.in2} >> ${test_case.in1} = ${res}`, async () => {
+    it(`0x${test_case.in2.toString(16).padStart(64, '0')} >> ${test_case.in1} 
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
@@ -409,7 +417,8 @@ describe("0x1D SAR test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = sar256BitInteger(test_case.in2, test_case.in1)
     const out = split256BitInteger(res)
-    it(`${test_case.in2} >>> ${test_case.in1} = ${res}`, async () => {
+    it(`0x${test_case.in2.toString(16).padStart(64, '0')} >>> ${test_case.in1} 
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
           "in1": in1,
