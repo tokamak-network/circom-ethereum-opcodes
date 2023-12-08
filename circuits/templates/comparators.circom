@@ -9,7 +9,15 @@ template IsLessThanN () {
 
   component divider = Divider128();
   divider.in <== [in[0], n];
-  signal iis_lower_less_than_n <== IsZero()(divider.q); // check if lower 128-bit integer is less than 32
+  signal is_lower_less_than_n <== IsZero()(divider.q); // check if lower 128-bit integer is less than n
 
-  signal output out <== is_zero_out * iis_lower_less_than_n; // check if both are true
+  signal output out <== is_zero_out * is_lower_less_than_n; // check if both are true
+}
+
+template IsLessThanN128 () { 
+  signal input in, n;
+
+  component divider = Divider128();
+  divider.in <== [in, n];
+  signal output out <== IsZero()(divider.q);
 }

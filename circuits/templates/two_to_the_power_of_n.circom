@@ -7,8 +7,8 @@ template CalculateTwoToThePowerOfN () {
     assert(n < 2**128);
 
     // determine the range of n
-    signal is_less_than_128 <== IsLessThanN()([n, 0], 128);
-    signal is_less_than_256 <== IsLessThanN()([n, 0], 256);
+    signal is_less_than_128 <== IsLessThanN128()(n, 128);
+    signal is_less_than_256 <== IsLessThanN128()(n, 256);
 
     // if n < 128
     signal inter1 <== Exp128()([2, n]);

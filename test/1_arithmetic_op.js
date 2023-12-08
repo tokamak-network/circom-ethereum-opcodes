@@ -595,6 +595,22 @@ describe("0x0B SIGNEXTEND test", function ()  {
       "in2": BigInt(0xf077fF)
     },
     {
+      "in1": BigInt(15),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(16),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(29),
+      "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(30),
+      "in2": BigInt(0xf077fF)
+    },
+    {
       "in1": BigInt(31),
       "in2": BigInt(0xf077fF)
     },
@@ -609,6 +625,58 @@ describe("0x0B SIGNEXTEND test", function ()  {
     {
       "in1": BigInt(10000),
       "in2": BigInt(0xf077fF)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(2**255) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(15),
+      "in2": BigInt(2**255) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(16),
+      "in2": BigInt(2**255) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(29),
+      "in2": BigInt(2**255) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(30),
+      "in2": BigInt(2**255) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(31),
+      "in2": BigInt(2**255) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(0),
+      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(15),
+      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(16),
+      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(17),
+      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(31),
+      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(32),
+      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
+    },
+    {
+      "in1": BigInt(100),
+      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
     },
   ]
   before(async () => {
