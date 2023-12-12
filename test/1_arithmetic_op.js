@@ -591,6 +591,10 @@ describe("0x0A EXP test", function ()  {
         "in2": BigInt(255)
       },
       {
+        "in1": BigInt(2**128) + BigInt(1),
+        "in2": BigInt(2)
+      },
+      {
         "in1": BigInt(0),
         "in2": BigInt(10)
       },
