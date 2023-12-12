@@ -10,7 +10,5 @@ template Adder128 () {
     divider.in[1] <== 2**NUM_BITS;
 
     signal output carry_out <== divider.q;
-    carry_out * (1 - carry_out) === 0;
-
     signal output sum <== divider.r;
 }
