@@ -26,6 +26,10 @@ describe("0x01 ADD test", function ()  {
       "in2": BigInt(2**255)
     },
     {
+      "in1": BigInt(2**256) - 1n,
+      "in2": BigInt(2**256) - 1n
+    },
+    {
       "in1": BigInt(2**256) - BigInt(1),
       "in2": BigInt(1)
     },
@@ -75,6 +79,10 @@ describe("0x02 MUL test", function ()  {
     {
       "in1": BigInt(2**255),
       "in2": BigInt(2**255)
+    },
+    {
+      "in1": BigInt(2**256) - 1n,
+      "in2": BigInt(2**256) - 1n
     },
     {
       "in1": BigInt(2**256) - BigInt(1),
@@ -170,55 +178,101 @@ describe("0x03 SUB test", function ()  {
   }
 })
 
-// describe("0x04 DIV test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "div_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [9, 20]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
+describe("0x04 DIV test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**128) - BigInt(1),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**128) + BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**250) + BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(3)
+    },
+    {
+      "in1": BigInt(7),
+      "in2": BigInt(3)
+    },
+    {
+      "in1": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
+      "in2": BigInt(3)
+    },
+    {
+      "in1": BigInt(7) * BigInt(2**128) + BigInt(1),
+      "in2": BigInt(3)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(3)
+    },
 
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [0, 1000]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to one", async() => {
-//     const input = [
-//       exports.p - Scalar.fromString('1'),
-//       exports.p - Scalar.fromString('1')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
-//   })
-//   it("Should equal to zero; divide by zero", async() => {
-//     const input = [10, 0]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero; divide by zero", async() => {
-//     const input = [
-//       MAX_VALUE,
-//       Scalar.fromString('0')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0)
+    },
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(0)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(10)
+    },
+    {
+      "in1": BigInt(10) << 128n,
+      "in2": BigInt(0)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(10) << 128n
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "div_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = test_case.in2 != 0 ? test_case.in1 / test_case.in2 : 0
+    const out = split256BitInteger(res)
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
+   // 0x${test_case.in2.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
 
 // describe("0x05 SDIV test", function ()  {
 //   let circuit;
@@ -305,44 +359,101 @@ describe("0x03 SUB test", function ()  {
 //   })
 // })
 
-// describe("0x06 MOD test", function ()  {
-//   let circuit;
-//   let witness;
-//   const test_cases = [
-//     {
-//       "in1": BigInt(2**256) - BigInt(1),
-//       "in2": BigInt(2**128)
-//     },
-//   ]
-//   before(async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "mod_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   for (const test_case of test_cases) {
-//     const in1 = split256BitInteger(test_case.in1)
-//     const in2 = split256BitInteger(test_case.in2)
-//     const res = (test_case.in1 * test_case.in2) % 2n**256n
-//     const out = split256BitInteger(res)
-//     it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
-//     * 0x${test_case.in2.toString(16).padStart(64, '0')}
-//     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
-//       witness = await circuit.calculateWitness(
-//         {
-//           "in1": in1,
-//           "in2": in2
-//         }, 
-//         true
-//       );
-//       assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
-//       assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
-//       assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
-//     });
-//   }
-// })
+describe("0x06 MOD test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**128) - BigInt(1),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**128) + BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**250) + BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(3)
+    },
+    {
+      "in1": BigInt(7),
+      "in2": BigInt(3)
+    },
+    {
+      "in1": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
+      "in2": BigInt(3)
+    },
+    {
+      "in1": BigInt(7) * BigInt(2**128) + BigInt(1),
+      "in2": BigInt(3)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(3)
+    },
+
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0)
+    },
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(0)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(10)
+    },
+    {
+      "in1": BigInt(10) << 128n,
+      "in2": BigInt(0)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(10) << 128n
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "mod_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = test_case.in2 != 0 ? (test_case.in1 % test_case.in2) : 0
+    const out = split256BitInteger(res)
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
+    % 0x${test_case.in2.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
 
 // describe("0x07 SMOD test", function ()  {
 //   let circuit;
@@ -420,107 +531,233 @@ describe("0x03 SUB test", function ()  {
 //   })
 // })
 
-// describe("0x08 ADDMOD test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "addmod_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to modular of summation of first two inputs", async() => {
-//     const input = [9, 20, 7]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e((input[0] + input[1]) % input[2])))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [0, 0, 7]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [
-//       exports.p - Scalar.fromString('1'),
-//       Scalar.fromString("1"),
-//       Scalar.fromString("17")
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero: divide by zero", async() => {
-//     const input = [10, 1, 0]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero: divide by zero", async() => {
-//     const input = [
-//       MAX_VALUE,
-//       Scalar.fromString('1'),
-//       Scalar.fromString('0')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
+describe("0x08 ADDMOD test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(10),
+      "in3": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**128) - BigInt(1),
+      "in2": BigInt(2**128) + BigInt(10),
+      "in3": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**128) + BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10),
+      "in3": BigInt(2**128) + BigInt(10),
+    },
+    {
+      "in1": BigInt(2**250) + BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10),
+      "in3": BigInt(2**128) + BigInt(10),
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": 0n,
+      "in3": BigInt(2**128) + BigInt(10),
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0),
+      "in3": BigInt(3),
+    },
+    {
+      "in1": BigInt(7),
+      "in2": BigInt(7),
+      "in3": BigInt(3),
+    },
+    {
+      "in1": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
+      "in2": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
+      "in3": BigInt(3)
+    },
+    {
+      "in1": BigInt(7) * BigInt(2**128) + BigInt(1),
+      "in2": BigInt(7) * BigInt(2**128) + BigInt(1),
+      "in3": BigInt(3)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(2**256) - BigInt(1),
+      "in3": BigInt(3)
+    },
 
-// describe("0x09 MULMOD test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "mulmod_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to modular of multiplication of first two inputs", async() => {
-//     const input = [9, 20, 7]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e((input[0] * input[1]) % input[2])))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [0, 0, 7]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [
-//       exports.p,
-//       Scalar.fromString("1"),
-//       Scalar.fromString("17")
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero: divide by zero", async() => {
-//     const input = [10, 1, 0]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero: divide by zero", async() => {
-//     const input = [
-//       MAX_VALUE,
-//       Scalar.fromString('2'),
-//       Scalar.fromString('0')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0),
+      "in3": BigInt(0)
+    },
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(0),
+      "in3": BigInt(0)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0),
+      "in3": BigInt(10)
+    },
+    {
+      "in1": BigInt(10) * BigInt(2**128),
+      "in2": BigInt(10) * BigInt(2**128),
+      "in3": BigInt(0)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0),
+      "in3": BigInt(10) * BigInt(2**128),
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "addmod_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const in3 = split256BitInteger(test_case.in3)
+    const res = test_case.in3 != 0 ? ((test_case.in1 + test_case.in2) % 2n**256n) % test_case.in3 : 0
+    const out = split256BitInteger(res)
+    it(`(0x${test_case.in1.toString(16).padStart(64, '0')} 
+    + 0x${test_case.in2.toString(16).padStart(64, '0')})
+    % 0x${test_case.in3.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2,
+          "in3": in3,
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
+
+describe("0x09 MULMOD test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(10),
+      "in3": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**128) - BigInt(1),
+      "in2": BigInt(2**128) + BigInt(10),
+      "in3": BigInt(2**128) + BigInt(10)
+    },
+    {
+      "in1": BigInt(2**128) + BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10),
+      "in3": BigInt(2**128) + BigInt(10),
+    },
+    {
+      "in1": BigInt(2**250) + BigInt(10),
+      "in2": BigInt(2**128) + BigInt(10),
+      "in3": BigInt(2**128) + BigInt(10),
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": 0n,
+      "in3": BigInt(2**128) + BigInt(10),
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0),
+      "in3": BigInt(3),
+    },
+    {
+      "in1": BigInt(7),
+      "in2": BigInt(7),
+      "in3": BigInt(3),
+    },
+    {
+      "in1": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
+      "in2": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
+      "in3": BigInt(3)
+    },
+    {
+      "in1": BigInt(7) * BigInt(2**128) + BigInt(1),
+      "in2": BigInt(7) * BigInt(2**128) + BigInt(1),
+      "in3": BigInt(3)
+    },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(2**256) - BigInt(1),
+      "in3": BigInt(3)
+    },
+
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0),
+      "in3": BigInt(0)
+    },
+    {
+      "in1": BigInt(10),
+      "in2": BigInt(0),
+      "in3": BigInt(0)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0),
+      "in3": BigInt(10)
+    },
+    {
+      "in1": BigInt(10) * BigInt(2**128),
+      "in2": BigInt(10) * BigInt(2**128),
+      "in3": BigInt(0)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(0),
+      "in3": BigInt(10) * BigInt(2**128),
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "mulmod_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const in3 = split256BitInteger(test_case.in3)
+    const res = test_case.in3 != 0 ? ((test_case.in1 * test_case.in2) % 2n**256n) % test_case.in3 : 0
+    const out = split256BitInteger(res)
+    it(`(0x${test_case.in1.toString(16).padStart(64, '0')} 
+    * 0x${test_case.in2.toString(16).padStart(64, '0')})
+    % 0x${test_case.in3.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2,
+          "in3": in3,
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
 
 describe("0x0A EXP test", function ()  {
     let circuit;
