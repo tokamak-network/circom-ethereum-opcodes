@@ -117,6 +117,64 @@ function signExtend (index, value) {
   return value & ((1n << signBitPos) - 1n);
 }
 
+function signedDivide(a, b) {
+  if (typeof a !== 'bigint') {
+    a = BigInt(a);
+  }
+  if (typeof b !== 'bigint') {
+    b = BigInt(b);
+  }
+
+  // Extract the sign bits (256th bits)
+  const signBitA = (a & (1n << 255n)) === 0n ? 0n : 1n;
+  const signBitB = (b & (1n << 255n)) === 0n ? 0n : 1n;
+
+  // If a or b is zero, return 0
+  if (a === 0n || b === 0n) {
+    return 0n;
+  }
+  
+  if (a === (2n**255n) && b === (2n**256n - 1n)) { // -2^255 / -1 = -2^255
+    return 2n**255n; // -2^255
+  }
+
+  if (signBitA !== 0n) a = 2n**256n - a;
+  if (signBitB !== 0n) b = 2n**256n - b;
+
+  if ((signBitA ^ signBitB) === 0n) {
+    return a / b;
+  } else {
+    return 2n**256n - (a / b);
+  }
+}
+
+function signedMod(a, b) {
+  if (typeof a !== 'bigint') {
+    a = BigInt(a);
+  }
+  if (typeof b !== 'bigint') {
+    b = BigInt(b);
+  }
+
+  // If a or b is zero, return 0
+  if (a === 0n || b === 0n) {
+    return 0n;
+  }
+
+  // Extract the sign bits (256th bits)
+  const signBitA = (a & (1n << 255n)) === 0n ? 0n : 1n;
+  const signBitB = (b & (1n << 255n)) === 0n ? 0n : 1n;
+
+  if (signBitA !== 0n) a = 2n**256n - a;
+  if (signBitB !== 0n) b = 2n**256n - b;
+
+  if ((signBitA ^ signBitB) === 0n) {
+    return a % b;
+  } else {
+    return 2n**256n - (a % b);
+  }
+}
+
 module.exports = {
   construct256BitInteger,
   split256BitInteger,
@@ -124,4 +182,6 @@ module.exports = {
   signedLessThan256BitInteger,
   getByte,
   signExtend,
+  signedDivide,
+  signedMod
 };

@@ -7,7 +7,7 @@ exports.p = Scalar.fromString("2188824287183927522224640574525727508854836440041
 const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
-const { split256BitInteger, signExtend} = require("./helper_functions")
+const { split256BitInteger, signExtend, signedDivide, signedMod} = require("./helper_functions")
 
 describe("0x01 ADD test", function ()  {
   let circuit;
@@ -88,6 +88,10 @@ describe("0x02 MUL test", function ()  {
       "in1": BigInt(2**256) - BigInt(1),
       "in2": BigInt(1)
     },
+    {
+      "in1": BigInt(2**256) - BigInt(1),
+      "in2": BigInt(2)
+    },
   ]
   before(async () => {
     circuit = await wasm_tester(
@@ -146,6 +150,10 @@ describe("0x03 SUB test", function ()  {
     {
       "in1": BigInt(1),
       "in2": BigInt(2**256) - BigInt(1)
+    },
+    {
+      "in1": BigInt(0),
+      "in2": BigInt(1)
     },
   ]
   before(async () => {
@@ -274,90 +282,76 @@ describe("0x04 DIV test", function ()  {
   }
 })
 
-// describe("0x05 SDIV test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "sdiv_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [9, 20]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to positive two", async() => {
-//     const input = [20, 9]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(2)))
-//   })
-//   it("Should equal to negative two", async() => {
-//     const input = [
-//       MAX_VALUE + Scalar.fromString('1') - Scalar.fromString('7'),
-//       Scalar.fromString('3')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE - Scalar.fromString('1'))))
-//   })
-//   it("Should equal to negative two", async() => {
-//     const input = [
-//       Scalar.fromString('7'),
-//       MAX_VALUE + Scalar.fromString('1') - Scalar.fromString('3')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE - Scalar.fromString('1'))))
-//   })
-//   it("Should equal to positive two", async() => {
-//     const input = [
-//       MAX_VALUE + Scalar.fromString('1') - Scalar.fromString('7'),
-//       MAX_VALUE + Scalar.fromString('1') - Scalar.fromString('3')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(2)))
-//   })
-//   it("Should equal to zero: devide by zero", async() => {
-//     const input = [100, 0]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero: devide by zero", async() => {
-//     const input = [
-//       Scalar.fromString('7237005577332262213973186563042994240829374041602535252466099000494570602495'),
-//       0
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero; divide by zero", async() => {
-//     const input = [
-//       MAX_VALUE, // -1
-//       Scalar.fromString('0')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to -2^252", async() => {
-//     const input = [
-//       Scalar.fromString('7237005577332262213973186563042994240829374041602535252466099000494570602496'), // -2^252
-//       MAX_VALUE
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0])))
-//   })
-// })
+describe("0x05 SDIV test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": 9n,
+      "in2": 20n,
+    },
+    {
+      "in1": 20n,
+      "in2": 9n,
+    },
+    {
+      "in1": BigInt(2**256) - 7n,
+      "in2": 3n,
+    },
+    {
+      "in1": 7n,
+      "in2": BigInt(2**256) - 3n,
+    },
+    {
+      "in1": BigInt(2**256) - 7n,
+      "in2": BigInt(2**256) - 3n
+    },
+    {
+      "in1": BigInt(2**256) - 3n,
+      "in2": BigInt(2**256) - 7n,
+    },
+    {
+      "in1": 100n,
+      "in2": 0n,
+    },
+    {
+      "in1": BigInt(2**128),
+      "in2": 0n,
+    },
+    {
+      "in1": BigInt(2**255),
+      "in2": 2n**256n - 1n,
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "sdiv_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = signedDivide(test_case.in1, test_case.in2)
+    const out = split256BitInteger(res)
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
+  // 0x${test_case.in2.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
 
 describe("0x06 MOD test", function ()  {
   let circuit;
@@ -455,81 +449,76 @@ describe("0x06 MOD test", function ()  {
   }
 })
 
-// describe("0x07 SMOD test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "smod_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to the first input", async() => {
-//     const input = [9, 20]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0])))
-//   })
-//   it("Should equal to positive two", async() => {
-//     const input = [20, 9]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(input[0] % input[1])))
-//   })
-//   it("Should equal to negative one", async() => {
-//     const input = [
-//       MAX_VALUE + Scalar.fromString('1') - Scalar.fromString('7'),
-//       Scalar.fromString('3')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE)))
-//   })
-//   it("Should equal to negative one", async() => {
-//     const input = [
-//       Scalar.fromString('7'),
-//       MAX_VALUE + Scalar.fromString('1') - Scalar.fromString('3')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(MAX_VALUE)))
-//   })
-//   it("Should equal to positive one", async() => {
-//     const input = [
-//       MAX_VALUE + Scalar.fromString('1') - Scalar.fromString('7'),
-//       MAX_VALUE + Scalar.fromString('1') - Scalar.fromString('3')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
-//   })
-//   it("Should equal to zero: divide by zero", async() => {
-//     const input = [1000, 0]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero; divide by zero", async() => {
-//     const input = [
-//       Scalar.fromString('7237005577332262213973186563042994240829374041602535252466099000494570602495'),
-//       Scalar.fromString('0')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to zero; divide by zero", async() => {
-//     const input = [
-//       MAX_VALUE, // -1
-//       Scalar.fromString('0')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
+describe("0x07 SMOD test", function ()  {
+  let circuit;
+  let witness;
+  const test_cases = [
+    {
+      "in1": 9n,
+      "in2": 20n,
+    },
+    {
+      "in1": 20n,
+      "in2": 9n,
+    },
+    {
+      "in1": BigInt(2**256) - 7n,
+      "in2": 3n,
+    },
+    {
+      "in1": 7n,
+      "in2": BigInt(2**256) - 3n,
+    },
+    {
+      "in1": BigInt(2**256) - 7n,
+      "in2": BigInt(2**256) - 3n
+    },
+    {
+      "in1": BigInt(2**256) - 3n,
+      "in2": BigInt(2**256) - 7n,
+    },
+    {
+      "in1": 100n,
+      "in2": 0n,
+    },
+    {
+      "in1": BigInt(2**128),
+      "in2": 0n,
+    },
+    {
+      "in1": BigInt(2**255),
+      "in2": 2n**256n - 1n,
+    },
+  ]
+  before(async () => {
+    circuit = await wasm_tester(
+      path.join(__dirname, "circuits", "smod_test.circom"),
+      {
+        prime: CURVE_NAME
+      }
+    )
+  })
+  for (const test_case of test_cases) {
+    const in1 = split256BitInteger(test_case.in1)
+    const in2 = split256BitInteger(test_case.in2)
+    const res = signedMod(test_case.in1, test_case.in2)
+    const out = split256BitInteger(res)
+    it(`0x${test_case.in1.toString(16).padStart(64, '0')} 
+    % 0x${test_case.in2.toString(16).padStart(64, '0')}
+    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
+      witness = await circuit.calculateWitness(
+        {
+          "in1": in1,
+          "in2": in2
+        }, 
+        true
+      );
+      assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+      assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+      assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+    });
+  }
+})
 
 describe("0x08 ADDMOD test", function ()  {
   let circuit;
