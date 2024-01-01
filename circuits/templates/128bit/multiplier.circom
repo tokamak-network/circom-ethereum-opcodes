@@ -10,10 +10,10 @@ template Multiplier128 () {
   divider[0].in <== [in[0], 2**64];
   divider[1].in <== [in[1], 2**64];
 
-  signal a <-- divider[0].q;
-  signal b <-- divider[0].r;
-  signal c <-- divider[1].q;
-  signal d <-- divider[1].r;
+  signal a <== divider[0].q;
+  signal b <== divider[0].r;
+  signal c <== divider[1].q;
+  signal d <== divider[1].r;
 
   signal temp1 <== a * d;
   signal temp2 <== b * d;

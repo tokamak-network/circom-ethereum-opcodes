@@ -1,4 +1,4 @@
-names=("load" "add" "mul" "sub" "div" "sha3" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr" "sar" "signextend" "byte") # "alu" "mlu" "ic")
+names=("load" "add" "mul" "sub" "div" "sha3" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr" "sar" "signextend" "byte" "alu" "mlu")
 CURVE_NAME="bn128"
 
 # get the directory of the script

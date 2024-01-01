@@ -8,32 +8,12 @@ const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
 const { split256BitInteger, signExtend, signedDivide, signedMod} = require("./helper_functions")
+const test_case = require("./test_cases.js")
 
 describe("0x01 ADD test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(10)
-    },
-    {
-      "in1": BigInt(2**254),
-      "in2": BigInt(2**254)
-    },
-    {
-      "in1": BigInt(2**255),
-      "in2": BigInt(2**255)
-    },
-    {
-      "in1": BigInt(2**256) - 1n,
-      "in2": BigInt(2**256) - 1n
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(1)
-    },
-  ]
+  const test_cases = test_case.add
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "add_test.circom"),
@@ -67,32 +47,7 @@ describe("0x01 ADD test", function ()  {
 describe("0x02 MUL test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(10)
-    },
-    {
-      "in1": BigInt(2**254),
-      "in2": BigInt(2)
-    },
-    {
-      "in1": BigInt(2**255),
-      "in2": BigInt(2**255)
-    },
-    {
-      "in1": BigInt(2**256) - 1n,
-      "in2": BigInt(2**256) - 1n
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(1)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2)
-    },
-  ]
+  const test_cases = test_case.mul
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "mul_test.circom"),
@@ -126,36 +81,7 @@ describe("0x02 MUL test", function ()  {
 describe("0x03 SUB test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(10)
-    },
-    {
-      "in1": BigInt(2**255),
-      "in2": BigInt(2**255)
-    },
-    {
-      "in1": BigInt(2**254),
-      "in2": BigInt(2)
-    },
-    {
-      "in1": BigInt(2),
-      "in2": BigInt(2**254)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(199)
-    },
-    {
-      "in1": BigInt(1),
-      "in2": BigInt(2**256) - BigInt(1)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(1)
-    },
-  ]
+  const test_cases = test_case.sub
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "sub_test.circom"),
@@ -189,69 +115,7 @@ describe("0x03 SUB test", function ()  {
 describe("0x04 DIV test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**128) - BigInt(1),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**128) + BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**250) + BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(3)
-    },
-    {
-      "in1": BigInt(7),
-      "in2": BigInt(3)
-    },
-    {
-      "in1": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
-      "in2": BigInt(3)
-    },
-    {
-      "in1": BigInt(7) * BigInt(2**128) + BigInt(1),
-      "in2": BigInt(3)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(3)
-    },
-
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0)
-    },
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(0)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(10)
-    },
-    {
-      "in1": BigInt(10) << 128n,
-      "in2": BigInt(0)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(10) << 128n
-    },
-  ]
+  const test_cases = test_case.div
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "div_test.circom"),
@@ -285,44 +149,7 @@ describe("0x04 DIV test", function ()  {
 describe("0x05 SDIV test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": 9n,
-      "in2": 20n,
-    },
-    {
-      "in1": 20n,
-      "in2": 9n,
-    },
-    {
-      "in1": BigInt(2**256) - 7n,
-      "in2": 3n,
-    },
-    {
-      "in1": 7n,
-      "in2": BigInt(2**256) - 3n,
-    },
-    {
-      "in1": BigInt(2**256) - 7n,
-      "in2": BigInt(2**256) - 3n
-    },
-    {
-      "in1": BigInt(2**256) - 3n,
-      "in2": BigInt(2**256) - 7n,
-    },
-    {
-      "in1": 100n,
-      "in2": 0n,
-    },
-    {
-      "in1": BigInt(2**128),
-      "in2": 0n,
-    },
-    {
-      "in1": BigInt(2**255),
-      "in2": 2n**256n - 1n,
-    },
-  ]
+  const test_cases = test_case.sdiv
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "sdiv_test.circom"),
@@ -356,69 +183,7 @@ describe("0x05 SDIV test", function ()  {
 describe("0x06 MOD test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**128) - BigInt(1),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**128) + BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**250) + BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(3)
-    },
-    {
-      "in1": BigInt(7),
-      "in2": BigInt(3)
-    },
-    {
-      "in1": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
-      "in2": BigInt(3)
-    },
-    {
-      "in1": BigInt(7) * BigInt(2**128) + BigInt(1),
-      "in2": BigInt(3)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(3)
-    },
-
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0)
-    },
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(0)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(10)
-    },
-    {
-      "in1": BigInt(10) << 128n,
-      "in2": BigInt(0)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(10) << 128n
-    },
-  ]
+  const test_cases = test_case.mod
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "mod_test.circom"),
@@ -452,44 +217,7 @@ describe("0x06 MOD test", function ()  {
 describe("0x07 SMOD test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": 9n,
-      "in2": 20n,
-    },
-    {
-      "in1": 20n,
-      "in2": 9n,
-    },
-    {
-      "in1": BigInt(2**256) - 7n,
-      "in2": 3n,
-    },
-    {
-      "in1": 7n,
-      "in2": BigInt(2**256) - 3n,
-    },
-    {
-      "in1": BigInt(2**256) - 7n,
-      "in2": BigInt(2**256) - 3n
-    },
-    {
-      "in1": BigInt(2**256) - 3n,
-      "in2": BigInt(2**256) - 7n,
-    },
-    {
-      "in1": 100n,
-      "in2": 0n,
-    },
-    {
-      "in1": BigInt(2**128),
-      "in2": 0n,
-    },
-    {
-      "in1": BigInt(2**255),
-      "in2": 2n**256n - 1n,
-    },
-  ]
+  const test_cases = test_case.smod
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "smod_test.circom"),
@@ -523,84 +251,7 @@ describe("0x07 SMOD test", function ()  {
 describe("0x08 ADDMOD test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(10),
-      "in3": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**128) - BigInt(1),
-      "in2": BigInt(2**128) + BigInt(10),
-      "in3": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**128) + BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10),
-      "in3": BigInt(2**128) + BigInt(10),
-    },
-    {
-      "in1": BigInt(2**250) + BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10),
-      "in3": BigInt(2**128) + BigInt(10),
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": 0n,
-      "in3": BigInt(2**128) + BigInt(10),
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0),
-      "in3": BigInt(3),
-    },
-    {
-      "in1": BigInt(7),
-      "in2": BigInt(7),
-      "in3": BigInt(3),
-    },
-    {
-      "in1": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
-      "in2": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
-      "in3": BigInt(3)
-    },
-    {
-      "in1": BigInt(7) * BigInt(2**128) + BigInt(1),
-      "in2": BigInt(7) * BigInt(2**128) + BigInt(1),
-      "in3": BigInt(3)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**256) - BigInt(1),
-      "in3": BigInt(3)
-    },
-
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0),
-      "in3": BigInt(0)
-    },
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(0),
-      "in3": BigInt(0)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0),
-      "in3": BigInt(10)
-    },
-    {
-      "in1": BigInt(10) * BigInt(2**128),
-      "in2": BigInt(10) * BigInt(2**128),
-      "in3": BigInt(0)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0),
-      "in3": BigInt(10) * BigInt(2**128),
-    },
-  ]
+  const test_cases = test_case.addmod
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "addmod_test.circom"),
@@ -637,84 +288,7 @@ describe("0x08 ADDMOD test", function ()  {
 describe("0x09 MULMOD test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(10),
-      "in3": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**128) - BigInt(1),
-      "in2": BigInt(2**128) + BigInt(10),
-      "in3": BigInt(2**128) + BigInt(10)
-    },
-    {
-      "in1": BigInt(2**128) + BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10),
-      "in3": BigInt(2**128) + BigInt(10),
-    },
-    {
-      "in1": BigInt(2**250) + BigInt(10),
-      "in2": BigInt(2**128) + BigInt(10),
-      "in3": BigInt(2**128) + BigInt(10),
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": 0n,
-      "in3": BigInt(2**128) + BigInt(10),
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0),
-      "in3": BigInt(3),
-    },
-    {
-      "in1": BigInt(7),
-      "in2": BigInt(7),
-      "in3": BigInt(3),
-    },
-    {
-      "in1": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
-      "in2": BigInt(7) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
-      "in3": BigInt(3)
-    },
-    {
-      "in1": BigInt(7) * BigInt(2**128) + BigInt(1),
-      "in2": BigInt(7) * BigInt(2**128) + BigInt(1),
-      "in3": BigInt(3)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**256) - BigInt(1),
-      "in3": BigInt(3)
-    },
-
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0),
-      "in3": BigInt(0)
-    },
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(0),
-      "in3": BigInt(0)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0),
-      "in3": BigInt(10)
-    },
-    {
-      "in1": BigInt(10) * BigInt(2**128),
-      "in2": BigInt(10) * BigInt(2**128),
-      "in3": BigInt(0)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0),
-      "in3": BigInt(10) * BigInt(2**128),
-    },
-  ]
+  const test_cases = test_case.mulmod
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "mulmod_test.circom"),
@@ -751,84 +325,7 @@ describe("0x09 MULMOD test", function ()  {
 describe("0x0A EXP test", function ()  {
     let circuit;
     let witness;
-    const test_cases = [
-      {
-        "in1": BigInt(2),
-        "in2": BigInt(0)
-      },
-      {
-        "in1": BigInt(2),
-        "in2": BigInt(10)
-      },
-      {
-        "in1": BigInt(2),
-        "in2": BigInt(100)
-      },
-      {
-        "in1": BigInt(2),
-        "in2": BigInt(128)
-      },
-      {
-        "in1": BigInt(2),
-        "in2": BigInt(255)
-      },
-      {
-        "in1": BigInt(7),
-        "in2": BigInt(0)
-      },
-      {
-        "in1": BigInt(7),
-        "in2": BigInt(10)
-      },
-      {
-        "in1": BigInt(7),
-        "in2": BigInt(100)
-      },
-      {
-        "in1": BigInt(7),
-        "in2": BigInt(110)
-      },
-      {
-        "in1": BigInt(0),
-        "in2": BigInt(10)
-      },
-      {
-        "in1": BigInt(2**128),
-        "in2": BigInt(0)
-      },
-      {
-        "in1": BigInt(2**128),
-        "in2": BigInt(1)
-      },
-      {
-        "in1": BigInt(2**128),
-        "in2": BigInt(2)
-      },
-      {
-        "in1": BigInt(2**128),
-        "in2": BigInt(100)
-      },
-      {
-        "in1": BigInt(2**128),
-        "in2": BigInt(128)
-      },
-      {
-        "in1": BigInt(2**128),
-        "in2": BigInt(255)
-      },
-      {
-        "in1": BigInt(2**128) + BigInt(1),
-        "in2": BigInt(2)
-      },
-      {
-        "in1": BigInt(0),
-        "in2": BigInt(10)
-      },
-      {
-        "in1": BigInt(0),
-        "in2": BigInt(0)
-      },
-    ]
+    const test_cases = test_case.exp
     before(async () => {
       circuit = await wasm_tester(
         path.join(__dirname, "circuits", "exp_test.circom"),
@@ -862,104 +359,7 @@ describe("0x0A EXP test", function ()  {
 describe("0x0B SIGNEXTEND test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(1),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(2),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(15),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(16),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(29),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(30),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(31),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(32),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(200),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(10000),
-      "in2": BigInt(0xf077fF)
-    },
-    {
-      "in1": BigInt(0),
-      "in2": BigInt(2**255) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(15),
-      "in2": BigInt(2**255) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(16),
-      "in2": BigInt(2**255) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(29),
-      "in2": BigInt(2**255) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(30),
-      "in2": BigInt(2**255) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(31),
-      "in2": BigInt(2**255) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(0),
-      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(15),
-      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(16),
-      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(17),
-      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(31),
-      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(32),
-      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
-    },
-    {
-      "in1": BigInt(100),
-      "in2": (BigInt("0xf077fF") << 128n) + BigInt("0xf077fF")
-    },
-  ]
+  const test_cases = test_case.signextend
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "signextend_test.circom"),

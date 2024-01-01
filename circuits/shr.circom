@@ -36,9 +36,8 @@ template _SHR () {
 }
 
 template SHR () {
-  signal input in2[2], in1[2];  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  signal input in1[2], in2[2];  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
                                 // in2 << in1
-  signal output out[2]; // 256-bit integer consisting of two 128-bit integers; out[0]: lower, out[1]: upper
 
   // 1) in1 >= 256 == !in1 < 256: out = 0
   // 1-1) in1[0] // 256 == 0
@@ -74,6 +73,8 @@ template SHR () {
 
 
   // collapse the two cases
-  out[0] <== lt_out * inter[0];
-  out[1] <== lt_out * inter[1];
+  signal output out[2] <== [
+    lt_out * inter[0],
+    lt_out * inter[1]
+  ];
 }

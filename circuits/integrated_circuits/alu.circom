@@ -9,109 +9,119 @@ include "../smod.circom";
 include "../addmod.circom";
 include "../mulmod.circom";
 include "../exp.circom";
+include "../signextend.circom";
+include "../eq.circom";
+include "../byte.circom";
 include "../shl.circom";
-include "../shr_l.circom";
-include "../shr_h.circom";
-include "../../node_modules/circomlib/circuits/comparators.circom";
-
+include "../shr.circom";
+include "../sar.circom";
+include "../../node_modules/circomlib/circuits/bitify.circom";
 
 template ALU () {
-  var NUM_FUNCTIONS = 15; // number of functions in the ALU
+  var NUM_FUNCTIONS = 14; // number of functions in the ALU
 
   // signal definitions
-  signal input in[3], b_selector[NUM_FUNCTIONS];
-  signal output out;
-  signal inter[NUM_FUNCTIONS - 1]; // intermediate signals to prevent non-quadratic constraints // 
+  signal input in[3][2], selector;
+  signal inter[NUM_FUNCTIONS - 1][2]; // intermediate signals to prevent non-quadratic constraints
+
+  // selector bitification
+  signal b_selector[NUM_FUNCTIONS] <== Num2Bits(NUM_FUNCTIONS)(selector);
 
   // operator 0x01: add
-  component add = Add();
-  add.in[0] <== in[0];
-  add.in[1] <== in[1];
-  inter[0] <== b_selector[0] * add.out;
+  signal add_out[2] <== Add()(in[0], in[1]);
+  inter[0] <== [
+    b_selector[0] * add_out[0],
+    b_selector[0] * add_out[1]
+  ];
 
   // operator 0x02: mul
-  component mul = Mul();
-  mul.in[0] <== in[0];
-  mul.in[1] <== in[1];
-  inter[1] <== inter[0] + b_selector[1] * mul.out;
+  signal mul_out[2] <== Mul()(in[0], in[1]);
+  inter[1] <== [
+    inter[0][0] + b_selector[1] * mul_out[0],
+    inter[0][1] + b_selector[1] * mul_out[1]
+  ];
 
   // operator 0x03: sub
-  component sub = Sub();
-  sub.in[0] <== in[0];
-  sub.in[1] <== in[1];
-  inter[2] <== inter[1] + b_selector[2] * sub.out;
+  signal sub_out[2] <== Sub()(in[0], in[1]);
+  inter[2] <== [
+    inter[1][0] + b_selector[2] * sub_out[0],
+    inter[1][1] + b_selector[2] * sub_out[1]
+  ];
 
   // operator 0x04: div
-  component div = Div();
-  div.in[0] <== in[0];
-  div.in[1] <== in[1];
-  inter[3] <== inter[2] + b_selector[3] * div.out;
+  signal div_out[2] <== Div()(in[0], in[1]);
+  inter[3] <== [
+    inter[2][0] + b_selector[3] * div_out[0],
+    inter[2][1] + b_selector[3] * div_out[1]
+  ];
 
   // operator 0x05: sdiv
-  component sdiv = Sdiv();
-  sdiv.in[0] <== in[0];
-  sdiv.in[1] <== in[1];
-  inter[4] <== inter[3] + b_selector[4] * sdiv.out;
+  signal sdiv_out[2] <== SDiv()(in[0], in[1]);
+  inter[4] <== [
+    inter[3][0] + b_selector[4] * sdiv_out[0],
+    inter[3][1] + b_selector[4] * sdiv_out[1]
+  ];
 
   // operator 0x06: mod
-  component mod = Mod();
-  mod.in[0] <== in[0];
-  mod.in[1] <== in[1];
-  inter[5] <== inter[4] + b_selector[5] * mod.out;
+  signal mod_out[2] <== Mod()(in[0], in[1]);
+  inter[5] <== [
+    inter[4][0] + b_selector[5] * mod_out[0],
+    inter[4][1] + b_selector[5] * mod_out[1]
+  ];
 
   // operator 0x07: smod
-  component smod = Smod();
-  smod.in[0] <== in[0];
-  smod.in[1] <== in[1];
-  inter[6] <== inter[5] + b_selector[6] * smod.out;
+  signal smod_out[2] <== SMod()(in[0], in[1]);
+  inter[6] <== [
+    inter[5][0] + b_selector[6] * smod_out[0],
+    inter[5][1] + b_selector[6] * smod_out[1]
+  ];
 
   // operator 0x08: addmod
-  component addmod = AddMod();
-  addmod.in[0] <== in[0];
-  addmod.in[1] <== in[1];
-  addmod.in[2] <== in[2];
-  inter[7] <== inter[6] + b_selector[7] * addmod.out;
+  signal addmod_out[2] <== AddMod()(in[0], in[1], in[2]);
+  inter[7] <== [
+    inter[6][0] + b_selector[7] * addmod_out[0],
+    inter[6][1] + b_selector[7] * addmod_out[1]
+  ];
 
   // operator 0x09: mulmod
-  component mulmod = MulMod();
-  mulmod.in[0] <== in[0];
-  mulmod.in[1] <== in[1];
-  mulmod.in[2] <== in[2];
-  inter[8] <== inter[7] + b_selector[8] * mulmod.out;
+  signal mulmod_out[2] <== MulMod()(in[0], in[1], in[2]);
+  inter[8] <== [
+    inter[7][0] + b_selector[8] * mulmod_out[0],
+    inter[7][1] + b_selector[8] * mulmod_out[1]
+  ];
 
   // operator 0x0a: exp
-  component exp = Exp();
-  exp.in[0] <== in[0];
-  exp.in[1] <== in[1];
-  inter[9] <== inter[8] + b_selector[9] * exp.out;
+  signal exp_out[2] <== Exp()(in[0], in[1]);
+  inter[9] <== [
+    inter[8][0] + b_selector[9] * exp_out[0],
+    inter[8][1] + b_selector[9] * exp_out[1]
+  ];
+
+  // operator 0x0b: signextend
+  signal signextend_out[2] <== SignExtend()(in[0], in[1]);
+  inter[10] <== [
+    inter[9][0] + b_selector[10] * signextend_out[0],
+    inter[9][1] + b_selector[10] * signextend_out[1]
+  ];
 
   // operator 0x14: eq
-  component eq = IsEqual();
-  eq.in[0] <== in[0];
-  eq.in[1] <== in[1];
-  inter[10] <== inter[9] + b_selector[10] * eq.out;
+  signal eq_out[2] <== Eq()(in[0], in[1]);
+  inter[11] <== [
+    inter[10][0] + b_selector[11] * eq_out[0],
+    inter[10][1] + b_selector[11] * eq_out[1]
+  ];
 
   // operator 0x15: iszero
-  component iszero = IsZero();
-  iszero.in <== in[0];
-  inter[11] <== inter[10] + b_selector[11] * iszero.out;
+  signal iszero_out[2] <== IsZero256()(in[0]);
+  inter[12] <== [
+    inter[11][0] + b_selector[12] * iszero_out[0],
+    inter[11][1] + b_selector[12] * iszero_out[1]
+  ];
 
-  // operator 0x1b: shl
-  component shl = SHL();
-  shl.in[0] <== in[0];
-  shl.in[1] <== in[1];
-  inter[12] <== inter[11] + b_selector[12] * shl.out;
-
-  // operator 0x1c is divided into two operators: shr-l and shr-r due to the lack of support for 256bit shift
-  //    operator 0x1c1: shr-l
-  component shr_l = SHR_L();
-  shr_l.in[0] <== in[0];
-  shr_l.in[1] <== in[1];
-  inter[13] <== inter[12] + b_selector[13] * shr_l.out;
-
-  //    operator 0x1c2: shr-h
-  component shr_h = SHR_H();
-  shr_h.in[0] <== in[0];
-  shr_h.in[1] <== in[1];
-  out <== inter[13] + b_selector[14] * shr_h.out; // output
+  // operator 0x1a: byte
+  signal byte_out[2] <== Byte()(in[0], in[1]);
+  signal output out[2] <== [
+    inter[12][0] + b_selector[13] * byte_out[0],
+    inter[12][1] + b_selector[13] * byte_out[1]
+  ];
 }

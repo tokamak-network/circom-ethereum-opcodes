@@ -8,32 +8,12 @@ const Fr = new F1Field(exports.p)
 const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
 const { split256BitInteger, signedLessThan256BitInteger} = require("./helper_functions")
+const test_case = require("./test_cases.js")
 
 describe("0x10 LT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(100)
-    },
-    {
-      "in1": BigInt(2**128),
-      "in2": BigInt(2**128) + BigInt(1)
-    },
-    {
-      "in1": BigInt(2**254),
-      "in2": BigInt(2**253) + BigInt(1)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**255)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(1)
-    },
-  ]
+  const test_cases = test_case.lt
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "lt_test.circom"),
@@ -65,28 +45,7 @@ describe("0x10 LT test", function ()  {
 describe("0x11 GT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(10),
-      "in2": BigInt(100)
-    },
-    {
-      "in1": BigInt(2**128),
-      "in2": BigInt(2**128) + BigInt(1)
-    },
-    {
-      "in1": BigInt(2**254),
-      "in2": BigInt(2**253) + BigInt(1)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**255)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(1)
-    },
-  ]
+  const test_cases = test_case.gt
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "gt_test.circom"),
@@ -118,40 +77,7 @@ describe("0x11 GT test", function ()  {
 describe("0x12 SLT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(1),
-      "in2": BigInt(200)
-    },
-    {
-      "in1": BigInt(1000),
-      "in2": BigInt(200)
-    },
-    {
-      "in1": BigInt(2**254),
-      "in2": BigInt(2**256) - BigInt(1)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**254),
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(200)
-    },
-    {
-      "in1": BigInt(200),
-      "in2": BigInt(2**256) - BigInt(1),
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**256) - BigInt(10)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(10),
-      "in2": BigInt(2**256) - BigInt(1),
-    },
-  ]
+  const test_cases = test_case.slt
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "slt_test.circom"),
@@ -183,40 +109,7 @@ describe("0x12 SLT test", function ()  {
 describe("0x13 SGT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(1),
-      "in2": BigInt(200)
-    },
-    {
-      "in1": BigInt(1000),
-      "in2": BigInt(200)
-    },
-    {
-      "in1": BigInt(2**254),
-      "in2": BigInt(2**256) - BigInt(1)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**254),
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(200)
-    },
-    {
-      "in1": BigInt(200),
-      "in2": BigInt(2**256) - BigInt(1),
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(2**256) - BigInt(10)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(10),
-      "in2": BigInt(2**256) - BigInt(1),
-    },
-  ]
+  const test_cases = test_case.sgt
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "sgt_test.circom"),
@@ -245,92 +138,10 @@ describe("0x13 SGT test", function ()  {
   }
 })
 
-// describe("0x13 SGT test", function ()  {
-//   let circuit;
-//   let witness;
-//   before( async () => {
-//     circuit = await wasm_tester(
-//       path.join(__dirname, "circuits", "sgt_test.circom"),
-//       {
-//         prime: CURVE_NAME
-//       }
-//     )
-//   })
-//   it("Should equal to one", async() => {
-//     const input = [200, 1]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [1, 200]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to one", async() => {
-//     const input = [
-//       Scalar.fromString("100"),
-//       MAX_VALUE - Scalar.fromString('1')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [
-//       MAX_VALUE - Scalar.fromString('1'),
-//       Scalar.fromString("100")
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-//   it("Should equal to one", async() => {
-//     const input = [
-//       MAX_VALUE - Scalar.fromString('1'),
-//       MAX_VALUE - Scalar.fromString('5')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(1)))
-//   })
-//   it("Should equal to zero", async() => {
-//     const input = [
-//       MAX_VALUE - Scalar.fromString('5'),
-//       MAX_VALUE - Scalar.fromString('1')
-//     ]
-//     witness = await circuit.calculateWitness({"in": input}, true)
-//     assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)))
-//     assert(Fr.eq(Fr.e(witness[1]), Fr.e(0)))
-//   })
-// })
-
 describe("0x14 EQ test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in1": BigInt(100),
-      "in2": BigInt(100)
-    },
-    {
-      "in1": BigInt(2**128),
-      "in2": BigInt(2**128)
-    },
-    {
-      "in1": BigInt(2**254),
-      "in2": BigInt(2)
-    },
-    {
-      "in1": BigInt(30),
-      "in2": BigInt(30 * 2**128)
-    },
-    {
-      "in1": BigInt(2**256) - BigInt(1),
-      "in2": BigInt(1)
-    },
-  ]
+  const test_cases = test_case.eq
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "eq_test.circom"),
@@ -362,20 +173,7 @@ describe("0x14 EQ test", function ()  {
 describe("0x15 ISZERO test", function ()  {
   let circuit;
   let witness;
-  const test_cases = [
-    {
-      "in": BigInt(0)
-    },
-    {
-      "in": BigInt(2**128)
-    },
-    {
-      "in": BigInt(2**254)
-    },
-    {
-      "in": BigInt(2**256) - BigInt(1)
-    }
-  ]
+  const test_cases = test_case.iszero
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "iszero_test.circom"),

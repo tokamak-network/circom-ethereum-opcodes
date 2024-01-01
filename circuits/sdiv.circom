@@ -56,20 +56,4 @@ template SDiv () {
     [xor_out * sub_out[0], xor_out * sub_out[1]],
     div_out
   );
-
-  log("sign_bit[0] = ", sign_bit[0]);
-  log("sign_bit[1] = ", sign_bit[1]);
-  log("two_complements[0][0] = ", two_complements[0][0]);
-  log("two_complements[0][1] = ", two_complements[0][1]);
-  log("two_complements[1][0] = ", two_complements[1][0]);
-  log("two_complements[1][1] = ", two_complements[1][1]);
-  log("abs_values[0][0] = ", abs_values[0][0]);
-  log("abs_values[0][1] = ", abs_values[0][1]);
-  log("abs_values[1][0] = ", abs_values[1][0]);
-  log("abs_values[1][1] = ", abs_values[1][1]);
-  log("div_out[0] = ", div_out[0]);
-  log("div_out[1] = ", div_out[1]);
-  log("xor_out = ", xor_out);
-  log("out[0] = ", out[0]);
-  log("out[1] = ", out[1]);
 }
