@@ -3,10 +3,14 @@
 You can compile all the circuits implemented in `@/circuits` by the following command.
 
 ```Bash
-$> cd test/circuits
-$> ./compile
+$> ./script/compile.sh
 ```
 
-This produces constraints(.json, .r1cs) in `test/circuits/constraints`, witness generator(.wasm) in `test/circuits/wasm` and `circuits/subcircuit-list.json`.
+This will generate constraints(.json, .r1cs) under `outputs/constraints`, witness generator(.wasm) in `outputs/wasm` and `outputs/subcircuit-list.json`.
 
-Moreover, you can run mocha test files.
+Moreover, you can run mocha test files by running the following commands.
+
+```Bash
+$> mocha test
+$> mocha test/1_arithmetic_op.js
+```

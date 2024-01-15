@@ -1,31 +1,71 @@
-pragma circom 2.0.5;
-include "../node_modules/circomlib/circuits/bitify.circom";
+pragma circom 2.1.6;
 include "shr.circom";
-include "exp.circom";
+include "templates/128bit/exp.circom";
+include "templates/comparators.circom";
+include "templates/128bit/divider.circom";
+include "../node_modules/circomlib/circuits/comparators.circom";
 
-
-// sar(in, n) == shr(in, n) + shl(2**NUM_BITS - 1, NUM_BITS - n) * SIGN_BIT
 
 template SAR () {
-  signal input in[2];
-  signal shl;
-  signal output out;
+  signal input in1[2], in2[2];  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+                                // in1 << in2
+
+
+  // 1. calculate msb
+  component msb_divider = Divider128();
+  msb_divider.in <== [in2[1], 2**127];
+  signal msb <== msb_divider.q;
+  msb * (1 - msb) === 0; // msb is either 0 or 1
+
+
+  // 2. calculate SHR
+  signal shr_out[2] <== SHR()(in1, in2);
+
+  // 3. calculate the supplied ones for upper 128 bits
+  // 3-1. determine if 0 <= in1 < 128
+  signal is_less_than_128 <== IsLessThanN()(in1, 128);
+
+  // 3-2. calculate the suppliments for out[1]
+  signal upper_suppliments[2];
+
+  // 3-2-1. calculate suppliments if 0 <= in1 < 128
+  signal temp1 <== Exp128()([2, in1[0]]);
+  signal temp2 <== Exp128()([2, 128 - in1[0]]);
+  upper_suppliments[0] <== (temp1 - 1) * temp2;
+
+  // 3-2-2. calculate suppliments if 128 <= in1
+  upper_suppliments[1] <== (2**128 - 1);
+
+  // 3-2-3. calculate the suppliment for out[1] if msb is set to 1
+  signal final_upper_suppliment <== is_less_than_128 * (upper_suppliments[0] - upper_suppliments[1]) + upper_suppliments[1];
   
-  var NUM_BITS = 253;
-  assert(in[0] <= NUM_BITS);
 
-  // To check sign bit
-  component num2Bits = Num2Bits(NUM_BITS);
-  num2Bits.in <== in[1];
+  // 4. calculate the supplied ones for lower 128 bits
+  // 4-1. determine if 0 <= in1 < 128 or 128 <= in1 < 256 or 256 <= in1
+  signal is_less_than_256 <== IsLessThanN()(in1, 256);
 
-  component shr = SHR();
-  shr.in[0] <== in[0];
-  shr.in[1] <== in[1];
+  // 4-2. calculate the suppliments for out[0]
+  signal lower_suppliments[2];
 
-  component exp = Exp();
-  exp.in[0] <== 2;
-  exp.in[1] <== 253 - in[0];
+  // 4-2-1. calculate suppliments if 0 <= in1 < 128
+  // suppliments are 0
 
-  shl <== 14474011154664524427946373126085988481658748083205070504932198000989141204992 - exp.out;
-  out <== shr.out + shl * num2Bits.out[NUM_BITS - 1];
+  // 4-2-2. calculate suppliments if 128 <= in1 < 256
+  signal temp3 <== Exp128()([2, in1[0] - 128]);
+  signal temp4 <== Exp128()([2, 256 - in1[0]]);
+  lower_suppliments[0] <== (temp3 - 1) * temp4;
+
+  // 4-2-3. calculate suppliments if 256 <= in1
+  lower_suppliments[1] <== (2**128 - 1);
+
+  // 4-2-4. calculate the suppliment for out[0] if msb is set to 1
+  signal temp5 <== is_less_than_256 * (lower_suppliments[0] - lower_suppliments[1]) + lower_suppliments[1];
+  signal final_lower_suppliment <== temp5 - is_less_than_128 * temp5;
+
+
+  // 5. calculate the final output
+  signal output out[2] <== [
+    shr_out[0] + final_lower_suppliment * msb,
+    shr_out[1] + final_upper_suppliment * msb
+  ]; // 256-bit integer consisting of two 128-bit integers; out[0]: lower, out[1]: upper
 }

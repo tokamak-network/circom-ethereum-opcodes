@@ -1,31 +1,41 @@
-pragma circom 2.0.5;
+pragma circom 2.1.6;
+include "add.circom";
+include "mul.circom";
+include "templates/128bit/divider.circom";
 include "../node_modules/circomlib/circuits/bitify.circom";
 
 template Exp () {
-    signal input in[2];
-    signal output out;
+    signal input in1[2], in2[2];
+    signal output out[2];
 
-    assert(in[1] <= 253); // 2^253 already overflows 253-bit unsigned integer; the possible maximum exponenet value is 252 
-                      // Since 2**253 can be described inside the circom integer range(the circom prime number is larger than 2**253), we set 253 as maximum value for other usages(SAR, etc).
+    var NUM_BITS = 256;
+    var NUM_EXP_BITS = 8; // an exponent can be represented into 8 bits since it is 255 at max
 
-    var NUM_BITS = 8; // An exponent can be represented into 8 bits since it is 252 at max. 
+    component divider = Divider128(); // ensure the exponent is always less 256
+    divider.in <== [in2[0], NUM_BITS];
 
-    signal exp[NUM_BITS];
-    signal inter[NUM_BITS];
-    signal temp[NUM_BITS]; // Used to detour a non-quadratic constraint error.
+    component num2Bits = Num2Bits(NUM_EXP_BITS);
+    num2Bits.in <== divider.r;
 
-    component num2Bits = Num2Bits(NUM_BITS);
-    num2Bits.in <== in[1];
+    signal exp[NUM_EXP_BITS][2];
+    signal inter[NUM_EXP_BITS][2];
+    signal temp[NUM_EXP_BITS][2]; // used to detour a non-quadratic constraint error
 
-    exp[0] <== in[0];
-    inter[0] <== 1;
-    for (var i = 0; i < NUM_BITS; i++) {
-        temp[i] <== num2Bits.out[i] * exp[i] + (1 - num2Bits.out[i]); // exponent_bin[i] == 1 ? 2^(i+1) : 1
-        if (i < NUM_BITS - 1) {
-            inter[i + 1] <== inter[i] * temp[i];
-            exp[i + 1] <== exp[i] * exp[i];
+
+    exp[0] <== in1;
+    inter[0] <== [1, 0];
+
+    for (var i = 0; i < NUM_EXP_BITS; i++) {
+        temp[i] <== [
+            num2Bits.out[i] * exp[i][0] + (1 - num2Bits.out[i]), 
+            num2Bits.out[i] * exp[i][1]
+        ]; // exponent_bin[i] == 1 ? n^(i+1) : 1
+
+        if (i < NUM_EXP_BITS - 1) {
+            inter[i + 1] <== Mul()(inter[i], temp[i]);
+            exp[i + 1] <== Mul()(exp[i], exp[i]);
         } else {
-            out <== inter[i] * temp[i];
+            out <== Mul()(inter[i], temp[i]);
         }
     }
 }

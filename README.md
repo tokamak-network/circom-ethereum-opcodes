@@ -16,46 +16,54 @@ This repository aims to implement zk-SNARK provable circuits of the EVM instruct
 ## Directory tree
 
 ```text
-.
-├── README.md
-├── circuits
-│   ├── add.circom
-│   ├── addmod.circom
-│   ├── and.circom
-│   ├── div.circom
-│   ├── eq.circom
-│   ├── exp.circom
-│   ├── gt.circom
-│   ├── iszero.circom
-│   ├── load.circom
-│   ├── lt.circom
-│   ├── mod.circom
-│   ├── mul.circom
-│   ├── mulmod.circom
-│   ├── not.circom
-│   ├── or.circom
-│   ├── sar.circom
-│   ├── sdiv.circom
-│   ├── sgt.circom
-│   ├── sha3.circom
-│   ├── shl.circom
-│   ├── shr.circom
-│   ├── shr_l.circom
-│   ├── shr_r.circom
-│   ├── slt.circom
-│   ├── smod.circom
-│   ├── sub.circom
-│   ├── wire-list.json
-│   └── xor.circom
-├── package-lock.json
-├── package.json
-└── test
-    ├── 0_special.js
-    ├── 1_arithmetic_op.js
-    ├── 2_comparators.js
-    ├── 3_bitwise_op.js
-    └── circuits/
+circuits
+├── templates
+│   ├── 128bit
+│   │   ├── adder.circom
+│   │   ├── divider.circom
+│   │   ├── exp.circom
+│   │   └── multiplier.circom
+│   ├── arithmetic_func.circom
+│   ├── bit_extractor.circom
+│   ├── comparators.circom
+│   ├── divider.circom
+│   └── two_to_the_power_of_n.circom
+├── integrated_circuits
+│   ├── alu.circom
+│   ├── mlu.circom
+│   └── selector_integrity_check.circom
+├── add.circom
+├── addmod.circom
+├── and.circom
+├── byte.circom
+├── div.circom
+├── eq.circom
+├── exp.circom
+├── gt.circom
+├── iszero.circom
+├── load.circom
+├── lt.circom
+├── mod.circom
+├── mul.circom
+├── mulmod.circom
+├── not.circom
+├── or.circom
+├── sar.circom
+├── sdiv.circom
+├── sgt.circom
+├── sha3.circom
+├── shl.circom
+├── shr.circom
+├── signextend.circom
+├── slt.circom
+├── smod.circom
+├── sub.circom
+└── xor.circom
 ```
+
+- `templates`: The set of circuits and functions frequently used by the sub-circuits. The circuits under `128bit` assume to take 128-bit length values.
+
+- `integrated_circuits`: The subcircuits are consolidated into two circuits (`alu` and `mlu`).
 
 ## Circuit design
 
@@ -65,32 +73,24 @@ To learn more about Circom, please check [the official document](https://docs.ci
 
 ### Input
 
-The circuits take one or multiple input signals called "`in`". An unary operator circuit takes "`in`" as a number, otherwise as an array.
+The circuits take one or multiple input signals such as "`in1`" or "`in2`".
 
-Input values should be 253-bit integers since Circom's finite field prime is 254-bit sized value; the finite field does not perform operators over any values greater than the prime number. Therefore we decided to set input signals as 253-bit size to execute operators with the input signals themselves, otherwise input values to circuit are remainders of them divided by the prime number.
+Due to limitation where the Circom's finite field prime (BN128) is 254-bit sized value, each circuit takes two 128-bit length values to be compatible with 32-byte words.
 
-Signed integers are represented as two's complement form.
+Signed integers are represented as two's complements.
 
 ### Output
 
 All the circuits return a single output except `load` for a special use.
 
-The output modulo the Circom prime might not the expected result if any intermediate or final result is greater than the prime number since the operators are performed over the finite field.
+The circuits returns two 128-bit values as output signals.
+
+### ALU and MLU
+
+The Arithmetic Logic Unit (ALU) and Mixed Logic Unit (MLU) are circuits that integrate several sub-circuits. They require an additional input signal called `selector` to choose which circuit will return the output signals. The ALU simply accumulates circuits, while the MLU minimizes constraints by collapsing duplicate circuit logics.
 
 ### Limitation
 
-There are a few limitations on our very first circuits.
-
-1. Integer incompability to EVM
-
-    The circuits should take 253-bit unsigned/signed integers to work as expected, however, EVM computes over 256-bit integers. We will figure it out to improve compatibility to EVM.
-
-2. SHA3
+- SHA3
 
     [Keccak256](https://github.com/vocdoni/keccak256-circom) hash function is implemented in Circom by [Vocdoni](https://github.com/vocdoni). However, it needs around 151k constraints by Keccak's zk-unfriendliness. Regarding no circuit has more than 1k constraints, Keccak circuit requires too much cost. We rather verify Keccak function in the verification phase of the modified Groth16.
-
-3. The prime number of finite field is less than MAX_VALUE of uint256.
-
-    Circom(2.0.5) performs over the finite field by the prime number; 2^253 < p < 2^254.
-
-    If input values are greater than the prime number, Circom automatically performs modulo by the prime. Therefore it would result in an unexpected output. For example, you cannot get the correct value of SHR(5, 2^254) because it actually computes the result of SHR(5 mod `p`, 2^254 mod `p`) which causes an wrong output. EVM still uses SHR operator to extract a function selector so most of transactions compute `VALUE_BIGGER_THAN_P` >> 224, for instance. SHR-H is designed to handle `VALUE_BIGGER_THAN_P` by dividing it by 2^8 before computing SHR so that the big value is fully representable. On the other hand, SHR-L takes an input smaller than the prime and there is no limitation to represent the input value itself over the finite field.

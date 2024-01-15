@@ -1,4 +1,7 @@
-pragma circom 2.0.5;
-include "../node_modules/circomlib/circuits/comparators.circom";
+pragma circom 2.1.6;
+include "lt.circom";
 
-component gt = GreaterThan(252);
+template GT () {
+  signal input in1[2], in2[2]; // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  signal output out[2] <== LT()(in2, in1);
+}

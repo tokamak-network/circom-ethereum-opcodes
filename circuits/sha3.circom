@@ -1,4 +1,4 @@
-pragma circom 2.0.5;
+pragma circom 2.1.6;
 
 // Dummy circuit: rather verify sha3 outside of circuits since proving sha3 overhead is humongous.
 template SHA3 () {

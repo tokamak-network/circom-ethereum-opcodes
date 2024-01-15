@@ -1,23 +1,29 @@
-pragma circom 2.0.5;
+pragma circom 2.1.6;
+include "../node_modules/circomlib/circuits/gates.circom";
 include "../node_modules/circomlib/circuits/bitify.circom";
 
 template Not () {
-  var NUM_BIT = 253;
+  signal input in[2];
 
-  signal input in;
-  signal output out;
+  var NUM_BIT = 128;
 
-  var i;
-  // Input -> bit num2bits
-  component num2bits;
+  component num_to_bits[2];
+  num_to_bits[0] = Num2Bits(NUM_BIT);
+  num_to_bits[1] = Num2Bits(NUM_BIT);
+  num_to_bits[0].in <== in[0];
+  num_to_bits[1].in <== in[1];
 
-  num2bits = Num2Bits(NUM_BIT);
-  num2bits.in <== in;
+  component bits_to_num[2];
+  bits_to_num[0] = Bits2Num(NUM_BIT);
+  bits_to_num[1] = Bits2Num(NUM_BIT);
 
-  component bits2num = Bits2Num(NUM_BIT);
   for (var i = 0; i < NUM_BIT; i++) {
-    // Not op
-    bits2num.in[i] <== 1 + num2bits.out[i] - 2 * num2bits.out[i];
+    bits_to_num[0].in[i] <== NOT()(num_to_bits[0].out[i]); // NOT gate
+    bits_to_num[1].in[i] <== NOT()(num_to_bits[1].out[i]); // NOT gate
   }
-  out <== bits2num.out;
+
+  signal output out[2] <== [
+    bits_to_num[0].out,
+    bits_to_num[1].out
+  ];
 }
