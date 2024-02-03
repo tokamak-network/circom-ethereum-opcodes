@@ -3,7 +3,7 @@
 You can compile all the circuits implemented in `@/circuits` by the following command.
 
 ```Bash
-$> ./script/compile.sh
+$> ./scripts/compile.sh
 ```
 
 This will generate constraints(.json, .r1cs) under `outputs/constraints`, witness generator(.wasm) in `outputs/wasm` and `outputs/subcircuit-list.json`.
