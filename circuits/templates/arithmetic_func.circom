@@ -9,7 +9,7 @@ function euclidean_div (a, b) {
 function _div1 (a, b) {
     // assume b[1] is not zero
     var r[2] = a;
-    var q = r[1] / b[1];
+    var q = r[1] \ b[1]; //integer division
 
     while (r[0] < q * b[0]) {
         r[0] = r[0] + 2**128;
