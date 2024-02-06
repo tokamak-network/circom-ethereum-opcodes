@@ -158,10 +158,6 @@ const div = [
     "in2": BigInt(2**128) + BigInt(8)
   },
   {
-    "in1": BigInt(3*(2**128))+BigInt(6),
-    "in2": BigInt((2**128))+BigInt(2)
-  },
-  {
     "in1": BigInt(3) * BigInt(2**128) + BigInt(6),
     "in2": BigInt(2) * BigInt(2**128) + BigInt(5)
   },
@@ -176,6 +172,10 @@ const div = [
   {
     "in1": (BigInt(2**128) - BigInt(2)) * BigInt(2**128) + BigInt(2**128) - BigInt(2),
     "in2": BigInt(3) * BigInt(2**128) - BigInt(1)
+  },
+  {
+    "in1": (BigInt(2**128) - BigInt(2)) * BigInt(2**128) + BigInt(2**128) - BigInt(2),
+    "in2": BigInt(3) * BigInt(2**128) - BigInt(2)
   }
 ]
 
