@@ -14,5 +14,8 @@ template Mod () {
     signal inter[2] <== Mul()(div_out, in2);
     
     signal temp[2] <== Sub()(in1, inter);
-    signal output out[2] <== Mul()([1 - is_zero_out[0], 0], temp);
+    signal output out[2] <== [
+        temp[0] * (1 - is_zero_out[0]),
+        temp[1] * (1 - is_zero_out[0])
+    ];
 }

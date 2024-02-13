@@ -1,6 +1,7 @@
 pragma circom 2.1.6;
 include "../../../node_modules/circomlib/circuits/comparators.circom";
 
+//in[0] = q * in[1] + r
 template Divider128 () {
     signal input in[2];
 
@@ -30,3 +31,24 @@ template Divider128 () {
     lt_r.out * lt_in1.out === 1;
 }
 
+template Divider (n) {
+    signal input in;
+
+    var divisor = 2**n;
+
+    signal output r <-- in % divisor;
+    signal output q <-- in \ divisor;
+
+    in === q * divisor + r;
+
+    // Ensure 0 <= r < divisor;
+    component lt_r = LessEqThan(n);
+    lt_r.in[0] <== 0;
+    lt_r.in[1] <== r;
+
+    component lt_divisor = LessThan(n);
+    lt_divisor.in[0] <== r;
+    lt_divisor.in[1] <== divisor;
+
+    lt_r.out * lt_divisor.out === 1;
+}

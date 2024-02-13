@@ -46,6 +46,14 @@ const mul = [
     "in1": BigInt(2**256) - BigInt(1),
     "in2": BigInt(2)
   },
+  {
+    "in1": BigInt(2**256) - BigInt(1),
+    "in2": BigInt(0)
+  },
+  {
+    "in1": BigInt(2**128) - BigInt(1),
+    "in2": BigInt(2**128)
+  }
 ]
 
 const sub = [
