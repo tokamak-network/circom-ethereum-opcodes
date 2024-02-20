@@ -23,7 +23,7 @@ template Div () {
     signal eq[2] <== Eq()(res, in1);
     eq[0] === 1;
 
-    //Assume divisor is not 0
+    //@todo: if divisor == 0 { out = 0 }
     //Ensure 0 <= remainder < in2
     signal lt_r[2] <== LEqT()([0,0],remainder);
     signal lt_divisor[2] <== LT()(remainder, in2);
