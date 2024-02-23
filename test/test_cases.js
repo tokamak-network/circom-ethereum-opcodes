@@ -19,6 +19,10 @@ const add = [
     "in1": BigInt(2**256) - BigInt(1),
     "in2": BigInt(1)
   },
+  {
+    "in1": BigInt(2**256) - BigInt(1),
+    "in2": BigInt(2)
+  }
 ]
 
 const mul = [
@@ -406,6 +410,11 @@ const addmod = [
     "in2": BigInt(0),
     "in3": BigInt(10) * BigInt(2**128),
   },
+  {
+    "in1": BigInt(2**256) - BigInt(1),
+    "in2": BigInt(2),
+    "in3": BigInt(10)
+  }
 ]
 
 const mulmod = [
@@ -485,6 +494,11 @@ const mulmod = [
     "in2": BigInt(0),
     "in3": BigInt(10) * BigInt(2**128),
   },
+  {
+    "in1": BigInt(2**256) - BigInt(1),
+    "in2": BigInt(2),
+    "in3": BigInt(10)
+  }
 ]
 
 const exp = [
