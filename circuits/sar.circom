@@ -12,8 +12,8 @@ template SAR () {
 
 
   // 1. calculate msb
-  component msb_divider = Divider128();
-  msb_divider.in <== [in2[1], 2**127];
+  component msb_divider = Divider(127);
+  msb_divider.in <== in2[1];
   signal msb <== msb_divider.q;
   msb * (1 - msb) === 0; // msb is either 0 or 1
 
@@ -23,7 +23,7 @@ template SAR () {
 
   // 3. calculate the supplied ones for upper 128 bits
   // 3-1. determine if 0 <= in1 < 128
-  signal is_less_than_128 <== IsLessThanN()(in1, 128);
+  signal is_less_than_128 <== IsLessThanExp(7)(in1);
 
   // 3-2. calculate the suppliments for out[1]
   signal upper_suppliments[2];
@@ -42,7 +42,7 @@ template SAR () {
 
   // 4. calculate the supplied ones for lower 128 bits
   // 4-1. determine if 0 <= in1 < 128 or 128 <= in1 < 256 or 256 <= in1
-  signal is_less_than_256 <== IsLessThanN()(in1, 256);
+  signal is_less_than_256 <== IsLessThanExp(8)(in1);
 
   // 4-2. calculate the suppliments for out[0]
   signal lower_suppliments[2];
@@ -51,8 +51,8 @@ template SAR () {
   // suppliments are 0
 
   // 4-2-2. calculate suppliments if 128 <= in1 < 256
-  signal temp3 <== Exp128()([2, in1[0] - 128]);
-  signal temp4 <== Exp128()([2, 256 - in1[0]]);
+  signal temp3 <== BinaryModExp128()(in1[0] - 128);
+  signal temp4 <== BinaryModExp128()(256 - in1[0]);
   lower_suppliments[0] <== (temp3 - 1) * temp4;
 
   // 4-2-3. calculate suppliments if 256 <= in1

@@ -1,5 +1,4 @@
 pragma circom 2.1.6;
-include "iszero.circom";
 include "templates/comparators.circom";
 include "templates/128bit/exp.circom";
 include "templates/128bit/divider.circom";
@@ -14,7 +13,7 @@ template _SHL () {
   signal is_zero_out <== IsZero()(in1);
   
   // 2) in1 > 0: out = in2 << in1
-  signal exp1 <== BinaryExp128()(128*(1-is_zero_out) - in1);
+  signal exp1 <== BinaryExp128()(128 - in1);
   signal exp2 <== BinaryExp128()(in1);
 
   component upper_divider = Divider128();
