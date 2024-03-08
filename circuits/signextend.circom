@@ -6,7 +6,7 @@ include "templates/128bit/divider.circom";
 include "templates/two_to_the_power_of_n.circom";
 include "../node_modules/circomlib/circuits/comparators.circom";
 
-// t = 256 - 8 * (1 + in0)
+// t = 256 - 8 * (1 + in1)
 // out = is_less_than_31 ?? ((2**256 - 2**t) * in1 at index of t + in % 2**t) : in2
 
 template _SignExtend () {
@@ -37,6 +37,10 @@ template SignExtend () {
 
   // check if in1 < 31
   signal is_less_than_31 <== IsLessThanN()(in1, 31);
+
+  //change to
+  //check in1[1] == 0
+  //check in1[0] < 31
 
   signal _sign_extend_out[2] <== _SignExtend()(in1, in2);
 
