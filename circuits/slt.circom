@@ -9,13 +9,13 @@ include "../node_modules/circomlib/circuits/gates.circom";
 template SLT () {
   signal input in1[2], in2[2]; // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
 
-  component divider1 = Divider128();
-  divider1.in <== [in1[1], 2**127];
+  component divider1 = Divider(127);
+  divider1.in <== in1[1];
   signal first_msb <== divider1.q;
   first_msb * (1 - first_msb) === 0;
 
-  component divider2 = Divider128();
-  divider2.in <== [in2[1], 2**127];
+  component divider2 = Divider(127);
+  divider2.in <== in2[1];
   signal second_msb <== divider2.q;
   second_msb * (1 - second_msb) === 0;
 

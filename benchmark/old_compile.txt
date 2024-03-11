@@ -1,0 +1,406 @@
+[32mtemplate instances[0m: 1
+non-linear constraints: 0
+linear constraints: 32
+public inputs: 32
+private inputs: 0
+public outputs: 32
+wires: 65
+labels: 65
+[32mWritten successfully:[0m ../outputs/constraints/load/load_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/load/load_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 1
+[32mWritten successfully:[0m ../outputs/wasm/load_test_js/load_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 7
+non-linear constraints: 518
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 519
+labels: 571
+[32mWritten successfully:[0m ../outputs/constraints/add/add_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/add/add_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 7
+[32mWritten successfully:[0m ../outputs/wasm/add_test_js/add_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 9
+non-linear constraints: 4674
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 4643
+labels: 5052
+[32mWritten successfully:[0m ../outputs/constraints/mul/mul_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/mul/mul_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 9
+[32mWritten successfully:[0m ../outputs/wasm/mul_test_js/mul_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 8
+non-linear constraints: 1036
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 1033
+labels: 1147
+[32mWritten successfully:[0m ../outputs/constraints/sub/sub_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/sub/sub_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 8
+[32mWritten successfully:[0m ../outputs/wasm/sub_test_js/sub_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 13
+non-linear constraints: 9876
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 9806
+labels: 10723
+[32mWritten successfully:[0m ../outputs/constraints/div/div_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/div/div_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 13
+[32mWritten successfully:[0m ../outputs/wasm/div_test_js/div_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 1
+non-linear constraints: 0
+linear constraints: 0
+public inputs: 1
+private inputs: 0
+public outputs: 1
+wires: 3
+labels: 3
+[32mWritten successfully:[0m ../outputs/constraints/sha3/sha3_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/sha3/sha3_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 1
+[32mWritten successfully:[0m ../outputs/wasm/sha3_test_js/sha3_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 16
+non-linear constraints: 25449
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 25257
+labels: 27703
+[32mWritten successfully:[0m ../outputs/constraints/sdiv/sdiv_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/sdiv/sdiv_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 16
+[32mWritten successfully:[0m ../outputs/wasm/sdiv_test_js/sdiv_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 15
+non-linear constraints: 20265
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 20115
+labels: 21997
+[32mWritten successfully:[0m ../outputs/constraints/mod/mod_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/mod/mod_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 15
+[32mWritten successfully:[0m ../outputs/wasm/mod_test_js/mod_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 17
+non-linear constraints: 35838
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 35566
+labels: 38977
+[32mWritten successfully:[0m ../outputs/constraints/smod/smod_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/smod/smod_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 17
+[32mWritten successfully:[0m ../outputs/wasm/smod_test_js/smod_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 16
+non-linear constraints: 20783
+linear constraints: 0
+public inputs: 6
+private inputs: 0
+public outputs: 2
+wires: 20631
+labels: 22577
+[32mWritten successfully:[0m ../outputs/constraints/addmod/addmod_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/addmod/addmod_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 16
+[32mWritten successfully:[0m ../outputs/wasm/addmod_test_js/addmod_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 16
+non-linear constraints: 24939
+linear constraints: 0
+public inputs: 6
+private inputs: 0
+public outputs: 2
+wires: 24755
+labels: 27058
+[32mWritten successfully:[0m ../outputs/constraints/mulmod/mulmod_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/mulmod/mulmod_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 16
+[32mWritten successfully:[0m ../outputs/wasm/mulmod_test_js/mulmod_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 11
+non-linear constraints: 70393
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 69855
+labels: 76106
+[32mWritten successfully:[0m ../outputs/constraints/exp/exp_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/exp/exp_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 11
+[32mWritten successfully:[0m ../outputs/wasm/exp_test_js/exp_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 6
+non-linear constraints: 262
+linear constraints: 1
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 266
+labels: 286
+[32mWritten successfully:[0m ../outputs/constraints/lt/lt_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/lt/lt_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 6
+[32mWritten successfully:[0m ../outputs/wasm/lt_test_js/lt_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 7
+non-linear constraints: 262
+linear constraints: 1
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 266
+labels: 292
+[32mWritten successfully:[0m ../outputs/constraints/gt/gt_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/gt/gt_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 7
+[32mWritten successfully:[0m ../outputs/wasm/gt_test_js/gt_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 10
+non-linear constraints: 784
+linear constraints: 1
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 782
+labels: 854
+[32mWritten successfully:[0m ../outputs/constraints/slt/slt_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/slt/slt_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 10
+[32mWritten successfully:[0m ../outputs/wasm/slt_test_js/slt_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 11
+non-linear constraints: 784
+linear constraints: 1
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 782
+labels: 860
+[32mWritten successfully:[0m ../outputs/constraints/sgt/sgt_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/sgt/sgt_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 11
+[32mWritten successfully:[0m ../outputs/wasm/sgt_test_js/sgt_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 3
+non-linear constraints: 5
+linear constraints: 1
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 11
+labels: 21
+[32mWritten successfully:[0m ../outputs/constraints/eq/eq_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/eq/eq_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 3
+[32mWritten successfully:[0m ../outputs/wasm/eq_test_js/eq_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 2
+non-linear constraints: 5
+linear constraints: 1
+public inputs: 2
+private inputs: 0
+public outputs: 2
+wires: 9
+labels: 13
+[32mWritten successfully:[0m ../outputs/constraints/iszero/iszero_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/iszero/iszero_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 2
+[32mWritten successfully:[0m ../outputs/wasm/iszero_test_js/iszero_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 4
+non-linear constraints: 768
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 769
+labels: 1549
+[32mWritten successfully:[0m ../outputs/constraints/and/and_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/and/and_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 4
+[32mWritten successfully:[0m ../outputs/wasm/and_test_js/and_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 4
+non-linear constraints: 768
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 769
+labels: 1549
+[32mWritten successfully:[0m ../outputs/constraints/or/or_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/or/or_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 4
+[32mWritten successfully:[0m ../outputs/wasm/or_test_js/or_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 4
+non-linear constraints: 768
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 769
+labels: 1549
+[32mWritten successfully:[0m ../outputs/constraints/xor/xor_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/xor/xor_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 4
+[32mWritten successfully:[0m ../outputs/wasm/xor_test_js/xor_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 4
+non-linear constraints: 256
+linear constraints: 2
+public inputs: 2
+private inputs: 0
+public outputs: 2
+wires: 259
+labels: 1033
+[32mWritten successfully:[0m ../outputs/constraints/not/not_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/not/not_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 4
+[32mWritten successfully:[0m ../outputs/wasm/not_test_js/not_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 11
+non-linear constraints: 2121
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 2106
+labels: 2326
+[32mWritten successfully:[0m ../outputs/constraints/shl/shl_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/shl/shl_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 11
+[32mWritten successfully:[0m ../outputs/wasm/shl_test_js/shl_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 10
+non-linear constraints: 2120
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 2105
+labels: 2322
+[32mWritten successfully:[0m ../outputs/constraints/shr/shr_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/shr/shr_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 10
+[32mWritten successfully:[0m ../outputs/wasm/shr_test_js/shr_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 12
+non-linear constraints: 5039
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 4997
+labels: 5543
+[32mWritten successfully:[0m ../outputs/constraints/sar/sar_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/sar/sar_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 12
+[32mWritten successfully:[0m ../outputs/wasm/sar_test_js/sar_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 18
+non-linear constraints: 8408
+linear constraints: 0
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 8339
+labels: 9233
+[32mWritten successfully:[0m ../outputs/constraints/signextend/signextend_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/signextend/signextend_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 18
+[32mWritten successfully:[0m ../outputs/wasm/signextend_test_js/signextend_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 9
+non-linear constraints: 2102
+linear constraints: 1
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 2089
+labels: 2277
+[32mWritten successfully:[0m ../outputs/constraints/byte/byte_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/byte/byte_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 9
+[32mWritten successfully:[0m ../outputs/wasm/byte_test_js/byte_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 35
+non-linear constraints: 224330
+linear constraints: 0
+public inputs: 7
+private inputs: 0
+public outputs: 2
+wires: 222599
+labels: 243534
+[32mWritten successfully:[0m ../outputs/constraints/alu/alu_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/alu/alu_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 35
+[32mWritten successfully:[0m ../outputs/wasm/alu_test_js/alu_test.wasm
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 26
+non-linear constraints: 10610
+linear constraints: 0
+public inputs: 5
+private inputs: 0
+public outputs: 2
+wires: 10516
+labels: 12439
+[32mWritten successfully:[0m ../outputs/constraints/mlu/mlu_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/mlu/mlu_test_constraints.json
+[32mEverything went okay[0m
+[32mtemplate instances[0m: 26
+[32mWritten successfully:[0m ../outputs/wasm/mlu_test_js/mlu_test.wasm
+[32mEverything went okay[0m

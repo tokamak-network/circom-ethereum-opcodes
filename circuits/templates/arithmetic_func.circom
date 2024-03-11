@@ -9,9 +9,16 @@ function euclidean_div (a, b) {
 function _div1 (a, b) {
     // assume b[1] is not zero
     var r[2] = a;
-    var q = r[1] / b[1];
+    var q = r[1] \ b[1]; //integer division
 
-    while (r[0] < q * b[0]) {
+    //@Todo: need another approach to find q
+    // while (q > 2**126 && b[0] > 2**126) { // q,b[0] < 2^128, q*b[0] must be <2^254 (circom field = 2^254)
+    //     r0 = r[0] + 2**128;
+    //     r[1] = r[1] - 1;
+    //     q = q - 1;
+    // }
+
+    while (r[0] < q * b[0]) { //problem: q * b[0] < 2^256
         r[0] = r[0] + 2**128;
         r[1] = r[1] - 1;
         q = q - 1;

@@ -1,5 +1,6 @@
 pragma circom 2.1.6;
 include "../../../node_modules/circomlib/circuits/bitify.circom";
+include "../../../node_modules/circomlib/circuits/comparators.circom";
 include "divider.circom";
 
 template Exp128 () {
@@ -35,4 +36,67 @@ template Exp128 () {
             out <== mod2.r;
         }
     }
+}
+
+template BinaryExp128 () {
+    signal input in;
+    signal output out;
+
+    var NUM_EXP_BITS = 7;
+    var NUM_BITS = 2**NUM_EXP_BITS;
+
+    signal is_zero_out <== IsZero()(NUM_BITS - in);
+
+    signal exp[NUM_EXP_BITS];
+    signal inter[NUM_EXP_BITS];
+    signal temp[NUM_EXP_BITS]; // Used to detour a non-quadratic constraint error.
+
+    component n2b = Num2Bits(NUM_EXP_BITS);
+    n2b.in <== (1 - is_zero_out) * in;
+
+    exp[0] <== 2;
+    inter[0] <== 1;
+
+    for (var i = 0; i < NUM_EXP_BITS; i++){
+        temp[i] <== n2b.out[i] * exp[i] + (1 - n2b.out[i]);
+        if(i < NUM_EXP_BITS - 1) {
+            inter[i+1] <== inter[i] * temp[i];
+            exp[i+1] <== exp[i] * exp[i];
+        } else {
+            out <== inter[i] * temp[i];
+        }
+    }
+
+}
+
+template BinaryModExp128 () {
+    signal input in;
+    signal output out;
+
+    var NUM_EXP_BITS = 7;
+    var NUM_BITS = 2**NUM_EXP_BITS;
+
+    component mod = Divider(NUM_EXP_BITS);
+    mod.in <== in;
+
+    signal exp[NUM_EXP_BITS];
+    signal inter[NUM_EXP_BITS];
+    signal temp[NUM_EXP_BITS]; // Used to detour a non-quadratic constraint error.
+
+    component n2b = Num2Bits(NUM_EXP_BITS);
+    n2b.in <== mod.r;
+
+    exp[0] <== 2;
+    inter[0] <== 1;
+
+    for (var i = 0; i < NUM_EXP_BITS; i++){
+        temp[i] <== n2b.out[i] * exp[i] + (1 - n2b.out[i]);
+        if(i < NUM_EXP_BITS - 1) {
+            inter[i+1] <== inter[i] * temp[i];
+            exp[i+1] <== exp[i] * exp[i];
+        } else {
+            out <== inter[i] * temp[i];
+        }
+    }
+
 }

@@ -264,7 +264,7 @@ describe("0x08 ADDMOD test", function ()  {
     const in1 = split256BitInteger(test_case.in1)
     const in2 = split256BitInteger(test_case.in2)
     const in3 = split256BitInteger(test_case.in3)
-    const res = test_case.in3 != 0 ? ((test_case.in1 + test_case.in2) % 2n**256n) % test_case.in3 : 0
+    const res = test_case.in3 != 0 ? ((test_case.in1 + test_case.in2)) % test_case.in3 : 0
     const out = split256BitInteger(res)
     it(`(0x${test_case.in1.toString(16).padStart(64, '0')} 
     + 0x${test_case.in2.toString(16).padStart(64, '0')})
@@ -301,7 +301,7 @@ describe("0x09 MULMOD test", function ()  {
     const in1 = split256BitInteger(test_case.in1)
     const in2 = split256BitInteger(test_case.in2)
     const in3 = split256BitInteger(test_case.in3)
-    const res = test_case.in3 != 0 ? ((test_case.in1 * test_case.in2) % 2n**256n) % test_case.in3 : 0
+    const res = test_case.in3 != 0 ? ((test_case.in1 * test_case.in2)) % test_case.in3 : 0
     const out = split256BitInteger(res)
     it(`(0x${test_case.in1.toString(16).padStart(64, '0')} 
     * 0x${test_case.in2.toString(16).padStart(64, '0')})

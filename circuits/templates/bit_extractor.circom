@@ -8,12 +8,12 @@ template _GetBitByIndex () {
   signal input in, pos;
 
   //(in >> pos) & 1 == (in // 2**pos) % 2
-  signal exp <== Exp128()([2, pos]);
+  signal exp <== BinaryExp128()(pos);
   component divider1 = Divider128();
   divider1.in <== [in, exp];
 
-  component divider2 = Divider128();
-  divider2.in <== [divider1.q, 2];
+  component divider2 = Divider(1);
+  divider2.in <== divider1.q;
 
   signal output out <== divider2.r;
 }
@@ -21,8 +21,8 @@ template _GetBitByIndex () {
 template GetBitByIndex () { // index 0 ~ 255; 0 is the least significant bit
   signal input in[2], index;
 
-  component divider = Divider128();
-  divider.in <== [index, 128];
+  component divider = Divider(7);
+  divider.in <== index;
 
   signal selector <== IsZero()(divider.q);
   signal pos <== divider.r;

@@ -19,6 +19,10 @@ const add = [
     "in1": BigInt(2**256) - BigInt(1),
     "in2": BigInt(1)
   },
+  {
+    "in1": BigInt(2**256) - BigInt(1),
+    "in2": BigInt(2)
+  }
 ]
 
 const mul = [
@@ -46,6 +50,14 @@ const mul = [
     "in1": BigInt(2**256) - BigInt(1),
     "in2": BigInt(2)
   },
+  {
+    "in1": BigInt(2**256) - BigInt(1),
+    "in2": BigInt(0)
+  },
+  {
+    "in1": BigInt(2**128) - BigInt(1),
+    "in2": BigInt(2**128)
+  }
 ]
 
 const sub = [
@@ -77,6 +89,14 @@ const sub = [
     "in1": BigInt(0),
     "in2": BigInt(1)
   },
+  {
+    "in1": BigInt(2**128),
+    "in2": BigInt(1)
+  },
+  {
+    "in1": BigInt(2**128),
+    "in2": BigInt(2**128) - BigInt(1)
+  }
 ]
 
 const div = [
@@ -141,6 +161,34 @@ const div = [
     "in1": BigInt(0),
     "in2": BigInt(10) << 128n
   },
+  {
+    "in1": BigInt(3*(2**128))+BigInt(6),
+    "in2": BigInt((2**128))+BigInt(8)
+  },
+  {
+    "in1": BigInt(3) * BigInt(2**128) + BigInt(6),
+    "in2": BigInt(2**128) + BigInt(8)
+  },
+  {
+    "in1": BigInt(3) * BigInt(2**128) + BigInt(6),
+    "in2": BigInt(2) * BigInt(2**128) + BigInt(5)
+  },
+  {
+    "in1": (BigInt(2**127) - BigInt(1)) * BigInt(2**128) + BigInt(2**128) - BigInt(1),
+    "in2": BigInt(2**128) - BigInt(1)
+  },
+  {
+    "in1": (BigInt(2**128) - BigInt(2)) * BigInt(2**128) + BigInt(2**128) - BigInt(2),
+    "in2": BigInt(2**128) - BigInt(1)
+  },
+  {
+    "in1": (BigInt(2**128) - BigInt(2)) * BigInt(2**128) + BigInt(2**128) - BigInt(2),
+    "in2": BigInt(3) * BigInt(2**128) - BigInt(1)
+  },
+  {
+    "in1": (BigInt(2**128) - BigInt(2)) * BigInt(2**128) + BigInt(2**128) - BigInt(2),
+    "in2": BigInt(3) * BigInt(2**128) - BigInt(2)
+  }
 ]
 
 const sdiv = [
@@ -362,6 +410,11 @@ const addmod = [
     "in2": BigInt(0),
     "in3": BigInt(10) * BigInt(2**128),
   },
+  {
+    "in1": BigInt(2**256) - BigInt(1),
+    "in2": BigInt(2),
+    "in3": BigInt(10)
+  }
 ]
 
 const mulmod = [
@@ -441,6 +494,11 @@ const mulmod = [
     "in2": BigInt(0),
     "in3": BigInt(10) * BigInt(2**128),
   },
+  {
+    "in1": BigInt(2**256) - BigInt(1),
+    "in2": BigInt(2),
+    "in3": BigInt(10)
+  }
 ]
 
 const exp = [

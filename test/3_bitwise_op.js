@@ -161,7 +161,7 @@ describe("0x1A BYTE test", function ()  {
     const in2 = split256BitInteger(test_case.in2)
     const res = getByte(test_case.in1, test_case.in2)
     const out = split256BitInteger(res)
-    it(`Extract a single byte from 0x${test_case.in2.toString(16).padStart(64, '0')} at index ${test_case.in1 * 8n} 
+    it(`Extract a single byte from 0x${test_case.in2.toString(16).padStart(64, '0')} at index ${test_case.in1} 
                                = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
