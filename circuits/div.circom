@@ -29,7 +29,6 @@ template Div () {
     rc_remainder[0] <== (1 - is_zero_out[0])*remainder[0];
     rc_remainder[1] <== (1 - is_zero_out[0])*remainder[1];
 
-    //@todo: if divisor == 0 { out = 0 }
     //Ensure 0 <= rc_remainder < rc_divisor
     signal lt_r[2] <== LEqT()([0,0],rc_remainder);
     signal lt_divisor[2] <== LT()(rc_remainder, rc_divisor);

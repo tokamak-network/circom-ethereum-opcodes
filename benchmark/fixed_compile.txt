@@ -96,60 +96,60 @@ labels: 11406
 [32mtemplate instances[0m: 26
 [32mWritten successfully:[0m ../outputs/wasm/sdiv_test_js/sdiv_test.wasm
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 21
-non-linear constraints: 2102
+[32mtemplate instances[0m: 22
+non-linear constraints: 2111
 linear constraints: 0
 public inputs: 4
 private inputs: 0
 public outputs: 2
-wires: 2089
-labels: 2324
+wires: 2096
+labels: 2342
 [32mWritten successfully:[0m ../outputs/constraints/mod/mod_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/mod/mod_test_constraints.json
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 21
+[32mtemplate instances[0m: 22
 [32mWritten successfully:[0m ../outputs/wasm/mod_test_js/mod_test.wasm
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 25
-non-linear constraints: 10431
+[32mtemplate instances[0m: 26
+non-linear constraints: 10440
 linear constraints: 0
 public inputs: 4
 private inputs: 0
 public outputs: 2
-wires: 10344
-labels: 11388
+wires: 10351
+labels: 11406
 [32mWritten successfully:[0m ../outputs/constraints/smod/smod_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/smod/smod_test_constraints.json
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 25
+[32mtemplate instances[0m: 26
 [32mWritten successfully:[0m ../outputs/wasm/smod_test_js/smod_test.wasm
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 22
-non-linear constraints: 2620
+[32mtemplate instances[0m: 23
+non-linear constraints: 2629
 linear constraints: 0
 public inputs: 6
 private inputs: 0
 public outputs: 2
-wires: 2605
-labels: 2894
+wires: 2612
+labels: 2912
 [32mWritten successfully:[0m ../outputs/constraints/addmod/addmod_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/addmod/addmod_test_constraints.json
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 22
+[32mtemplate instances[0m: 23
 [32mWritten successfully:[0m ../outputs/wasm/addmod_test_js/addmod_test.wasm
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 22
-non-linear constraints: 3154
+[32mtemplate instances[0m: 23
+non-linear constraints: 3163
 linear constraints: 0
 public inputs: 6
 private inputs: 0
 public outputs: 2
-wires: 3131
-labels: 3482
+wires: 3138
+labels: 3500
 [32mWritten successfully:[0m ../outputs/constraints/mulmod/mulmod_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/mulmod/mulmod_test_constraints.json
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 22
+[32mtemplate instances[0m: 23
 [32mWritten successfully:[0m ../outputs/wasm/mulmod_test_js/mulmod_test.wasm
 [32mEverything went okay[0m
 [32mtemplate instances[0m: 13
@@ -377,13 +377,13 @@ labels: 698
 [32mWritten successfully:[0m ../outputs/wasm/byte_test_js/byte_test.wasm
 [32mEverything went okay[0m
 [32mtemplate instances[0m: 67
-non-linear constraints: 56800
+non-linear constraints: 56836
 linear constraints: 0
 public inputs: 7
 private inputs: 0
 public outputs: 2
-wires: 56245
-labels: 62371
+wires: 56273
+labels: 62443
 [32mWritten successfully:[0m ../outputs/constraints/alu/alu_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/alu/alu_test_constraints.json
 [32mEverything went okay[0m

@@ -8,7 +8,8 @@ function euclidean_div (a, b) {
 
 function _div1 (a, b) {
     // assume b[1] is not zero
-    var q = a[1] \ b[1]; //integer division
+    var r[2] = a;
+    var q = r[1] \ b[1]; //integer division
 
     var high_q[2];
     var temp;
@@ -28,7 +29,7 @@ function _div1 (a, b) {
         high_q = mul128(mid, b[0]);
         temp = mid*b[1] + high_q[1];
 
-        if (a[1] > temp || ((a[1] == temp) && (a[0] >= high_q[0]))){
+        if (r[1] > temp || ((r[1] == temp) && (r[0] >= high_q[0]))){
             result = mid;
             left = mid + 1;
         }
@@ -40,9 +41,14 @@ function _div1 (a, b) {
     high_q = mul128(result, b[0]);
     temp = result*b[1] + high_q[1];
 
+    if(r[1] > temp && r[0] < high_q[0]){
+        r[1] = r[1] - 1;
+        r[0] = r[0] + 2**128;
+    }
+
     return [
         [result, 0], // quotient
-        [a[0] - high_q[0], a[1] - temp] // remainder
+        [r[0] - high_q[0], r[1] - temp] // remainder
     ];
 }
 
