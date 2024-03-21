@@ -9,14 +9,9 @@ include "templates/arithmetic_func.circom";
 template Div () {
     signal input in1[2], in2[2];
 
-    var temp[2] = [0, 0];
-    if (in2[0] == 0 && in2[1] == 0) {
-        temp = add(in1, [1, 0]);
-    }
-
     signal is_zero_out[2] <== IsZero256()(in2);
 
-    var q[2][2] = div(in1, add(in2, temp)); //div 
+    var q[2][2] = div(in1, in2); //div 
     signal output out[2] <-- q[0];
     signal remainder[2] <-- q[1];
 
