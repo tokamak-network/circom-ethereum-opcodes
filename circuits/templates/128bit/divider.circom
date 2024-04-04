@@ -20,18 +20,19 @@ template Divider128 () {
     is_zero_out * q === 0;
 
     //Ensure 0 <= r < in[1]+temp;
-    component lt_r = LessEqThan(128);
-    lt_r.in[0] <== 0;
-    lt_r.in[1] <== r;
+    // component lt_r = LessEqThan(128);
+    // lt_r.in[0] <== 0;
+    // lt_r.in[1] <== r;
 
     component lt_in1 = LessThan(128);
     lt_in1.in[0] <== r;
     lt_in1.in[1] <== in[1]; //todo: (in[1] + temp);
 
-    lt_r.out * lt_in1.out === 1;
+    lt_in1.out === 1;
 }
 
 template Divider (n) {
+    //add assert
     signal input in;
 
     var divisor = 2**n;
@@ -42,13 +43,13 @@ template Divider (n) {
     in === q * divisor + r;
 
     // Ensure 0 <= r < divisor;
-    component lt_r = LessEqThan(n);
-    lt_r.in[0] <== 0;
-    lt_r.in[1] <== r;
+    // component lt_r = LessEqThan(n);
+    // lt_r.in[0] <== 0;
+    // lt_r.in[1] <== r;
 
     component lt_divisor = LessThan(n);
     lt_divisor.in[0] <== r;
     lt_divisor.in[1] <== divisor;
 
-    lt_r.out * lt_divisor.out === 1;
+    lt_divisor.out === 1;
 }

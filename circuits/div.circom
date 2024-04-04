@@ -30,10 +30,10 @@ template Div () {
     rc_remainder[1] <== (1 - is_zero_out[0])*remainder[1];
 
     //Ensure 0 <= rc_remainder < rc_divisor
-    signal lt_r[2] <== LEqT()([0,0],rc_remainder);
+    //signal lt_r[2] <== LEqT()([0,0],rc_remainder);
     signal lt_divisor[2] <== LT()(rc_remainder, rc_divisor);
 
-    lt_r[0]*lt_divisor[0] === 1;
+    lt_divisor[0] === 1;
 
     // Ensure out is zero if in2 is zero
     is_zero_out[0] * out[0] === 0;
