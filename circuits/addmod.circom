@@ -3,8 +3,8 @@ include "add.circom";
 include "div.circom";
 include "mod.circom";
 
-template AddMod () {
+template AddMod () {//intermediate operation is not subject to 2^256 modulo
   signal input in1[2], in2[2], in3[2];
-  signal sum[2] <== Add()(in1, in2);
-  signal output out[2] <== Mod()(sum, in3);
+  signal sum[2] <== CarryAdd()(in1, in2);
+  signal output out[2] <== CarryMod()(sum, in3);
 }
