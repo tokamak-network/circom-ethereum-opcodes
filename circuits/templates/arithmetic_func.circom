@@ -102,6 +102,22 @@ function div (a, b) {
     }
 }
 
+//@Todo
+function div512 (a,b) {
+    if(b[0] == 0 && b[1] == 0){
+        return [
+            [0,0,0,0],
+            a
+        ];
+    }
+    else{
+        return[
+           [b[0],b[1],0,0],
+           a
+        ];
+    }
+}
+
 function add (a, b) {
     var r = (a[0] + b[0]) % 2**128;
     var carry = (a[0] + b[0]) \ 2**128;
