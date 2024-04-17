@@ -206,8 +206,8 @@ template BigMul512() {
     split_in1_upper[1].in <== in1[3];
     c[4] <== split_in1_lower[1].r;
     c[5] <== split_in1_lower[1].q;
-    c[6] <== split_in1_upper[0].r;
-    c[7] <== split_in1_upper[0].q;
+    c[6] <== split_in1_upper[1].r;
+    c[7] <== split_in1_upper[1].q;
 
     component split_in2_lower = Divider(64);
     component split_in2_upper = Divider(64);

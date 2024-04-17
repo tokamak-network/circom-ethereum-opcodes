@@ -106,47 +106,51 @@ function div (a, b) {
 
 function _div512_1 (a, b) {
     var out[2][100];
-    log("in1[0]:",a[0],"in1[1]:",a[1],"in1[2]:",a[2],"in1[3]:",a[3]);
-    log("in2[0]:",b[0],"in2[1]:",b[1]);
-    out = long_div(128,2,2,a,b);
+
+    if(b[3] != 0){
+        out = long_div(64,4,4,a,b);
+    } else {
+        out = long_div(64,3,5,a,b);
+    }
 
     var quotient[4];
     var remainder[4];
     var inter;
 
-    quotient[0] = out[0][0] % 2**128;
-    inter = out[0][0];
-    log("0 : ",quotient[0]);
-    for(var i = 1; i < 4; i++){
-        inter = out[0][i] + (inter \ 2**128);
-        quotient[i] = inter % 2**128;
-        log(i,": ",quotient[i]);
-    }
-
-    remainder[0] = out[1][0] % 2**128;
-    inter = out[1][0];
-    log("----remainder-----");
-    log("0 : ", remainder[0]);
-    for(var i = 1; i < 4; i++){
-        inter = out[1][i] + (inter \ 2**128);
-        remainder[i] = inter % 2**128;
-        log(i,": ",remainder[i]);
+    quotient[0] = out[0][0] + out[0][1]*2**64;
+    for(var i = 0; i < 4; i++){
+        quotient[i] = out[0][2*i] + out[0][2*i+1]*2**64;
+        remainder[i] = out[1][2*i] + out[1][2*i+1]*2**64;
     }
 
     return [
-        [out[0][0],out[0][1],out[0][2],out[0][3]],  //quotient
-        [out[1][0],out[1][1],out[1][2],out[1][3]]   //remainder
+        quotient,  //quotient
+        remainder   //remainder
     ];
 }
 
 function _div512_2 (a, b) {
     var out[2][100];
-    log("in1[0]:",a[0],"in1[1]:",a[1],"in1[2]:",a[2],"in1[3]:",a[3]);
-    log("in2[0]:",b[0],"in2[1]:",b[1]);
-    out = long_div(128,1,3,a,b);
+
+    if(b[1] != 0){
+        out = long_div(64,2,6,a,b);
+    } else {
+        out = long_div(64,1,7,a,b);
+    }
+
+    var quotient[4];
+    var remainder[4];
+    var inter;
+
+    quotient[0] = out[0][0] + out[0][1]*2**64;
+    for(var i = 0; i < 4; i++){
+        quotient[i] = out[0][2*i] + out[0][2*i+1]*2**64;
+        remainder[i] = out[1][2*i] + out[1][2*i+1]*2**64;
+    }
+
     return [
-        [out[0][0],out[0][1],out[0][2],out[0][3]],  //quotient
-        [out[1][0],out[1][1],out[1][2],out[1][3]]   //remainder
+        quotient,  //quotient
+        remainder   //remainder
     ];
 }
 
@@ -158,10 +162,23 @@ function div512 (a,b) {
         ];
     }
 
+    var split64_a[8];
+    var split64_b[4];
+
+    for(var i = 0; i < 4; i++){
+        split64_a[2*i] = a[i] % 2**64;
+        split64_a[2*i+1] = a[i] \ 2**64;
+    }
+
+    for(var i = 0; i < 2; i++){
+        split64_b[2*i] = b[i] % 2**64;
+        split64_b[2*i+1] = b[i] \ 2**64;
+    }
+
     if (b[1] != 0) {
-        return _div512_1(a,b);
+        return _div512_1(split64_a, split64_b);
     } else {
-        return _div512_2(a,b);
+        return _div512_2(split64_a, split64_b);
     }
 }
 

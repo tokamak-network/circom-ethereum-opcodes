@@ -84,15 +84,10 @@ template BigMod () {
     signal quotient[4] <-- q[0];
     signal remainder[4] <-- q[1];
 
-    log("quotient[0]:",quotient[0],"quotient[1]:",quotient[1],"quotient[2]:",quotient[2],"quotient[3]:",quotient[3]);
-    log("remainder[0]:",remainder[0],"remainder[1]:",remainder[1],"remainder[2]:",remainder[2],"remainder[3]:",remainder[3]);
     signal inter[4] <== BigMul512()(quotient, in2); //error
     signal sum[4] <== BigAdd512()(inter, remainder);
 
-    log("inter[3]: ",inter[3]);
-
     for(var i = 0; i < 4; i++){
-        log(in1[i],sum[i]);
         in1[i] === sum[i];
     }
 
