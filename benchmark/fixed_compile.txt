@@ -40,18 +40,18 @@ labels: 587
 [32mtemplate instances[0m: 7
 [32mWritten successfully:[0m ../outputs/wasm/mul_test_js/mul_test.wasm
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 6
-non-linear constraints: 512
+[32mtemplate instances[0m: 5
+non-linear constraints: 256
 linear constraints: 0
 public inputs: 4
 private inputs: 0
 public outputs: 2
-wires: 517
-labels: 583
+wires: 261
+labels: 289
 [32mWritten successfully:[0m ../outputs/constraints/sub/sub_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/sub/sub_test_constraints.json
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 6
+[32mtemplate instances[0m: 5
 [32mWritten successfully:[0m ../outputs/wasm/sub_test_js/sub_test.wasm
 [32mEverything went okay[0m
 [32mtemplate instances[0m: 18
@@ -83,13 +83,13 @@ labels: 3
 [32mWritten successfully:[0m ../outputs/wasm/sha3_test_js/sha3_test.wasm
 [32mEverything went okay[0m
 [32mtemplate instances[0m: 22
-non-linear constraints: 5179
+non-linear constraints: 4155
 linear constraints: 0
 public inputs: 4
 private inputs: 0
 public outputs: 2
-wires: 5180
-labels: 5890
+wires: 4156
+labels: 4714
 [32mWritten successfully:[0m ../outputs/constraints/sdiv/sdiv_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/sdiv/sdiv_test_constraints.json
 [32mEverything went okay[0m
@@ -111,13 +111,13 @@ labels: 1214
 [32mWritten successfully:[0m ../outputs/wasm/mod_test_js/mod_test.wasm
 [32mEverything went okay[0m
 [32mtemplate instances[0m: 22
-non-linear constraints: 5179
+non-linear constraints: 4155
 linear constraints: 0
 public inputs: 4
 private inputs: 0
 public outputs: 2
-wires: 5180
-labels: 5890
+wires: 4156
+labels: 4714
 [32mWritten successfully:[0m ../outputs/constraints/smod/smod_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/smod/smod_test_constraints.json
 [32mEverything went okay[0m
@@ -348,18 +348,18 @@ labels: 1347
 [32mtemplate instances[0m: 24
 [32mWritten successfully:[0m ../outputs/wasm/sar_test_js/sar_test.wasm
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 26
-non-linear constraints: 3335
+[32mtemplate instances[0m: 25
+non-linear constraints: 2823
 linear constraints: 0
 public inputs: 4
 private inputs: 0
 public outputs: 2
-wires: 3330
-labels: 3893
+wires: 2818
+labels: 3305
 [32mWritten successfully:[0m ../outputs/constraints/signextend/signextend_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/signextend/signextend_test_constraints.json
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 26
+[32mtemplate instances[0m: 25
 [32mWritten successfully:[0m ../outputs/wasm/signextend_test_js/signextend_test.wasm
 [32mEverything went okay[0m
 [32mtemplate instances[0m: 17
@@ -377,13 +377,13 @@ labels: 385
 [32mWritten successfully:[0m ../outputs/wasm/byte_test_js/byte_test.wasm
 [32mEverything went okay[0m
 [32mtemplate instances[0m: 64
-non-linear constraints: 29114
+non-linear constraints: 26298
 linear constraints: 0
 public inputs: 7
 private inputs: 0
 public outputs: 2
-wires: 29084
-labels: 33258
+wires: 26268
+labels: 30024
 [32mWritten successfully:[0m ../outputs/constraints/alu/alu_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/alu/alu_test_constraints.json
 [32mEverything went okay[0m
