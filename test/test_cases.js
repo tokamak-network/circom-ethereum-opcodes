@@ -504,7 +504,22 @@ const addmod = [
     "in1": BigInt(2**256) - BigInt(1),
     "in2": BigInt(2),
     "in3": BigInt(10)
-  }
+  },
+  {
+    "in1": BigInt(2**256) - BigInt(2**10),
+    "in2": BigInt(2**256) - BigInt(1),
+    "in3": BigInt(1111)
+  },
+  {
+    "in1": BigInt(2**100),
+    "in2": BigInt(2**123),
+    "in3": BigInt(2**130) - BigInt(123)
+  },
+  {
+    "in1": BigInt(2**255),
+    "in2": BigInt(2**255),
+    "in3": BigInt(2**200) - BigInt(11111)
+  },
 ]
 
 const mulmod = [

@@ -1,5 +1,7 @@
 pragma circom 2.1.6;
 
+include "bigint_func.circom";
+
 function euclidean_div (a, b) {
     var r = a % b;
     var q = a \ b; 
@@ -101,6 +103,100 @@ function div (a, b) {
         return _div2(a, b);
     }
 }
+
+function _div512_1 (a, b) {
+    var out[2][100];
+
+    if(b[3] != 0){
+        out = long_div(64,4,4,a,b);
+    } else {
+        out = long_div(64,3,5,a,b);
+    }
+
+    var quotient[4];
+    var remainder[4];
+    var inter;
+
+    quotient[0] = out[0][0] + out[0][1]*2**64;
+    for(var i = 0; i < 4; i++){
+        quotient[i] = out[0][2*i] + out[0][2*i+1]*2**64;
+        remainder[i] = out[1][2*i] + out[1][2*i+1]*2**64;
+    }
+
+    return [
+        quotient,  //quotient
+        remainder   //remainder
+    ];
+}
+
+function _div512_2 (a, b) {
+    var out[2][100];
+
+    if(b[1] != 0){
+        out = long_div(64,2,6,a,b);
+    } else {
+        out = long_div(64,1,7,a,b);
+    }
+
+    var quotient[4];
+    var remainder[4];
+    var inter;
+
+    quotient[0] = out[0][0] + out[0][1]*2**64;
+    for(var i = 0; i < 4; i++){
+        quotient[i] = out[0][2*i] + out[0][2*i+1]*2**64;
+        remainder[i] = out[1][2*i] + out[1][2*i+1]*2**64;
+    }
+
+    return [
+        quotient,  //quotient
+        remainder   //remainder
+    ];
+}
+
+function div512 (a,b) {
+    if(b[0] == 0 && b[1] == 0){
+        return [
+            [0,0,0,0],
+            a
+        ];
+    }
+
+    var split64_a[8];
+    var split64_b[4];
+
+    for(var i = 0; i < 4; i++){
+        split64_a[2*i] = a[i] % 2**64;
+        split64_a[2*i+1] = a[i] \ 2**64;
+    }
+
+    for(var i = 0; i < 2; i++){
+        split64_b[2*i] = b[i] % 2**64;
+        split64_b[2*i+1] = b[i] \ 2**64;
+    }
+
+    if (b[1] != 0) {
+        return _div512_1(split64_a, split64_b);
+    } else {
+        return _div512_2(split64_a, split64_b);
+    }
+}
+
+//@Todo
+// function div512 (a,b) {
+//     if(b[0] == 0 && b[1] == 0){
+//         return [
+//             [0,0,0,0],
+//             a
+//         ];
+//     }
+
+//     if (b[1] != 0) {
+//         return _div512_1(a,b);
+//     } else {
+//         return _div_512_2(a,b);
+//     }
+// }
 
 function add (a, b) {
     var r = (a[0] + b[0]) % 2**128;
