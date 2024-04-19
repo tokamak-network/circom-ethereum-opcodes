@@ -10,10 +10,25 @@ const assert = chai.assert
 const { split256BitInteger, signExtend, signedDivide, signedMod} = require("./helper_functions")
 const test_case = require("./test_cases.js")
 
+const two_input_cases = [];
+const three_input_cases = [];
+
+
+for(let i = 0; i <= 256; i++) {
+  const in1 = (BigInt(3)**BigInt(i)+BigInt(1)) % BigInt(2**256);
+  const in2 = (BigInt(5)**BigInt(i)+BigInt(1)) % BigInt(2**256);
+  const in3 = (BigInt(7)**BigInt(i)+BigInt(1)) % BigInt(2**256);
+
+  two_input_cases.push({in1: in1, in2: in2});
+  three_input_cases.push({in1: in1, in2: in2, in3: in3});
+}
+
 describe("0x01 ADD test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.add
+  const test_cases = [...two_input_cases, ...test_case.add]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "add_test.circom"),
@@ -22,6 +37,7 @@ describe("0x01 ADD test", function ()  {
       }
     )
   })
+
   for (const test_case of test_cases) {
     const in1 = split256BitInteger(test_case.in1)
     const in2 = split256BitInteger(test_case.in2)
@@ -45,9 +61,11 @@ describe("0x01 ADD test", function ()  {
 })
 
 describe("0x02 MUL test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.mul
+  const test_cases = [...two_input_cases, ...test_case.mul]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "mul_test.circom"),
@@ -79,9 +97,11 @@ describe("0x02 MUL test", function ()  {
 })
 
 describe("0x03 SUB test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.sub
+  const test_cases = [...two_input_cases, ...test_case.sub]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "sub_test.circom"),
@@ -113,9 +133,11 @@ describe("0x03 SUB test", function ()  {
 })
 
 describe("0x04 DIV test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.div
+  const test_cases = [...two_input_cases, ...test_case.div]; //edge cases + stress cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "div_test.circom"),
@@ -147,9 +169,11 @@ describe("0x04 DIV test", function ()  {
 })
 
 describe("0x05 SDIV test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.sdiv
+  const test_cases = [...two_input_cases, ...test_case.sdiv]; //edge cases + stress cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "sdiv_test.circom"),
@@ -181,9 +205,11 @@ describe("0x05 SDIV test", function ()  {
 })
 
 describe("0x06 MOD test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.mod
+  const test_cases = [...two_input_cases, ...test_case.mod]; //edge cases + stress cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "mod_test.circom"),
@@ -215,9 +241,11 @@ describe("0x06 MOD test", function ()  {
 })
 
 describe("0x07 SMOD test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.smod
+  const test_cases = [...two_input_cases, ...test_case.smod]; //edge cases + stress cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "smod_test.circom"),
@@ -249,9 +277,11 @@ describe("0x07 SMOD test", function ()  {
 })
 
 describe("0x08 ADDMOD test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.addmod
+  const test_cases = [...three_input_cases, ...test_case.addmod]; //edge cases + stress cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "addmod_test.circom"),
@@ -286,9 +316,11 @@ describe("0x08 ADDMOD test", function ()  {
 })
 
 describe("0x09 MULMOD test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.mulmod
+  const test_cases = [...three_input_cases, ...test_case.mulmod]; //edge cases + stress cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "mulmod_test.circom"),
@@ -323,6 +355,8 @@ describe("0x09 MULMOD test", function ()  {
 })
 
 describe("0x0A EXP test", function ()  {
+  this.timeout(1000 * 1000);
+
     let circuit;
     let witness;
     const test_cases = test_case.exp
@@ -357,9 +391,11 @@ describe("0x0A EXP test", function ()  {
 
 // 0x0B SINGEXTEND
 describe("0x0B SIGNEXTEND test", function ()  {
+  this.timeout(1000 * 1000);
+
   let circuit;
   let witness;
-  const test_cases = test_case.signextend
+  const test_cases = [...test_case.signextend]; //edge cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "signextend_test.circom"),

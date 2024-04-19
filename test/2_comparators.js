@@ -10,10 +10,21 @@ const assert = chai.assert
 const { split256BitInteger, signedLessThan256BitInteger} = require("./helper_functions")
 const test_case = require("./test_cases.js")
 
+const one_input_cases = [];
+const two_input_cases = [];
+
+for(let i = 0; i <= 256; i++) {
+  const in1 = (BigInt(3)**BigInt(i)+BigInt(1)) % BigInt(2**256);
+  const in2 = (BigInt(5)**BigInt(i)+BigInt(1)) % BigInt(2**256);
+
+  one_input_cases.push({in: in1});
+  two_input_cases.push({in1: in1, in2: in2});
+}
+
 describe("0x10 LT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.lt
+  const test_cases = [...two_input_cases, ...test_case.lt]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "lt_test.circom"),
@@ -45,7 +56,7 @@ describe("0x10 LT test", function ()  {
 describe("0x11 GT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.gt
+  const test_cases = [...two_input_cases, ...test_case.gt]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "gt_test.circom"),
@@ -77,7 +88,7 @@ describe("0x11 GT test", function ()  {
 describe("0x12 SLT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.slt
+  const test_cases = [...two_input_cases, ...test_case.slt]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "slt_test.circom"),
@@ -109,7 +120,7 @@ describe("0x12 SLT test", function ()  {
 describe("0x13 SGT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.sgt
+  const test_cases = [...two_input_cases, ...test_case.sgt]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "sgt_test.circom"),
@@ -141,7 +152,7 @@ describe("0x13 SGT test", function ()  {
 describe("0x14 EQ test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.eq
+  const test_cases = [...two_input_cases, ...test_case.eq]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "eq_test.circom"),
@@ -173,7 +184,7 @@ describe("0x14 EQ test", function ()  {
 describe("0x15 ISZERO test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.iszero
+  const test_cases = [...one_input_cases, ...test_case.iszero]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "iszero_test.circom"),

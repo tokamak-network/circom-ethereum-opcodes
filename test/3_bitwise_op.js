@@ -10,10 +10,24 @@ const assert = chai.assert
 const { split256BitInteger, sar256BitInteger, getByte} = require("./helper_functions")
 const test_case = require("./test_cases.js")
 
+const one_input_cases = [];
+const two_input_cases = [];
+const index_input_cases =[];
+
+for(let i = 0; i <= 256; i++) {
+  const in1 = (BigInt(3)**BigInt(i)+BigInt(1)) % BigInt(2**256);
+  const in2 = (BigInt(5)**BigInt(i)+BigInt(1)) % BigInt(2**256);
+  const in3 = (BigInt(5)**BigInt(i)+BigInt(1)) % BigInt(32);
+
+  one_input_cases.push({in: in1});
+  two_input_cases.push({in1: in1, in2: in2});
+  index_input_cases.push({in1: in3, in2: in1});
+}
+
 describe("0x16 AND test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.and
+  const test_cases = [...two_input_cases, ...test_case.and]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "and_test.circom"),
@@ -47,7 +61,7 @@ describe("0x16 AND test", function ()  {
 describe("0x17 OR test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.or
+  const test_cases = [...two_input_cases, ...test_case.or]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "or_test.circom"),
@@ -81,7 +95,7 @@ describe("0x17 OR test", function ()  {
 describe("0x18 XOR test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.xor
+  const test_cases = [...two_input_cases, ...test_case.xor]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "xor_test.circom"),
@@ -115,7 +129,7 @@ describe("0x18 XOR test", function ()  {
 describe("0x19 NOT test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.not
+  const test_cases = [...one_input_cases, ...test_case.not]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "not_test.circom"),
@@ -147,7 +161,7 @@ describe("0x19 NOT test", function ()  {
 describe("0x1A BYTE test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.byte
+  const test_cases = [...index_input_cases, ...test_case.byte]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "byte_test.circom"),
@@ -180,7 +194,7 @@ describe("0x1A BYTE test", function ()  {
 describe("0x1B SHL test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.shl
+  const test_cases = [...index_input_cases, ...test_case.shl]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "shl_test.circom"),
@@ -213,7 +227,7 @@ describe("0x1B SHL test", function ()  {
 describe("0x1C SHR test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.shr
+  const test_cases = [...index_input_cases, ...test_case.shr]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "shr_test.circom"),
@@ -246,7 +260,7 @@ describe("0x1C SHR test", function ()  {
 describe("0x1D SAR test", function ()  {
   let circuit;
   let witness;
-  const test_cases = test_case.sar
+  const test_cases = [...index_input_cases, ...test_case.sar]; //edge cases + normal cases
   before(async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "sar_test.circom"),
