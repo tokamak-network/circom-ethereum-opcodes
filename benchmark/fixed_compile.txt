@@ -376,31 +376,4 @@ labels: 385
 [32mtemplate instances[0m: 17
 [32mWritten successfully:[0m ../outputs/wasm/byte_test_js/byte_test.wasm
 [32mEverything went okay[0m
-[32mtemplate instances[0m: 64
-non-linear constraints: 26298
-linear constraints: 0
-public inputs: 7
-private inputs: 0
-public outputs: 2
-wires: 26268
-labels: 30024
-[32mWritten successfully:[0m ../outputs/constraints/alu/alu_test.r1cs
-[32mConstraints written in:[0m ../outputs/constraints/alu/alu_test_constraints.json
-[32mEverything went okay[0m
-[32mtemplate instances[0m: 64
-[32mWritten successfully:[0m ../outputs/wasm/alu_test_js/alu_test.wasm
-[32mEverything went okay[0m
-[32mtemplate instances[0m: 38
-non-linear constraints: 2780
-linear constraints: 0
-public inputs: 5
-private inputs: 0
-public outputs: 2
-wires: 2760
-labels: 4145
-[32mWritten successfully:[0m ../outputs/constraints/mlu/mlu_test.r1cs
-[32mConstraints written in:[0m ../outputs/constraints/mlu/mlu_test_constraints.json
-[32mEverything went okay[0m
-[32mtemplate instances[0m: 38
-[32mWritten successfully:[0m ../outputs/wasm/mlu_test_js/mlu_test.wasm
-[32mEverything went okay[0m
+Successfully wrote a file

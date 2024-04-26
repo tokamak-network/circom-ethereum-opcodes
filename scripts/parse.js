@@ -15,12 +15,17 @@ fs.readFile('./temp.txt', 'utf8', function(err, data) {
 
     // circuit name
     let name
-    if (output[i].includes('_')) {
-      const _name = output[i].split(' = ')[1].toUpperCase()
-      const index = _name.indexOf('_')
-      name = _name.substring(0, index) + '-' + _name.substring(index + 1)
+    const parts = output[i].split(' = ');
+    if (parts.length > 1) {
+      let tempName = parts[1].toUpperCase();
+      if (tempName.includes('_')) {
+        const index = tempName.indexOf('_');
+        name = tempName.substring(0, index) + '-' + tempName.substring(index + 1);
+      } else {
+        name = tempName;
+      }
     } else {
-      name = output[i].split(' = ')[1].toUpperCase()
+      continue;
     }
 
     // circuit opcode
