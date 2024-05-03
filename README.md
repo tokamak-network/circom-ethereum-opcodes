@@ -98,7 +98,7 @@ The circuits returns two 128-bit values as output signals.
 Most Cost is the range check cost. For future research on optimization, please check [Further Research](#further-research) below.
 
 ### Our SNARK Primitive - Subcircuit library
-Refer to our SNARK paper "3 Front-end preprocess: System of constraints and setup algorithm"
+Refer to [our SNARK paper](https://eprint.iacr.org/2024/507.pdf) "3 Front-end preprocess: System of constraints and setup algorithm"
 
 ### Our Limitation
 - EXP

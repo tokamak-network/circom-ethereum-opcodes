@@ -74,7 +74,6 @@ template BinaryModExp128 () {
     signal output out;
 
     var NUM_EXP_BITS = 7;
-    var NUM_BITS = 2**NUM_EXP_BITS;
 
     component mod = Divider(NUM_EXP_BITS);
     mod.in <== in;

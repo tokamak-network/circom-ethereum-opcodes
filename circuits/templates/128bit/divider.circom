@@ -40,11 +40,7 @@ template Divider (n) {
 
     in === q * divisor + r;
 
-    // Ensure 0 <= r < divisor;
-    // component lt_r = LessEqThan(n);
-    // lt_r.in[0] <== 0;
-    // lt_r.in[1] <== r;
-
+    // Ensure r < divisor;
     component lt_divisor = LessThan(n);
     lt_divisor.in[0] <== r;
     lt_divisor.in[1] <== divisor;
