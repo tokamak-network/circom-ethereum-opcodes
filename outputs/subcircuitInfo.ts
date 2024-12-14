@@ -5,11 +5,11 @@ export const subcircuits =
     "name": "Load",
     "Nwires": "513",
     "Out_idx": [
-      "0",
+      "1",
       "256"
     ],
     "In_idx": [
-      "256",
+      "257",
       "256"
     ]
   },
@@ -18,11 +18,11 @@ export const subcircuits =
     "name": "ADD",
     "Nwires": "289",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -31,11 +31,11 @@ export const subcircuits =
     "name": "MUL",
     "Nwires": "587",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -44,11 +44,11 @@ export const subcircuits =
     "name": "SUB",
     "Nwires": "289",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -57,11 +57,11 @@ export const subcircuits =
     "name": "DIV",
     "Nwires": "1214",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -70,11 +70,11 @@ export const subcircuits =
     "name": "SDIV",
     "Nwires": "4714",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -83,11 +83,11 @@ export const subcircuits =
     "name": "MOD",
     "Nwires": "1214",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -96,11 +96,11 @@ export const subcircuits =
     "name": "SMOD",
     "Nwires": "4714",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -109,11 +109,11 @@ export const subcircuits =
     "name": "ADDMOD",
     "Nwires": "1660",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "6"
     ]
   },
@@ -122,11 +122,11 @@ export const subcircuits =
     "name": "MULMOD",
     "Nwires": "2545",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "6"
     ]
   },
@@ -135,11 +135,11 @@ export const subcircuits =
     "name": "EQ",
     "Nwires": "21",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -148,11 +148,11 @@ export const subcircuits =
     "name": "ISZERO",
     "Nwires": "13",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "2"
     ]
   },
@@ -161,11 +161,11 @@ export const subcircuits =
     "name": "SHL",
     "Nwires": "417",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -174,11 +174,11 @@ export const subcircuits =
     "name": "SHR",
     "Nwires": "417",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -187,11 +187,11 @@ export const subcircuits =
     "name": "LT",
     "Nwires": "286",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -200,11 +200,11 @@ export const subcircuits =
     "name": "GT",
     "Nwires": "292",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -213,11 +213,11 @@ export const subcircuits =
     "name": "NOT",
     "Nwires": "1033",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "2"
     ]
   },
@@ -226,11 +226,11 @@ export const subcircuits =
     "name": "BYTE",
     "Nwires": "385",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -239,11 +239,11 @@ export const subcircuits =
     "name": "SAR",
     "Nwires": "1347",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -252,11 +252,11 @@ export const subcircuits =
     "name": "SIGNEXTEND",
     "Nwires": "3305",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -265,11 +265,11 @@ export const subcircuits =
     "name": "SLT",
     "Nwires": "570",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -278,11 +278,11 @@ export const subcircuits =
     "name": "SGT",
     "Nwires": "576",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -291,11 +291,11 @@ export const subcircuits =
     "name": "AND",
     "Nwires": "1549",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -304,11 +304,11 @@ export const subcircuits =
     "name": "OR",
     "Nwires": "1549",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -317,11 +317,11 @@ export const subcircuits =
     "name": "XOR",
     "Nwires": "1549",
     "Out_idx": [
-      "0",
+      "1",
       "2"
     ],
     "In_idx": [
-      "2",
+      "3",
       "4"
     ]
   },
@@ -330,11 +330,11 @@ export const subcircuits =
     "name": "DecToBit",
     "Nwires": "258",
     "Out_idx": [
-      "0",
+      "1",
       "256"
     ],
     "In_idx": [
-      "256",
+      "257",
       "1"
     ]
   },
@@ -343,11 +343,11 @@ export const subcircuits =
     "name": "SubEXP",
     "Nwires": "1206",
     "Out_idx": [
-      "0",
+      "1",
       "4"
     ],
     "In_idx": [
-      "4",
+      "5",
       "6"
     ]
   },
@@ -356,11 +356,11 @@ export const subcircuits =
     "name": "KeccakBufferIn",
     "Nwires": "513",
     "Out_idx": [
-      "0",
+      "1",
       "256"
     ],
     "In_idx": [
-      "256",
+      "257",
       "256"
     ]
   },
@@ -369,11 +369,11 @@ export const subcircuits =
     "name": "KeccakBufferOut",
     "Nwires": "513",
     "Out_idx": [
-      "0",
+      "1",
       "256"
     ],
     "In_idx": [
-      "256",
+      "257",
       "256"
     ]
   },
@@ -382,11 +382,11 @@ export const subcircuits =
     "name": "ReturnBuffer",
     "Nwires": "513",
     "Out_idx": [
-      "0",
+      "1",
       "256"
     ],
     "In_idx": [
-      "256",
+      "257",
       "256"
     ]
   }
