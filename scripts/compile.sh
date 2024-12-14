@@ -1,4 +1,4 @@
-names=("load" "add" "mul" "sub" "div" "sha3" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr" "sar" "signextend" "byte")
+names=("Load" "ADD" "MUL" "SUB" "DIV" "SDIV" "MOD" "SMOD" "ADDMOD" "MULMOD" "EQ" "ISZERO" "SHL" "SHR" "LT" "GT" "NOT" "BYTE" "SAR" "SIGNEXTEND" "SLT" "SGT" "AND" "OR" "XOR" "DecToBit" "SubEXP" "KeccakBufferIn" "KeccakBufferOut" "ReturnBuffer")
 CURVE_NAME="bn128"
 
 # get the directory of the script

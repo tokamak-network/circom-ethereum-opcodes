@@ -1,7 +1,7 @@
-const {opcodeDictionary} = require('./opcode.js')
+//const {opcodeDictionary} = require('./opcode.js')
 const fs = require('fs')
 
-const numOfLinesPerCircuit = 13
+const numOfLinesPerCircuit = 12
 
 fs.readFile('./temp.txt', 'utf8', function(err, data) {
   if (err) throw err;
@@ -17,7 +17,8 @@ fs.readFile('./temp.txt', 'utf8', function(err, data) {
     let name
     const parts = output[i].split(' = ');
     if (parts.length > 1) {
-      let tempName = parts[1].toUpperCase();
+      //let tempName = parts[1].toUpperCase();
+      let tempName = parts[1];
       if (tempName.includes('_')) {
         const index = tempName.indexOf('_');
         name = tempName.substring(0, index) + '-' + tempName.substring(index + 1);
@@ -29,24 +30,24 @@ fs.readFile('./temp.txt', 'utf8', function(err, data) {
     }
 
     // circuit opcode
-    const opcode = opcodeDictionary[name]
+    //const opcode = opcodeDictionary[name]
 
     // num_wires 
     const numWires = output[i + 8].match(/\d+/)[0]
 
     // public output
-    const numOutput = output[i + 5].match(/\d+/)[0]
+    const numOutput = output[i + 6].match(/\d+/)[0]
 
     // public input
     const numInput = output[i + 4].match(/\d+/)[0]
 
     const subcircuit = {
       id: id,
-      opcode: opcode,
+      //opcode: '0',
       name: name,
       Nwires: numWires,
-      Out_idx: ['1', numOutput],
-      In_idx: [`${Number(numOutput) + 1}`, numInput]
+      Out_idx: ['0', numOutput],
+      In_idx: [`${Number(numOutput)}`, numInput]
     }
     subcircuitJson['wire-list'].push(subcircuit)
   }
