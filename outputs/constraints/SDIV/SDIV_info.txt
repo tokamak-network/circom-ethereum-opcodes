@@ -1,0 +1,11 @@
+[32mtemplate instances[0m: 20
+non-linear constraints: 4193
+linear constraints: 193
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 4349
+labels: 4714
+[32mWritten successfully:[0m ../outputs/constraints/SDIV\SDIV_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/SDIV\SDIV_test_constraints.json
+[32mEverything went okay[0m

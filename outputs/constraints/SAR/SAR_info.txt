@@ -1,0 +1,11 @@
+[32mtemplate instances[0m: 22
+non-linear constraints: 1146
+linear constraints: 88
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 1213
+labels: 1347
+[32mWritten successfully:[0m ../outputs/constraints/SAR\SAR_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/SAR\SAR_test_constraints.json
+[32mEverything went okay[0m

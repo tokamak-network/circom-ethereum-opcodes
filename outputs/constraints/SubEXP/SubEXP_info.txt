@@ -1,0 +1,11 @@
+[32mtemplate instances[0m: 10
+non-linear constraints: 1066
+linear constraints: 58
+public inputs: 6
+private inputs: 0
+public outputs: 4
+wires: 1117
+labels: 1206
+[32mWritten successfully:[0m ../outputs/constraints/SubEXP\SubEXP_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/SubEXP\SubEXP_test_constraints.json
+[32mEverything went okay[0m

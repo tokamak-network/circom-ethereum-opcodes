@@ -1,0 +1,11 @@
+[32mtemplate instances[0m: 7
+non-linear constraints: 528
+linear constraints: 27
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 554
+labels: 587
+[32mWritten successfully:[0m ../outputs/constraints/MUL\MUL_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/MUL\MUL_test_constraints.json
+[32mEverything went okay[0m
