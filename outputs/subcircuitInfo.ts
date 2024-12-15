@@ -3,7 +3,7 @@ export const subcircuits =
   {
     "id": 0,
     "name": "Load",
-    "Nwires": 769,
+    "Nwires": 2305,
     "Out_idx": [
       1,
       256
@@ -354,7 +354,7 @@ export const subcircuits =
   {
     "id": 27,
     "name": "KeccakBufferIn",
-    "Nwires": 769,
+    "Nwires": 2305,
     "Out_idx": [
       1,
       256
@@ -367,7 +367,7 @@ export const subcircuits =
   {
     "id": 28,
     "name": "KeccakBufferOut",
-    "Nwires": 769,
+    "Nwires": 2305,
     "Out_idx": [
       1,
       256
@@ -380,7 +380,7 @@ export const subcircuits =
   {
     "id": 29,
     "name": "ReturnBuffer",
-    "Nwires": 769,
+    "Nwires": 2305,
     "Out_idx": [
       1,
       256
