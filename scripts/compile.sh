@@ -20,13 +20,13 @@ for (( i = 0 ; i < ${#names[@]} ; i++ )) ; do
 
   circom ${test_circuit_dir_path}/${names[$i]}_test.circom --r1cs --json -o ${output_dir_path}/constraints/${names[$i]} -p $CURVE_NAME | tee ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_info.txt && \
   cat ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_info.txt >> temp.txt && \
-  mv  ${output_dir_path}/constraints/${names[$i]}/${names[$i]}.r1cs              ${output_dir_path}/constraints/${names[$i]}/${names[$i]}.r1cs && \
+  mv  ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_test.r1cs              ${output_dir_path}/constraints/${names[$i]}/${names[$i]}.r1cs && \
   mv  ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_test_constraints.json  ${output_dir_path}/constraints/${names[$i]}/${names[$i]}_constraints.json && \
   cp  ${output_dir_path}/constraints/${names[$i]}/${names[$i]}.r1cs                   ${output_dir_path}/constraints/subcircuit$i.r1cs
 
   circom ${test_circuit_dir_path}/${names[$i]}_test.circom --wasm -o ${output_dir_path}/wasm && \
   mv ${output_dir_path}/wasm/${names[$i]}_test_js                 ${output_dir_path}/wasm/${names[$i]} && \
-  cp ${output_dir_path}/wasm/${names[$i]}/${names[$i]}.wasm  ${output_dir_path}/wasm/subcircuit$i.wasm
+  cp ${output_dir_path}/wasm/${names[$i]}/${names[$i]}_test.wasm  ${output_dir_path}/wasm/subcircuit$i.wasm
 done
 
 node parse.js

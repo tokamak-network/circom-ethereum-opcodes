@@ -1,6 +1,6 @@
 [32mtemplate instances[0m: 1
-non-linear constraints: 0
-linear constraints: 256
+non-linear constraints: 256
+linear constraints: 0
 public inputs: 256
 private inputs: 0
 public outputs: 256
