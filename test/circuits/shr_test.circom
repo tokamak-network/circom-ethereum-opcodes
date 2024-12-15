@@ -1,4 +1,4 @@
 pragma circom 2.1.6;
 include "../../circuits/shr.circom";
 
-component main = SHR();
+component main {public [in]} = SHR();

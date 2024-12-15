@@ -1,8 +1,8 @@
 [32mtemplate instances[0m: 1
 non-linear constraints: 256
 linear constraints: 1
-public inputs: 0
-private inputs: 1
+public inputs: 1
+private inputs: 0
 public outputs: 256
 wires: 258
 labels: 258
