@@ -1,10 +1,10 @@
 [32mtemplate instances[0m: 1
 non-linear constraints: 0
-linear constraints: 256
-public inputs: 256
-private inputs: 0
+linear constraints: 0
+public inputs: 0
+private inputs: 256 (none belong to witness)
 public outputs: 256
-wires: 513
+wires: 257
 labels: 513
 [32mWritten successfully:[0m ../outputs/constraints/Load\Load_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/Load\Load_test_constraints.json

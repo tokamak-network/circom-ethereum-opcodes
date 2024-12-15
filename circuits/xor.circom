@@ -3,7 +3,10 @@ include "../node_modules/circomlib/circuits/bitify.circom";
 include "../node_modules/circomlib/circuits/gates.circom";
 
 template Xor () {
-  signal input in1[2], in2[2]; // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  signal input in[4];
+  signal in1[2] <== [in[0], in[1]];
+  signal in2[2] <== [in[2], in[3]];
   signal output out[2];
 
   var NUM_BITS = 128;

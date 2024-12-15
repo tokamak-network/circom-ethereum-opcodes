@@ -7,8 +7,11 @@ include "../node_modules/circomlib/circuits/comparators.circom";
 
 
 template SAR () {
-  signal input in1[2], in2[2];  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
-                                // in1 << in2
+  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  // in1 << in2
+  signal input in[4];
+  signal in1[2] <== [in[0], in[1]];
+  signal in2[2] <== [in[2], in[3]];
 
 
   // 1. calculate msb
@@ -19,7 +22,7 @@ template SAR () {
 
 
   // 2. calculate SHR
-  signal shr_out[2] <== SHR()(in1, in2);
+  signal shr_out[2] <== SHR()([in1[0], in1[1], in2[0], in2[1]]);
 
   // 3. calculate the supplied ones for upper 128 bits
   // 3-1. determine if 0 <= in1 < 128

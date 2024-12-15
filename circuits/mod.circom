@@ -5,7 +5,9 @@ include "div.circom";
 include "iszero.circom";
 
 template Mod () {
-    signal input in1[2], in2[2];
+    signal input in[4];
+    signal in1[2] <== [in[0], in[1]];
+    signal in2[2] <== [in[2], in[3]];
 
     signal is_zero_out[2] <== IsZero256()(in2);
 
@@ -13,9 +15,9 @@ template Mod () {
     signal quotient[2] <-- q[0];
     signal remainder[2] <-- q[1];
 
-    signal inter[2] <== Mul()(quotient, in2);
-    signal res[2] <== Add()(inter, remainder);
-    signal eq[2] <== Eq()(res, in1);
+    signal inter[2] <== Mul()([quotient[0],quotient[1], in2[0], in2[1]]);
+    signal res[2] <== Add()([inter[0], inter[1], remainder[0], remainder[1]]);
+    signal eq[2] <== Eq()([res[0], res[1], in1[0], in1[1]]);
     eq[0] === 1;
 
     //rc => Range Check
@@ -29,7 +31,7 @@ template Mod () {
 
     //Ensure 0 <= out < rc_divisor
     //signal lt_r[2] <== LEqT()([0,0],out);
-    signal lt_divisor[2] <== LT()(out, rc_divisor);
+    signal lt_divisor[2] <== LT()([out[0], out[1], rc_divisor[0], rc_divisor[1]]);
 
     lt_divisor[0] === 1;
 
@@ -52,7 +54,7 @@ template CarryMod () {
     inter[2]*(1-inter[2]) === 0;
 
     signal res[2] <== BigAdd()([inter[0], inter[1] + (inter[2] * 2**128)], remainder);
-    signal eq[2] <== Eq()(res, in1);
+    signal eq[2] <== Eq()([res[0], res[1], in1[0], in1[1]]);
     eq[0] === 1;
 
     //rc => Range Check
@@ -66,7 +68,7 @@ template CarryMod () {
 
     //Ensure 0 <= out < rc_divisor
     //signal lt_r[2] <== LEqT()([0,0],out);
-    signal lt_divisor[2] <== LT()(out, rc_divisor);
+    signal lt_divisor[2] <== LT()([out[0], out[1], rc_divisor[0], rc_divisor[1]]);
 
     lt_divisor[0] === 1;
 
@@ -104,7 +106,7 @@ template BigMod () {
 
     //Ensure 0 <= out < rc_divisor
     //signal lt_r[2] <== LEqT()([0,0],out);
-    signal lt_divisor[2] <== LT()(out, rc_divisor);
+    signal lt_divisor[2] <== LT()([out[0], out[1], rc_divisor[0], rc_divisor[1]]);
 
     lt_divisor[0] === 1;
 

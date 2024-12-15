@@ -1,11 +1,11 @@
 [32mtemplate instances[0m: 5
 non-linear constraints: 258
 linear constraints: 10
-public inputs: 4
-private inputs: 0
+public inputs: 0
+private inputs: 4
 public outputs: 2
 wires: 271
-labels: 289
+labels: 293
 [32mWritten successfully:[0m ../outputs/constraints/ADD\ADD_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/ADD\ADD_test_constraints.json
 [32mEverything went okay[0m

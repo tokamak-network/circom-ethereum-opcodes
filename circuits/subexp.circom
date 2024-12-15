@@ -3,9 +3,10 @@ include "mul.circom";
 include "../node_modules/circomlib/circuits/comparators.circom";
 
 template SubEXP () {
-    signal input c_prev[2];
-    signal input a_prev[2];
-    signal input b[2];
+    signal input in[6];
+    signal c_prev[2] <== [in[0], in[1]];
+    signal a_prev[2] <== [in[2], in[3]];
+    signal b[2] <== [in[4], in[5]];
     
     signal output c_next[2];
     signal output a_next[2];
@@ -15,7 +16,7 @@ template SubEXP () {
     b[1] * b[1] === 0;
 
     // Constraint 2: a_next <== a_prev * a_prev
-    a_next <== Mul()(a_prev, a_prev);
+    a_next <== Mul()([a_prev[0], a_prev[1], a_prev[0], a_prev[1]]);
 
     // Constraint 3: c_next <== c_prev * ( b ? a_next : 1 )
     signal inter1[2];
@@ -30,5 +31,5 @@ template SubEXP () {
     signal sum <== (1 - bool5) * (inter1[0] + inter2[0]);
     inter3[0] <== sum;
     inter3[1] <== carry + inter2[1]; // a_next * b + (1 - b)    
-    c_next <== Mul()(c_prev, inter3);
+    c_next <== Mul()([c_prev[0], c_prev[1], inter3[0], inter3[1]]);
 }

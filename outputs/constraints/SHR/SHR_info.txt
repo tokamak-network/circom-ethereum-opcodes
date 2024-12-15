@@ -1,11 +1,11 @@
 [32mtemplate instances[0m: 15
 non-linear constraints: 351
 linear constraints: 25
-public inputs: 4
-private inputs: 0
+public inputs: 0
+private inputs: 4
 public outputs: 2
 wires: 373
-labels: 417
+labels: 421
 [32mWritten successfully:[0m ../outputs/constraints/SHR\SHR_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/SHR\SHR_test_constraints.json
 [32mEverything went okay[0m

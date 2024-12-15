@@ -3,7 +3,7 @@ include "add.circom";
 include "mul.circom";
 include "templates/128bit/divider.circom";
 include "../node_modules/circomlib/circuits/bitify.circom";
-
+//deprecated
 template Exp () {
     signal input in1[2], in2[2];
     signal output out[2];

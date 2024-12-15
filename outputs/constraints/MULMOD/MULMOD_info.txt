@@ -1,11 +1,11 @@
 [32mtemplate instances[0m: 17
 non-linear constraints: 2259
 linear constraints: 113
-public inputs: 6
-private inputs: 0
+public inputs: 0
+private inputs: 6
 public outputs: 2
 wires: 2352
-labels: 2545
+labels: 2555
 [32mWritten successfully:[0m ../outputs/constraints/MULMOD\MULMOD_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/MULMOD\MULMOD_test_constraints.json
 [32mEverything went okay[0m

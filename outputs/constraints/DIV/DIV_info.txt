@@ -1,11 +1,11 @@
 [32mtemplate instances[0m: 16
 non-linear constraints: 1062
 linear constraints: 49
-public inputs: 4
-private inputs: 0
+public inputs: 0
+private inputs: 4
 public outputs: 2
 wires: 1106
-labels: 1214
+labels: 1234
 [32mWritten successfully:[0m ../outputs/constraints/DIV\DIV_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/DIV\DIV_test_constraints.json
 [32mEverything went okay[0m

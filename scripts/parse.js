@@ -45,9 +45,9 @@ fs.readFile('./temp.txt', 'utf8', function(err, data) {
       id: id,
       //opcode: '0',
       name: name,
-      Nwires: numWires,
-      Out_idx: ['1', numOutput],
-      In_idx: [`${Number(numOutput)+1}`, numInput]
+      Nwires: Number(numWires),
+      Out_idx: [1, Number(numOutput)],
+      In_idx: [Number(numOutput)+1, Number(numInput)]
     }
     subcircuits.push(subcircuit)
   }
