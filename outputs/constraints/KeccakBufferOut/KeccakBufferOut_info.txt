@@ -1,11 +1,11 @@
 [32mtemplate instances[0m: 1
-non-linear constraints: 256
+non-linear constraints: 512
 linear constraints: 0
 public inputs: 256
 private inputs: 0
 public outputs: 256
-wires: 513
-labels: 513
+wires: 769
+labels: 769
 [32mWritten successfully:[0m ../outputs/constraints/KeccakBufferOut\KeccakBufferOut_test.r1cs
 [32mConstraints written in:[0m ../outputs/constraints/KeccakBufferOut\KeccakBufferOut_test_constraints.json
 [32mEverything went okay[0m
