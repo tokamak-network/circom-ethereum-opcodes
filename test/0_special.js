@@ -11,7 +11,7 @@ const assert = chai.assert
 describe("0x00 LOAD test", function ()  {
   let circuit;
   let witness;
-  const NUM_INPUTS = 32
+  const NUM_INPUTS = 256
   before( async () => {
     circuit = await wasm_tester(
       path.join(__dirname, "circuits", "load_test.circom"),

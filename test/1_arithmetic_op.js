@@ -9,6 +9,7 @@ const wasm_tester = require("circom_tester").wasm
 const assert = chai.assert
 const { split256BitInteger, signExtend, signedDivide, signedMod} = require("./helper_functions")
 const test_case = require("./test_cases.js")
+const N = 115792089237316195423570985008687907853269984665640564039457584007913129639936n
 
 const two_input_cases = [];
 const three_input_cases = [];
@@ -48,8 +49,7 @@ describe("0x01 ADD test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -84,8 +84,7 @@ describe("0x02 MUL test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -120,8 +119,7 @@ describe("0x03 SUB test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -156,8 +154,7 @@ describe("0x04 DIV test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -192,8 +189,7 @@ describe("0x05 SDIV test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -228,8 +224,7 @@ describe("0x06 MOD test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -264,8 +259,7 @@ describe("0x07 SMOD test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -302,9 +296,7 @@ describe("0x08 ADDMOD test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2,
-          "in3": in3,
+          "in": [in1, in2, in3]
         }, 
         true
       );
@@ -341,9 +333,7 @@ describe("0x09 MULMOD test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2,
-          "in3": in3,
+          "in": [in1, in2, in3]
         }, 
         true
       );
@@ -354,40 +344,79 @@ describe("0x09 MULMOD test", function ()  {
   }
 })
 
-describe("0x0A EXP test", function ()  {
-  this.timeout(1000 * 1000);
+// describe("0x0A EXP test", function ()  {
+//   this.timeout(1000 * 1000);
 
-    let circuit;
-    let witness;
-    const test_cases = test_case.exp
-    before(async () => {
-      circuit = await wasm_tester(
-        path.join(__dirname, "circuits", "exp_test.circom"),
-        {
-          prime: CURVE_NAME
-        }
-      )
-    })
-    for (const test_case of test_cases) {
-      const in1 = split256BitInteger(test_case.in1)
-      const in2 = split256BitInteger(test_case.in2)
-      const res = (test_case.in1 ** test_case.in2) % 2n**256n
-      const out = split256BitInteger(res)
-      it(`0x${test_case.in1.toString(16).padStart(64, '0')} ** 0x${test_case.in2.toString(16)}
-    = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
-        witness = await circuit.calculateWitness(
+//     let circuit;
+//     let witness;
+//     const test_cases = test_case.exp
+//     before(async () => {
+//       circuit = await wasm_tester(
+//         path.join(__dirname, "circuits", "EXP_test.circom"),
+//         {
+//           prime: CURVE_NAME
+//         }
+//       )
+//     })
+//     for (const test_case of test_cases) {
+//       const in1 = split256BitInteger(test_case.in1)
+//       const in2 = split256BitInteger(test_case.in2)
+//       const res = (test_case.in1 ** test_case.in2) % 2n**256n
+//       const out = split256BitInteger(res)
+//       it(`0x${test_case.in1.toString(16).padStart(64, '0')} ** 0x${test_case.in2.toString(16)}
+//     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
+//         witness = await circuit.calculateWitness(
+//           {
+//             "in": [in1, in2]
+//           }, 
+//           true
+//         );
+//         assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+//         assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
+//         assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
+//       });
+//     }
+//   })
+
+  describe("0x0? SubEXP test", function ()  {
+    this.timeout(1000 * 1000);
+  
+      let circuit;
+      let witness;
+      const test_cases = test_case.subexp
+      before(async () => {
+        circuit = await wasm_tester(
+          path.join(__dirname, "circuits", "SubEXP_test.circom"),
           {
-            "in1": in1,
-            "in2": in2
-          }, 
-          true
-        );
-        assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
-        assert(Fr.eq(Fr.e(witness[1]), Fr.e(out[0])));
-        assert(Fr.eq(Fr.e(witness[2]), Fr.e(out[1])));
-      });
-    }
-  })
+            prime: CURVE_NAME
+          }
+        )
+      })
+      for (const test_case of test_cases) {
+        const c_prev = split256BitInteger(test_case.c_prev)
+        const a_prev = split256BitInteger(test_case.a_prev)
+        const b = split256BitInteger(test_case.b)
+        const _a_next = (test_case.a_prev * test_case.a_prev) % N
+        const _c_next = (test_case.c_prev * (test_case.a_prev * test_case.b + (1n-test_case.b))) % N
+        const a_next = split256BitInteger(_a_next)
+        const c_next = split256BitInteger(_c_next)
+        it(`b[0]=${b[0]}, b[1]=${b[1]}\n ${test_case.a_prev} * ${test_case.a_prev}
+      = ${_a_next}\n ${test_case.c_prev} * ( ${test_case.a_prev} * ${test_case.b} + ( 1 - ${test_case.b} ) )
+      = ${_c_next}\n`, async () => {
+          witness = await circuit.calculateWitness(
+            {
+              "in": [c_prev, a_prev, b]
+            }, 
+            true
+          );
+          assert(Fr.eq(Fr.e(witness[0]), Fr.e(1)));
+          assert(Fr.eq(Fr.e(witness[1]), Fr.e(c_next[0])));
+          assert(Fr.eq(Fr.e(witness[2]), Fr.e(c_next[1])));
+          assert(Fr.eq(Fr.e(witness[3]), Fr.e(a_next[0])));
+          assert(Fr.eq(Fr.e(witness[4]), Fr.e(a_next[1])));
+        });
+      }
+    })
 
 // 0x0B SINGEXTEND
 describe("0x0B SIGNEXTEND test", function ()  {
@@ -413,8 +442,7 @@ describe("0x0B SIGNEXTEND test", function ()  {
                                                     => ${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );

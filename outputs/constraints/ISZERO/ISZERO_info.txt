@@ -1,0 +1,11 @@
+[32mtemplate instances[0m: 2
+non-linear constraints: 5
+linear constraints: 1
+public inputs: 2
+private inputs: 0
+public outputs: 2
+wires: 9
+labels: 13
+[32mWritten successfully:[0m ../outputs/constraints/ISZERO\ISZERO_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/ISZERO\ISZERO_test_constraints.json
+[32mEverything went okay[0m

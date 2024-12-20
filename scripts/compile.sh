@@ -1,4 +1,4 @@
-names=("load" "add" "mul" "sub" "div" "sha3" "sdiv" "mod" "smod" "addmod" "mulmod" "exp" "lt" "gt" "slt" "sgt" "eq" "iszero" "and" "or" "xor" "not" "shl" "shr" "sar" "signextend" "byte")
+names=("KeccakBufferOut" "InterfaceBufferIn" "ADD" "MUL" "SUB" "DIV" "SDIV" "MOD" "SMOD" "ADDMOD" "MULMOD" "EQ" "ISZERO" "SHL" "SHR" "LT" "GT" "NOT" "BYTE" "SAR" "SIGNEXTEND" "SLT" "SGT" "AND" "OR" "XOR" "DecToBit" "SubEXP" "InterfaceBufferOut" "KeccakBufferIn")
 CURVE_NAME="bn128"
 
 # get the directory of the script
@@ -29,5 +29,4 @@ for (( i = 0 ; i < ${#names[@]} ; i++ )) ; do
   cp ${output_dir_path}/wasm/${names[$i]}/${names[$i]}_test.wasm  ${output_dir_path}/wasm/subcircuit$i.wasm
 done
 
-node parse.js
-rm temp.txt
+node parse.js && rm temp.txt

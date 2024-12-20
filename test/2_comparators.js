@@ -41,8 +41,7 @@ describe("0x10 LT test", function ()  {
     it(`0x${test_case.in1.toString(16).padStart(64, '0')} < 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -73,8 +72,7 @@ describe("0x11 GT test", function ()  {
     it(`0x${test_case.in1.toString(16).padStart(64, '0')} > 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -105,8 +103,7 @@ describe("0x12 SLT test", function ()  {
     it(`0x${test_case.in1.toString(16).padStart(64, '0')} < 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -137,8 +134,7 @@ describe("0x13 SGT test", function ()  {
     it(`0x${test_case.in1.toString(16).padStart(64, '0')} > 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -169,8 +165,7 @@ describe("0x14 EQ test", function ()  {
     it(`0x${test_case.in1.toString(16).padStart(64, '0')} == 0x${test_case.in2.toString(16).padStart(64, '0')} = ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -200,7 +195,7 @@ describe("0x15 ISZERO test", function ()  {
     it(`0x${test_case.in.toString(16).padStart(64, '0')} == 0x0 => ${res ? "True" : "False"}`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in": input
+          "in": [input]
         }, 
         true
       );

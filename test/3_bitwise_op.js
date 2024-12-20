@@ -46,8 +46,7 @@ describe("0x16 AND test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -80,8 +79,7 @@ describe("0x17 OR test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -114,8 +112,7 @@ describe("0x18 XOR test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -179,8 +176,7 @@ describe("0x1A BYTE test", function ()  {
                                = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -212,8 +208,7 @@ describe("0x1B SHL test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -245,8 +240,7 @@ describe("0x1C SHR test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );
@@ -278,8 +272,7 @@ describe("0x1D SAR test", function ()  {
     = 0x${res.toString(16).padStart(64, '0')}\n`, async () => {
       witness = await circuit.calculateWitness(
         {
-          "in1": in1,
-          "in2": in2
+          "in": [in1, in2]
         }, 
         true
       );

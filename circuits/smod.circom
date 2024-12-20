@@ -6,7 +6,9 @@ include "templates/128bit/divider.circom";
 include "../node_modules/circomlib/circuits/gates.circom";
 
 template SMod () {
-  signal input in1[2], in2[2];
+  signal input in[4];
+  signal in1[2] <== [in[0], in[1]];
+  signal in2[2] <== [in[2], in[3]];
 
   // get the sign bits
   component divider[2];
@@ -22,38 +24,38 @@ template SMod () {
 
   // get the absolute values
   signal mul_out[2][2];
-  mul_out[0] <== Mul()([2, 0], in1);
-  mul_out[1] <== Mul()([2, 0], in2);
+  mul_out[0] <== Mul()([2, 0, in1[0], in1[1]]);
+  mul_out[1] <== Mul()([2, 0, in2[0], in2[1]]);
 
   signal two_complements[2][2];
-  two_complements[0] <== Sub()([0, 0], mul_out[0]);
-  two_complements[1] <== Sub()([0, 0], mul_out[1]);
+  two_complements[0] <== Sub()([0, 0, mul_out[0][0], mul_out[0][1]]);
+  two_complements[1] <== Sub()([0, 0, mul_out[1][0], mul_out[1][1]]);
 
   signal abs_values[2][2];
   abs_values[0] <== Add()(
-    [sign_bit[0] * two_complements[0][0], sign_bit[0] * two_complements[0][1]],
-    [in1[0], in1[1]]
+    [sign_bit[0] * two_complements[0][0], sign_bit[0] * two_complements[0][1],
+    in1[0], in1[1]]
   );
   abs_values[1] <== Add()(
-    [sign_bit[1] * two_complements[1][0], sign_bit[1] * two_complements[1][1]],
-    [in2[0], in2[1]]
+    [sign_bit[1] * two_complements[1][0], sign_bit[1] * two_complements[1][1],
+    in2[0], in2[1]]
   );
 
   // get remainder of the absolute values
   signal mod_out[2] <== Mod()(
-    abs_values[0], 
-    abs_values[1] 
+    [abs_values[0][0], abs_values[0][1], 
+    abs_values[1][0], abs_values[1][1]]
   );
 
   // get the sign of the output
   signal xor_out <== XOR()(sign_bit[0], sign_bit[1]);
 
   // get output
-  signal neg_out[2] <== Sub()([0, 0], mod_out);
-  signal sub_out[2] <== Sub()(neg_out, mod_out);
+  signal neg_out[2] <== Sub()([0, 0, mod_out[0], mod_out[1]]);
+  signal sub_out[2] <== Sub()([neg_out[0], neg_out[1], mod_out[0], mod_out[1]]);
 
   signal output out[2] <== Add()(
-    [xor_out * sub_out[0], xor_out * sub_out[1]],
-    mod_out
+    [xor_out * sub_out[0], xor_out * sub_out[1],
+    mod_out[0], mod_out[1]]
   );
 }

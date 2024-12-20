@@ -1,0 +1,11 @@
+[32mtemplate instances[0m: 24
+non-linear constraints: 2926
+linear constraints: 156
+public inputs: 4
+private inputs: 0
+public outputs: 2
+wires: 3040
+labels: 3317
+[32mWritten successfully:[0m ../outputs/constraints/SIGNEXTEND\SIGNEXTEND_test.r1cs
+[32mConstraints written in:[0m ../outputs/constraints/SIGNEXTEND\SIGNEXTEND_test_constraints.json
+[32mEverything went okay[0m

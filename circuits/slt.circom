@@ -7,7 +7,10 @@ include "../node_modules/circomlib/circuits/gates.circom";
 // otherwise, the result is the result of lt(in1, in2)
 
 template SLT () {
-  signal input in1[2], in2[2]; // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  signal input in[4];
+  signal in1[2] <== [in[0], in[1]];
+  signal in2[2] <== [in[2], in[3]];
 
   component divider1 = Divider(127);
   divider1.in <== in1[1];
@@ -19,7 +22,7 @@ template SLT () {
   signal second_msb <== divider2.q;
   second_msb * (1 - second_msb) === 0;
 
-  signal lt_out[2] <== LT()(in1, in2);
+  signal lt_out[2] <== LT()([in1[0], in1[1], in2[0], in2[1]]);
   signal xor_out <== XOR()(first_msb, second_msb);
 
   signal output out[2] <== [

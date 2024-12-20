@@ -5,8 +5,11 @@ include "templates/128bit/divider.circom";
 include "../node_modules/circomlib/circuits/comparators.circom";
 
 template Byte () {
-  signal input in1[2], in2[2];  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
-                                // in1: index, in2: value
+  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  // in1: index, in2: value
+  signal input in[4];
+  signal in1[2] <== [in[0], in[1]];
+  signal in2[2] <== [in[2], in[3]];
   
   // check if in1 < 32 (2**5)
   // if lt_32 = 0 output should be 0.

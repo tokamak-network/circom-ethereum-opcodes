@@ -19,8 +19,8 @@ template _SignExtend () {
 
   // calculate the supplied bitstring
   signal two_to_the_power_of_t[2] <== CalculateTwoToThePowerOfN()(t);
-  signal temp[2] <== Sub()(two_to_the_power_of_t, [1, 0]); // 2**t - 1
-  signal bitstring[2] <== Sub()([2**128 - 1, 2**128 - 1], temp); // 2**256 - 2**t
+  signal temp[2] <== Sub()([two_to_the_power_of_t[0], two_to_the_power_of_t[1], 1, 0]); // 2**t - 1
+  signal bitstring[2] <== Sub()([2**128 - 1, 2**128 - 1, temp[0], temp[1]]); // 2**256 - 2**t
 
   // in2 % 2**t
   signal sliced_bit_str[2] <== SliceBitStr()(in2, t);
@@ -33,7 +33,10 @@ template _SignExtend () {
 }
 
 template SignExtend () {
-  signal input in1[2], in2[2]; // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  // 256-bit integers consisting of two 128-bit integers; in[0]: lower, in[1]: upper
+  signal input in[4];
+  signal in1[2] <== [in[0], in[1]];
+  signal in2[2] <== [in[2], in[3]];
 
   // check if in1 < 31
   signal is_less_than_31 <== IsLessThanN()(in1, 31);
